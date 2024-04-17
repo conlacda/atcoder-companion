@@ -5,6 +5,7 @@
 * Mark solved problems
 * Predict rating during contest
 * Add cronjob to fetch test cases
+* Add graph for performance, ranking, ...
 
 ## Improvement
 * Use typescript
