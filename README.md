@@ -1,14 +1,13 @@
-# An extension to enhance experience for atcoder
+# An extension to enhance the experience for atcoder
 
 ## Features I think I should implement
-* Add test cases to problem statement
-* Mark solved problems
-* Predict rating during contest
-* Add cronjob to fetch test cases
-* Add graph for performance, ranking, ...
+* [x] Add test cases to a problem statement
+* [] Mark solved problems
+* [] Predict rating during contest
+* [] Add cronjob to download test cases
 
 ## Improvement
-* Use typescript
+* Use typescript (or add JsDoc)
 * Upload to chrome store, firefox
 
 ## Reference
