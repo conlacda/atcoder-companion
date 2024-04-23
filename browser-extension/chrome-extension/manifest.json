@@ -7,21 +7,33 @@
         "default_popup": "index.html",
         "default_icon": "icon.png"
     },
+    "permissions": [
+        "storage"
+    ],
     "content_scripts": [
         {
-            "js": ["scripts/utils.js"],
+            "js": [
+                "scripts/utils.js",
+                "scripts/content.js"
+            ],
             "matches": [
                 "*://atcoder.jp/*"
             ]
         },
         {
-            "js": ["scripts/testcase/fetch-test-case.js", "scripts/testcase/main.js"],
+            "js": [
+                "scripts/testcase/fetch-test-case.js",
+                "scripts/testcase/main.js"
+            ],
             "matches": [
                 "*://atcoder.jp/contests/*/tasks/a*"
             ]
         },
         {
-            "js": ["scripts/mark-solved-problem/main.js"],
+            "js": [
+                "scripts/mark-solved-problem/const.js",
+                "scripts/mark-solved-problem/main.js"
+            ],
             "matches": [
                 "*://atcoder.jp/contests/*/tasks",
                 "*://atcoder.jp/contests/*/tasks/"
