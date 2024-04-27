@@ -13,6 +13,7 @@
     "content_scripts": [
         {
             "js": [
+                "scripts/jquery_.js",
                 "scripts/utils.js",
                 "scripts/content.js"
             ],
@@ -22,6 +23,7 @@
         },
         {
             "js": [
+                "scripts/testcase/dom.js",
                 "scripts/testcase/fetch-test-case.js",
                 "scripts/testcase/main.js"
             ],

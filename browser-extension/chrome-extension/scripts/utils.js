@@ -75,3 +75,12 @@ async function clearLocalStorageIfFull() {
         await chrome.storage.local.clear();
     }
 }
+
+/**
+ * Sleep in miliseconds
+ * @param {number} ms - The number of milliseconds to sleep
+ * @returns {Promise<void>} - A Promise that resolves after the specified time
+ */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

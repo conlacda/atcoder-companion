@@ -29,7 +29,6 @@ async function hasNewSubmission(htmlDom) {
 }
 
 function saveCrawlResult() {
-    console.log(latestSubmissionTime);
     writeLocalStorage(lastSubmissionKey, latestSubmissionTime);
     writeLocalStorage(resultKey, JSON.stringify(result));
 }
@@ -92,22 +91,29 @@ function addStatusColumnToTable(result) {
         const newCell = document.createElement('td'); // Create a new cell
         if (result[problem]?.status) {
             newCell.innerHTML = BADGE[result[problem]?.status]; // Add content to the cell
+            // TODO: add tooltip for new cell
+            // Add hover to status badge + last submission time - 1 hour ago, 3 days ago,... + status for all test cases (1WA + 2AC + 10TLE)
+            // Add link to navigate to submission page with filter
         }
         rows[i].insertBefore(newCell, firstCell); // Insert the new cell before the first cell of the row
     }
 }
 
 /**
- * Load submissions from a submission page.
+ * Load submissions from submission pages.
  * @async
- * @returns {Promise<void>} Fetch submission pages to extract submission info from them.
+ * @returns {Promise<void>} Fetch submission pages to extract submissions info from them.
  */
-async function loadSubmission() {
+async function loadSubmissions() {
     let page = 1;
     while (true) {
         // Fetch submission pages
         const MY_SUBMISSION_URL = `https://atcoder.jp/contests/${contest}/submissions/me?page=${page}`;
         const res = await fetch(MY_SUBMISSION_URL);
+        if (res.status != 200) {
+            sleep(1000);
+            continue;
+        }
         const pageContent = await res.text();
         // Get submission results of loggin user
         const parser = new DOMParser();
@@ -139,7 +145,7 @@ async function loadSubmission() {
 }
 
 setup().then(() => {
-    loadSubmission().then(() => {
+    loadSubmissions().then(() => {
         saveCrawlResult();
     });
 });
