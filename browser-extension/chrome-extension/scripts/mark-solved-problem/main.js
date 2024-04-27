@@ -125,12 +125,10 @@ async function loadSubmissions() {
         const trows = tbody.querySelectorAll('tr');
         for (let i = 0; i < trows.length; i++) {
             const submission = extractSubmissionFromRow(trows[i]);
-            if (!result.hasOwnProperty(submission.task)) {
+            if (result[submission.task]?.status == 'AC')
+                continue;
+            if (!result.hasOwnProperty(submission.task) || result[submission.task].time <= submission.time) {
                 result[submission.task] = submission;
-            } else {
-                if (result[submission.task].STATUS != 'AC' && submission.status == 'AC') {
-                    result[submission.task] = submission;
-                }
             }
         }
         // Break if fetch all pages
