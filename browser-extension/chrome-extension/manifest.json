@@ -53,6 +53,9 @@
             ],
             "matches": [
                 "*://atcoder.jp/contests/*/submissions/*"
+            ],
+            "exclude_matches": [
+                "*://atcoder.jp/contests/*/submissions/me"
             ]
         }
     ]
