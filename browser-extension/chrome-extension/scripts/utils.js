@@ -84,3 +84,12 @@ async function clearLocalStorageIfFull() {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+/**
+ * Copies the provided text to the clipboard using the Clipboard API.
+ * @param {string} clipboard - The text to be copied to the clipboard.
+ * @returns {Promise<void>} A Promise that resolves when the text is successfully copied to the clipboard.
+ */
+copyToClipboard = async (clipboard) => {
+    await navigator.clipboard.writeText(clipboard);
+}

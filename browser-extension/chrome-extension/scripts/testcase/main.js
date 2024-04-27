@@ -40,7 +40,7 @@ async function appendTestcases() {
             const copiedInputTooltip = document.getElementById(`tooltip_copy_input_${tc.txtfile}`);
             copiedInputTooltip.style.left = `${copyInputButton.offsetLeft - 5}px`;
             copiedInputTooltip.style.display = '';
-            await navigator.clipboard.writeText(tc.input);
+            await copyToClipboard(tc.input);
             setTimeout(() => {
                 copiedInputTooltip.style.display = 'none';
             }, 700);
@@ -49,7 +49,7 @@ async function appendTestcases() {
         const preInputTooltip = document.getElementById(`tooltip_pre_input_${tc.txtfile}`);
         const copyInputButton2 = document.getElementById(`copy_input_2_${tc.txtfile}`);
         copyInputButton2.onclick = async () => {
-            await navigator.clipboard.writeText(tc.input);
+            await copyToClipboard(tc.input);
             preInputTooltip.style.display = '';
             setTimeout(() => {
                 preInputTooltip.style.display = 'none';
@@ -89,7 +89,7 @@ async function appendTestcases() {
         // Add event to copy button
         copyOutputButton.onclick = async () => {
             copiedOutputTooltip.style.display = '';
-            await navigator.clipboard.writeText(tc.output);
+            await copyToClipboard(tc.output);
             setTimeout(() => {
                 copiedOutputTooltip.style.display = 'none';
             }, 500);
@@ -98,7 +98,7 @@ async function appendTestcases() {
         const preOutputTooltip = document.getElementById(`tooltip_pre_output_${tc.txtfile}`);
         const copyOutputButton2 = document.getElementById(`copy_output_2_${tc.txtfile}`);
         copyOutputButton2.onclick = async () => {
-            await navigator.clipboard.writeText(tc.output);
+            await copyToClipboard(tc.output);
             preOutputTooltip.style.display = '';
             setTimeout(() => {
                 preOutputTooltip.style.display = 'none';

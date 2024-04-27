@@ -3,8 +3,10 @@
 ## Features I think I should implement
 * [x] Add test cases to a problem statement
 * [x] Mark solved problems
+* [] Debug with custom test page
 * [] Predict rating during a contest
 * [] Add cronjob to download test cases
+* [] Setup page
 
 ## Improvement
 * Upload to Chrome store, firefox
@@ -18,5 +20,3 @@
 
 ## Reference
 * [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
-
-* Move to debug page to debug (bring source code + data test)

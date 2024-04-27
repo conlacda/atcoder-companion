@@ -78,7 +78,7 @@ function addStatusColumnToTable(result) {
     let headRow = document.querySelector('thead').querySelector('tr');
     const firstHeadCell = headRow.querySelectorAll('th')[0];
     let statusHeadCell = document.createElement('th');
-    statusHeadCell.textContent = 'Stt';
+    statusHeadCell.textContent = 'Status';
     statusHeadCell.width = "3%";
     headRow.insertBefore(statusHeadCell, firstHeadCell);
 
