@@ -4,7 +4,7 @@
  *                           - The first element is the contest name.
  *                           - The second element is the problem code in uppercase.
  */
-function getProblemInfo() {
+getProblemInfo = () => {
     const curPath = window.location.pathname;
     const regex = /contests\/.*\/tasks\/(.*)_(.*)/;
     const match = regex.exec(curPath);
@@ -17,7 +17,7 @@ function getProblemInfo() {
  * Retrieve the name of the current contest from the URL path.
  * @returns {string} The name of the contest extracted from the URL path.
  */
-function getContest() {
+getContest = () => {
     const curPath = window.location.pathname;
     const regex = /contests\/(.*)\/tasks/gm;
     const match = regex.exec(curPath);
@@ -29,7 +29,7 @@ function getContest() {
  * Retrieves the number of tasks in a table.
  * @returns {number} The number of tasks.
  */
-function getTaskNum() {
+getTaskNum = () => {
     const tbody = document.querySelector('tbody');
     return tbody.querySelectorAll('tr').length;
 }
@@ -42,7 +42,7 @@ function getTaskNum() {
  * @returns {Promise<any>} A promise that resolves with the value associated with the given key,
  * or rejects if the key is not found.
  */
-async function readLocalStorage(key, defaultVal) {
+readLocalStorage = async (key, defaultVal) => {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get([key], function (result) {
             resolve(result[key] ?? defaultVal);
@@ -58,7 +58,7 @@ async function readLocalStorage(key, defaultVal) {
  * @returns {Promise<any>} A promise that resolves with the value associated with the given key,
  * or rejects if the key is not found.
  */
-async function writeLocalStorage(key, value) {
+writeLocalStorage = async (key, value) => {
     const obj = {};
     obj[key] = value;
     return chrome.storage.local.set(obj);
@@ -69,7 +69,7 @@ async function writeLocalStorage(key, value) {
  * @async
  * @returns {Promise<void>} A Promiset that clear chrome.storage.local if it reaches the storage limit.
  */
-async function clearLocalStorageIfFull() {
+clearLocalStorageIfFull = async () => {
     const localStorageSize = chrome.storage.local.getBytesInUse();
     const MAX_STORAGE_SIZE = 1024 * 1024; // 1MB
     if (localStorageSize > MAX_STORAGE_SIZE) {
@@ -82,7 +82,7 @@ async function clearLocalStorageIfFull() {
  * @param {number} ms - The number of milliseconds to sleep
  * @returns {Promise<void>} - A Promise that resolves after the specified time
  */
-function sleep(ms) {
+sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -90,7 +90,7 @@ function sleep(ms) {
  * Checks if test cases for a given contest and problem are published.
  * @param {string} contest - The name of the contest ex: abc123.
  * @param {string} problem - The name of the problem ex: A.
- * @returns {Promise<boolean>} A promise that resolves to a boolean indicating 
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating
  *                              whether the test cases are published (true) or not (false).
  */
 isTestCasePublished = async (contest, problem) => {
@@ -111,7 +111,7 @@ copyToClipboard = async (clipboard) => {
 
 // save file content to local
 saveToLocal = async (content, fileName = "testcase.txt") => {
-    const blob = new Blob([content], { type: 'text/plain' });
+    const blob = new Blob([content], {type: 'text/plain'});
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;

@@ -1,7 +1,7 @@
 const [contest, problem] = getProblemInfo();
 const copyButtonSize = getSize($('span[data-toggle="tooltip"]:visible').first());
 
-async function appendTestcases() {
+(async () => {
     const taskStatement = document.getElementById('task-statement');
     const testcases = await fetchTestcases(contest, problem);
     testcases.forEach((tc) => {
@@ -105,6 +105,6 @@ async function appendTestcases() {
             }, 700);
         }
     })
-}
+})();
 
-await appendTestcases();
+
