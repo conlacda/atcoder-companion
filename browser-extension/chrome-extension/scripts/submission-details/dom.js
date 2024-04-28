@@ -1,10 +1,10 @@
 addInputColumnToResultTable = (resultTable) => {
-    const theader = resultTable.find('thead');
+    const thead = resultTable.find('thead');
     const tbody = resultTable.find('tbody');
     let rows = tbody.find('tr');
 
     // Add cell to header
-    const lastHeadCell = theader.find('th:last');
+    const lastHeadCell = thead.find('th:last');
     const inputHeadCell = $('<th width="15%">Input</th>');
     inputHeadCell.insertAfter(lastHeadCell);
 
@@ -48,7 +48,7 @@ addInputColumnToResultTable = (resultTable) => {
         downloadIcon.css('cursor', 'pointer');
         downloadIcon.on("click", async () => {
             const fileName = $(this).find('td:first').text();
-            saveToLocal(await fetchTestCase(tcfile, "in"), fileName);
+            await saveToLocal(await fetchTestCase(tcfile, "in"), fileName);
         });
         cell.append(downloadIcon);
         cell.insertAfter(lastTdCell);
@@ -56,12 +56,12 @@ addInputColumnToResultTable = (resultTable) => {
 }
 
 addOutputColumnToResultTable = (resultTable) => {
-    const theader = resultTable.find('thead');
+    const thead = resultTable.find('thead');
     const tbody = resultTable.find('tbody');
     let rows = tbody.find('tr');
 
     // Add cell to header
-    const lastHeadCell = theader.find('th:last');
+    const lastHeadCell = thead.find('th:last');
     const inputHeadCell = $('<th width="15%">Output</th>');
     inputHeadCell.insertAfter(lastHeadCell);
 
@@ -105,7 +105,7 @@ addOutputColumnToResultTable = (resultTable) => {
         downloadIcon.css('cursor', 'pointer');
         downloadIcon.on("click", async () => {
             const fileName = $(this).find('td:first').text();
-            saveToLocal(await fetchTestCase(tcfile, "out"), fileName);
+            await saveToLocal(await fetchTestCase(tcfile, "out"), fileName);
         });
         cell.append(downloadIcon);
         cell.insertAfter(lastTdCell);
@@ -113,24 +113,24 @@ addOutputColumnToResultTable = (resultTable) => {
 }
 
 addDebugColumnToResultTable = (resultTable) => {
-    const theader = resultTable.find('thead');
+    const thead = resultTable.find('thead');
     const tbody = resultTable.find('tbody');
     let rows = tbody.find('tr');
     
     // Add cell to header
-    const lastHeadCell = theader.find('th:last');
+    const lastHeadCell = thead.find('th:last');
     const debugHeadCell = $('<th width="10%">Debug</th>');
     debugHeadCell.insertAfter(lastHeadCell);
 
     rows = tbody.find('tr');
     rows.each(function (index, row) {
+        const tcfile = $(this).find('td:first').text();
         // add download button
         const lastTdCell = $(this).find('td:last');
         const debugIcon = $('<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 32 32"><path fill="currentColor" d="m29.83 20l.34-2l-5.17-.85v-4.38l5.06-1.36l-.51-1.93l-4.83 1.29A9 9 0 0 0 20 5V2h-2v2.23a8.81 8.81 0 0 0-4 0V2h-2v3a9 9 0 0 0-4.71 5.82L2.46 9.48L2 11.41l5 1.36v4.38L1.84 18l.32 2L7 19.18a8.9 8.9 0 0 0 .82 3.57l-4.53 4.54l1.42 1.42l4.19-4.2a9 9 0 0 0 14.2 0l4.19 4.2l1.42-1.42l-4.54-4.54a8.9 8.9 0 0 0 .83-3.57ZM15 25.92A7 7 0 0 1 9 19v-6h6ZM9.29 11a7 7 0 0 1 13.42 0ZM23 19a7 7 0 0 1-6 6.92V13h6Z"/></svg>');
         debugIcon.css('cursor', 'pointer');
-        debugIcon.on("click", function () {
-            // TODO: copy output
-            console.log('navigate to debug page');
+        debugIcon.on("click",  () => {
+            window.location.href = `https://atcoder.jp/contests/${getContestName()}/custom_test?submissionId=${getSubmissionId()}&testcase=${tcfile}&problem=${getProblemName()}`;
         });
         const cell = $('<td class="text-right"></td>');
         cell.append(debugIcon);

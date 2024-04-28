@@ -58,6 +58,15 @@
             "exclude_matches": [
                 "*://atcoder.jp/contests/*/submissions/me*"
             ]
+        },
+        // Debug on the custom test page
+        {
+            "js": [
+                "scripts/custom-test/custom-test.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/custom_test?submissionId=*&testcase=*&problem=*"
+            ]
         }
     ]
 }

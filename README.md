@@ -3,10 +3,10 @@
 ## Features I think I should implement
 * [x] Add test cases to a problem statement
 * [x] Mark solved problems
-* [] Debug with custom test page
+* [x] Debug with custom test page
 * [] Predict rating during a contest
 * [] Add cronjob to download test cases
-* [] Setup page
+* [] Add setup page
 
 ## Improvement
 * Upload to Chrome store, firefox
