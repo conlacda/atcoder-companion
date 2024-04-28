@@ -1,5 +1,5 @@
 const [contest, problem] = getProblemInfo();
-const copyButtonSize = getSize($('span[data-toggle="tooltip"]:visible').first());
+const copyButton = $('span[data-toggle="tooltip"]:visible').first();
 
 (async () => {
     const taskStatement = document.getElementById('task-statement');
@@ -10,7 +10,7 @@ const copyButtonSize = getSize($('span[data-toggle="tooltip"]:visible').first())
             <hr>
             <div class="part">
                 <section style="position:relative">
-                    <div class="tooltip fade top in" role="tooltip" style="display: none; position: absolute; top: ${-copyButtonSize.height}px" id="tooltip_copy_input_${tc.txtfile}">
+                    <div class="tooltip fade top in" role="tooltip" style="display: none; position: absolute; top: ${-copyButton.outerHeight()}px" id="tooltip_copy_input_${tc.txtfile}">
                         <div class="tooltip-arrow" style="left: 50%"></div>
                         <div class="tooltip-inner">Copied!</div>
                     </div>
@@ -59,7 +59,7 @@ const copyButtonSize = getSize($('span[data-toggle="tooltip"]:visible').first())
         const outputElement = `
             <div class="part">
                 <section style="position:relative">
-                    <div class="tooltip fade top in" role="tooltip" style="display: none; position: absolute; top: ${-copyButtonSize.height}px" id="tooltip_copy_output_${tc.txtfile}">
+                    <div class="tooltip fade top in" role="tooltip" style="display: none; position: absolute; top: ${-copyButton.outerHeight()}px" id="tooltip_copy_output_${tc.txtfile}">
                         <div class="tooltip-arrow" style="left: 50%"></div>
                         <div class="tooltip-inner">Copied!</div>
                     </div>
