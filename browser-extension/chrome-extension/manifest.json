@@ -44,13 +44,13 @@
                 "*://atcoder.jp/contests/*/tasks/"
             ]
         },
-        // Debug with custom test
+        // Run on the submission-details page
         {
             "js": [
-                "scripts/debug-with-custom-test/problem-info.js",
-                "scripts/debug-with-custom-test/testcase-downloader.js",
-                "scripts/debug-with-custom-test/dom.js",
-                "scripts/debug-with-custom-test/main.js"
+                "scripts/submission-details/problem-info.js",
+                "scripts/submission-details/testcase-downloader.js",
+                "scripts/submission-details/dom.js",
+                "scripts/submission-details/main.js"
             ],
             "matches": [
                 "*://atcoder.jp/contests/*/submissions/*"
