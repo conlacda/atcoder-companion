@@ -49,6 +49,7 @@
             "js": [
                 "scripts/debug-with-custom-test/problem-info.js",
                 "scripts/debug-with-custom-test/testcase-downloader.js",
+                "scripts/debug-with-custom-test/dom.js",
                 "scripts/debug-with-custom-test/main.js"
             ],
             "matches": [

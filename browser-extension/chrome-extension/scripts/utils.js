@@ -86,10 +86,37 @@ function sleep(ms) {
 }
 
 /**
+ * Checks if test cases for a given contest and problem are published.
+ * @param {string} contest - The name of the contest ex: abc123.
+ * @param {string} problem - The name of the problem ex: A.
+ * @returns {Promise<boolean>} A promise that resolves to a boolean indicating 
+ *                              whether the test cases are published (true) or not (false).
+ */
+isTestCasePublished = async (contest, problem) => {
+    const SOURCE_PREFIX = "https://raw.githubusercontent.com/conlacda/atcoder-testcase/main";
+    const listUrl = `${SOURCE_PREFIX}/${contest}/${problem}/list.txt`;
+    const res = await fetch(listUrl);
+    return res.status === 200;
+}
+
+/**
  * Copies the provided text to the clipboard using the Clipboard API.
  * @param {string} clipboard - The text to be copied to the clipboard.
  * @returns {Promise<void>} A Promise that resolves when the text is successfully copied to the clipboard.
  */
 copyToClipboard = async (clipboard) => {
     await navigator.clipboard.writeText(clipboard);
+}
+
+// save file content to local
+saveToLocal = async (content, fileName = "testcase.txt") => {
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    URL.revokeObjectURL(url);
+    document.body.removeChild(link);
 }

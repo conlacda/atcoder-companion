@@ -12,7 +12,3 @@ fetchTestCase = async (testcase, inOrOut = "in") => {
     }
     return await res.text();
 }
-
-downloadTestCase = async (testcase, inOrOut = "in") => {
-    // TODO
-}
