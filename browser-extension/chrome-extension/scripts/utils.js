@@ -38,6 +38,7 @@ function getTaskNum() {
  * Read data from the local storage.
  * @async
  * @param {string} key - The key to identify the data in the local storage.
+ * @param {string} defaultVal - The default value would be returned if no key was found.
  * @returns {Promise<any>} A promise that resolves with the value associated with the given key,
  * or rejects if the key is not found.
  */
@@ -47,7 +48,7 @@ async function readLocalStorage(key, defaultVal) {
             resolve(result[key] ?? defaultVal);
         });
     });
-};
+}
 
 /**
  * Write data from the local storage.

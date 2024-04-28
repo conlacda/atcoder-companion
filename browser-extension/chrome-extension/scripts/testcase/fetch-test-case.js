@@ -11,8 +11,6 @@ class Testcase {
      * @param {string} txtfile - The raw name of the test case (ex: random_test_12.txt).
      * @param {number} inputsize - The size of the input for the test case in bytes.
      * @param {number} outputsize - The size of the output for the test case in bytes.
-     * @param {string} input - The input of the test case.
-     * @param {string} ouput - The output of the test case.
      */
     constructor(txtfile, inputsize, outputsize) {
         this.txtfile = txtfile;

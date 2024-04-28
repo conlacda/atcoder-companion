@@ -107,4 +107,4 @@ async function appendTestcases() {
     })
 }
 
-appendTestcases();
+await appendTestcases();

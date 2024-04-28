@@ -49,7 +49,7 @@ function saveCrawlResult() {
  * - detail {string} - The URL link to detailed information about the task.
  */
 function extractSubmissionFromRow(tr) {
-    isCE = tr.querySelectorAll('td').length == 8;
+    isCE = tr.querySelectorAll('td').length === 8;
     const submission = {
         time: tr.querySelectorAll('td')[0].innerText,
         task: tr.querySelectorAll('td')[1].innerText[0],
@@ -110,8 +110,8 @@ async function loadSubmissions() {
         // Fetch submission pages
         const MY_SUBMISSION_URL = `https://atcoder.jp/contests/${contest}/submissions/me?page=${page}`;
         const res = await fetch(MY_SUBMISSION_URL);
-        if (res.status != 200) {
-            sleep(1000);
+        if (res.status !== 200) {
+            await sleep(1000);
             continue;
         }
         const pageContent = await res.text();
@@ -125,7 +125,7 @@ async function loadSubmissions() {
         const trows = tbody.querySelectorAll('tr');
         for (let i = 0; i < trows.length; i++) {
             const submission = extractSubmissionFromRow(trows[i]);
-            if (result[submission.task]?.status == 'AC')
+            if (result[submission.task]?.status === 'AC')
                 continue;
             if (!result.hasOwnProperty(submission.task) || result[submission.task].time <= submission.time) {
                 result[submission.task] = submission;

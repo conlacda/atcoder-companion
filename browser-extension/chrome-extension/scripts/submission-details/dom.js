@@ -115,14 +115,13 @@ addOutputColumnToResultTable = (resultTable) => {
 addDebugColumnToResultTable = (resultTable) => {
     const thead = resultTable.find('thead');
     const tbody = resultTable.find('tbody');
-    let rows = tbody.find('tr');
-    
+
     // Add cell to header
     const lastHeadCell = thead.find('th:last');
     const debugHeadCell = $('<th width="10%">Debug</th>');
     debugHeadCell.insertAfter(lastHeadCell);
 
-    rows = tbody.find('tr');
+    const rows = tbody.find('tr');
     rows.each(function (index, row) {
         const tcfile = $(this).find('td:first').text();
         // add download button
