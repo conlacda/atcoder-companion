@@ -31,7 +31,7 @@ const problem = urlParams.get('problem');
     res = await fetch(TC_OUTPUT_URL);
     if (res.status != 200) return;
     const standardInputDiv = $("#input").parent().parent();
-    const expectedOutputDiv = $(`<div class="form-group"><label class="control-label col-sm-3 col-md-2">Expected Output</label><div class="col-sm-8"><textarea id="expected-output" rows="5" class="form-control customtest-textarea"></textarea><p><span className="gray">* There can be multiple outputs that are accepted as correct, depending on each problem.</span></p></div></div>`);
+    const expectedOutputDiv = $(`<div class="form-group"><label class="control-label col-sm-3 col-md-2">Expected Output</label><div class="col-sm-8"><textarea id="expected-output" rows="5" class="form-control customtest-textarea"></textarea><p><span class="gray">* There can be multiple outputs that are accepted as correct, depending on each problem.</span></p></div></div>`);
     standardInputDiv.after(expectedOutputDiv);
     $("#expected-output").val(await res.text());
 })();
