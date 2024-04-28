@@ -14,9 +14,9 @@
         // Common
         {
             "js": [
-                "scripts/jquery_.js",
-                "scripts/utils.js",
-                "scripts/content.js"
+                "scripts/shared/jquery_.js",
+                "scripts/shared/utils.js",
+                "scripts/shared/content.js"
             ],
             "matches": [
                 "*://atcoder.jp/*"
