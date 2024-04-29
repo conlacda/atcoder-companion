@@ -36,6 +36,7 @@
         {
             "js": [
                 "scripts/mark-solved-problem/const.js",
+                "scripts/mark-solved-problem/utils.js",
                 "scripts/mark-solved-problem/main.js"
             ],
             "matches": [
