@@ -1,5 +1,7 @@
 # An extension to enhance the experience for atcoder
 
+[![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml)
+
 ## Features I think I should implement
 * [x] Add test cases to a problem statement
 * [x] Mark solved problems
