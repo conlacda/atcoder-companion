@@ -10,7 +10,7 @@ export const test = base.extend<{
     // Install extension from path
     context: async ({}, use) => {
         const pathToExtension = path.join(__dirname, '../chrome-extension');
-        const context = await chromium.launchPersistentContext('', {
+        const context = await chromium.launchPersistentContext('.auth/user.json', {
             headless: false,
             args: [
                 `--disable-extensions-except=${pathToExtension}`,
