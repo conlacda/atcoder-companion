@@ -1,5 +1,5 @@
 const SOURCE_PREFIX = "https://raw.githubusercontent.com/conlacda/atcoder-testcase/main";
-const SMALL_FILE_SIZE = 100 * 1024; // bytes
+const SMALL_FILE_SIZE = 512 * 1024; // bytes
 
 /**
  * Represent a test case.
