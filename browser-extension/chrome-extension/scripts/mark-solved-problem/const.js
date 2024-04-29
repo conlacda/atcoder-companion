@@ -7,7 +7,8 @@ const BADGE = {
     'OLE': '<span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Output Limit Exceeded">OLE</span>',
     'IE': '<span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Internal Error">IE</span>',
     'CE': '<span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Compilation Error">CE</span>',
-    'WJ': '<span class="label label-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Waiting for Judging">WJ</span>'
+    'WJ': '<span class="label label-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Waiting for Judging">WJ</span>',
+    'JD': '<span class="label label-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Judging">JD</span>'
 }
 
 const TOOLTIP = {
@@ -19,7 +20,8 @@ const TOOLTIP = {
     'OLE': 'Output Limit Exceeded',
     'IE': 'Internal Error',
     'CE': 'Compile Error',
-    'WJ': 'Waiting for Judging'
+    'WJ': 'Waiting for Judging',
+    'JD': 'Judging'
 }
 // https://atcoder.jp/contests/abc293/glossary
 // https://atcoder.jp/contests/cn2016summer-practice/

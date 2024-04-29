@@ -90,7 +90,7 @@ function addStatusColumnToTable(result) {
         const problem = firstCell.innerText;
         const newCell = document.createElement('td'); // Create a new cell
         if (result[problem]?.status) {
-            newCell.innerHTML = BADGE[result[problem]?.status]; // Add content to the cell
+            newCell.innerHTML = BADGE[result[problem]?.status] ?? BADGE['JD']; // Add content to the cell
             // TODO: add tooltip for new cell
             // Add hover to status badge + last submission time - 1 hour ago, 3 days ago,... + status for all test cases (1WA + 2AC + 10TLE)
             // Add link to navigate to submission page with filter
@@ -127,9 +127,12 @@ async function loadSubmissions() {
             const submission = extractSubmissionFromRow(trows[i]);
             if (result[submission.task]?.status === 'AC')
                 continue;
-            if (!result.hasOwnProperty(submission.task) || result[submission.task].time <= submission.time) {
+
+            if (submission.status === 'AC')
                 result[submission.task] = submission;
-            }
+
+            if (!result.hasOwnProperty(submission.task))
+                result[submission.task] = submission;
         }
         // Break if fetch all pages
         if (!(await hasNewSubmission(htmlDom)))
