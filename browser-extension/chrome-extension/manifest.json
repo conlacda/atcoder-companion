@@ -72,6 +72,15 @@
             "matches": [
                 "*://atcoder.jp/contests/*/custom_test?submissionId=*&testcase=*&problem=*"
             ]
+        },
+        // Rating estimator during contest
+        {
+            "js": [
+                "scripts/rating-estimator/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/standings"
+            ]
         }
     ]
 }
