@@ -1,13 +1,25 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, dev ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, dev ]
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    # https://playwright.dev/docs/chrome-extensions
+    # By default, Chrome's headless mode in Playwright does not support Chrome extensions
+    # To run UI on GitHub action, we need some configurations
+    # So self-hosted is the easiest way to run github action.
+    runs-on: self-hosted
+    env:
+      ATCODER_USERNAME: ${{ secrets.ATCODER_USERNAME }}
+      ATCODER_PASSWORD: ${{ secrets.ATCODER_PASSWORD }}
+
+    defaults:
+      run:
+        working-directory: ./browser-extension/chrome-extension-test
+
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
