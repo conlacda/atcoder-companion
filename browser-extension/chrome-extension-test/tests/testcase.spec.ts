@@ -19,9 +19,9 @@ test.afterAll(async () => {
 
 test('More test cases should be added to problem statement.', async () => {
     await page.goto('https://atcoder.jp/contests/abc347/tasks/abc347_a');
-    const taskStatment: Locator = page.locator('#task-statement');
+    const taskStatement: Locator = page.locator('#task-statement');
     for (let i = 1; i <= 12; i++) {
-        await expect(taskStatment).toContainText(`Test Input ${i}`);
-        await expect(taskStatment).toContainText(`Test Output ${i}`);
+        await expect(taskStatement).toContainText(`Test Input ${i}`);
+        await expect(taskStatement).toContainText(`Test Output ${i}`);
     }
 });
