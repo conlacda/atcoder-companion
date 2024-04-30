@@ -30,6 +30,8 @@ export default defineConfig({
     trace: 'on-first-retry',
 
     headless: false,
+
+    permissions: ["clipboard-read", "clipboard-write"],
   },
 
   /* Configure projects for major browsers */

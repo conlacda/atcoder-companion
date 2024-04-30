@@ -1,4 +1,3 @@
-
 (async () => {
     const tcpub = await isTestCasePublished(getContestName(), getProblemName());
     if (!tcpub) {
