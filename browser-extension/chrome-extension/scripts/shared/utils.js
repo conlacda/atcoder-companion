@@ -35,49 +35,6 @@ getTaskNum = () => {
 }
 
 /**
- * Read data from the local storage.
- * @async
- * @param {string} key - The key to identify the data in the local storage.
- * @param {string} defaultVal - The default value would be returned if no key was found.
- * @returns {Promise<any>} A promise that resolves with the value associated with the given key,
- * or rejects if the key is not found.
- */
-readLocalStorage = async (key, defaultVal) => {
-    return new Promise((resolve, reject) => {
-        chrome.storage.local.get([key], function (result) {
-            resolve(result[key] ?? defaultVal);
-        });
-    });
-}
-
-/**
- * Write data from the local storage.
- * @async
- * @param {string} key - The key of object.
- * @param {string} value - The value corresponds to the key.
- * @returns {Promise<any>} A promise that resolves with the value associated with the given key,
- * or rejects if the key is not found.
- */
-writeLocalStorage = async (key, value) => {
-    const obj = {};
-    obj[key] = value;
-    return chrome.storage.local.set(obj);
-}
-
-/**
- * Clear the local storage if its size exceeds the maximum allowed size.
- * @async
- * @returns {Promise<void>} A Promiset that clear chrome.storage.local if it reaches the storage limit.
- */
-clearLocalStorageIfFull = async () => {
-    const localStorageSize = chrome.storage.local.getBytesInUse();
-    const MAX_STORAGE_SIZE = 1024 * 1024; // 1MB
-    if (localStorageSize > MAX_STORAGE_SIZE) {
-        await chrome.storage.local.clear();
-    }
-}
-
-/**
  * Sleep in miliseconds
  * @param {number} ms - The number of milliseconds to sleep
  * @returns {Promise<void>} - A Promise that resolves after the specified time

@@ -12,16 +12,13 @@
             "128": "images/icon-128.png"
         }
     },
-    "permissions": [
-        "storage"
-    ],
+    "permissions": [],
     "content_scripts": [
         // Common
         {
             "js": [
                 "scripts/shared/jquery_.js",
-                "scripts/shared/utils.js",
-                "scripts/shared/content.js"
+                "scripts/shared/utils.js"
             ],
             "matches": [
                 "*://atcoder.jp/*"

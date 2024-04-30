@@ -37,7 +37,7 @@ const addStatusColumnToTable = (result) => {
         const problem = firstCell.text();
         const newCell = $('<td></td>'); // Create a new cell
         if (result[problem]?.status) {
-            newCell.html(BADGE[result[problem]?.status] ?? BADGE['JD']); // Add content to the cell
+            newCell.html(BADGE[result[problem]?.status] ?? BADGE['JD'].replace('_STATUS_', result[problem]?.status)); // Add content to the cell
             // TODO: add tooltip for new cell
             // Add hover to status badge + last submission time - 1 hour ago, 3 days ago,... + status for all test cases (1WA + 2AC + 10TLE)
             // Add link to navigate to submission page with filter

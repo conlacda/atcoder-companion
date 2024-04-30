@@ -8,7 +8,7 @@ const BADGE = {
     'IE': '<span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Internal Error">IE</span>',
     'CE': '<span class="label label-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="Compilation Error">CE</span>',
     'WJ': '<span class="label label-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Waiting for Judging">WJ</span>',
-    'JD': '<span class="label label-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Judging">JD</span>'
+    'JD': '<span class="label label-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Judging">_STATUS_</span>'
 }
 
 const TOOLTIP = {
@@ -25,3 +25,16 @@ const TOOLTIP = {
 }
 // https://atcoder.jp/contests/abc293/glossary
 // https://atcoder.jp/contests/cn2016summer-practice/
+
+const PRIORITY_LEVEL = {
+    'AC': 2,
+    'WA': 0,
+    'TLE': 0,
+    'MLE': 0,
+    'RE': 0,
+    'OLE': 0,
+    'IE': 0,
+    'CE': 0,
+    'WJ': 1,
+    'JD': 1
+}
