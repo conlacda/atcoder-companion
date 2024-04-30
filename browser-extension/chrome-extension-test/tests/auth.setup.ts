@@ -7,8 +7,8 @@ const authFile = '.auth/user.json';
 setup('authenticate', async ({ page }) => {
     await page.goto('https://atcoder.jp/login');
 
-    const username = process.env.ATCODER_USERNAME;
-    const password = process.env.ATCODER_PASSWORD;
+    const username: string = process.env.ATCODER_USERNAME;
+    const password: string = process.env.ATCODER_PASSWORD;
 
     // Check if logged in
     let usernameLocator: Locator = page.getByText(process.env.ATCODER_USERNAME);

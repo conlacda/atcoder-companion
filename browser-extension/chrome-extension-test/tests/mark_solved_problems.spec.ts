@@ -1,5 +1,5 @@
 import {test, expect} from '../fixtures';
-import {Page} from "@playwright/test";
+import {Page, Locator} from "@playwright/test";
 
 require('dotenv').config({path: './.env'});
 
@@ -18,8 +18,20 @@ test.afterAll(async () => {
 });
 
 test('Test status of a participated contest', async () => {
+    // Test the status column is added
     await page.goto('https://atcoder.jp/contests/abc301/tasks');
     await expect(page.locator('table').nth(0)).toContainText('Status');
+
+    // Test status of columns
+    const tbody: Locator = page.locator('table').locator('tbody');
+    await expect(tbody.locator('tr').nth(0).locator('td').nth(0)).toHaveText('AC');
+    await expect(tbody.locator('tr').nth(1).locator('td').nth(0)).toHaveText('AC');
+    await expect(tbody.locator('tr').nth(2).locator('td').nth(0)).toHaveText('AC');
+    await expect(tbody.locator('tr').nth(3).locator('td').nth(0)).toHaveText('AC');
+    await expect(tbody.locator('tr').nth(4).locator('td').nth(0)).toHaveText('CE');
+    await expect(tbody.locator('tr').nth(5).locator('td').nth(0)).toHaveText('WA');
+    await expect(tbody.locator('tr').nth(6).locator('td').nth(0)).toHaveText('');
+    await expect(tbody.locator('tr').nth(7).locator('td').nth(0)).toHaveText('');
 });
 
 test('Test status of an un-participated contest', async () => {
