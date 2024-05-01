@@ -8,9 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     # https://playwright.dev/docs/chrome-extensions
-    # By default, Chrome's headless mode in Playwright does not support Chrome extensions
-    # To run UI on GitHub action, we need some configurations
-    # So self-hosted is the easiest way to run github action.
+    # By default, Chrome's headless mode in Playwright does not support Chrome extension.
+    # self-hosted is the easiest way to run github action.
     runs-on: self-hosted
     env:
       ATCODER_USERNAME: ${{ secrets.ATCODER_USERNAME }}
