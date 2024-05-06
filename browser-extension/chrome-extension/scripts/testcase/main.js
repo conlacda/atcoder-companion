@@ -3,7 +3,7 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
 
 (async () => {
     const taskStatement = document.getElementById('task-statement');
-    const testcases = await fetchTestcases(contest, problem);
+    const testcases = await Testcase.fetchAll(contest, problem);
     testcases.forEach((tc) => {
         if (tc.isSample()) return;
         const inputElement = `
