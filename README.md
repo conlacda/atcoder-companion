@@ -35,6 +35,7 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 ## Reference
 * [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
 * [Chrome webstore documentation](https://developer.chrome.com/docs/webstore/)
+* [Chrome devconsole](https://chrome.google.com/webstore/devconsole/)
 
 ## Develop
 ### .env
