@@ -106,5 +106,3 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
         }
     })
 })();
-
-

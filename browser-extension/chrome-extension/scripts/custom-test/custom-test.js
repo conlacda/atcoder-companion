@@ -22,13 +22,13 @@ const problem = urlParams.get('problem');
     toggleEditorButton.click();
 
     // Get testcase then put to "Standard input"
-    const TC_INPUT_URL = `https://raw.githubusercontent.com/conlacda/atcoder-testcase/main/${contest}/${problem}/in/${testCase}`;
+    const TC_INPUT_URL = `https://raw.githubusercontent.com/conlacda/atcoder-testcases/${contest}/${contest}/${problem}/in/${testCase}`;
     res = await fetch(TC_INPUT_URL);
     if (res.status !== 200) return;
     const inputTextArea = $("#input");
     inputTextArea.val(await res.text());
     // Add Standard output
-    const TC_OUTPUT_URL = `https://raw.githubusercontent.com/conlacda/atcoder-testcase/main/${contest}/${problem}/out/${testCase}`;
+    const TC_OUTPUT_URL = `https://raw.githubusercontent.com/conlacda/atcoder-testcases/${contest}/${contest}/${problem}/out/${testCase}`;
     res = await fetch(TC_OUTPUT_URL);
     if (res.status !== 200) return;
     const standardInputDiv = inputTextArea.parent().parent();

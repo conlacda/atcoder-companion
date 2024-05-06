@@ -18,6 +18,7 @@
         {
             "js": [
                 "scripts/shared/jquery_.js",
+                "scripts/shared/testcase.js",
                 "scripts/shared/utils.js"
             ],
             "matches": [
@@ -27,7 +28,6 @@
         // Add test cases to problem statement
         {
             "js": [
-                "scripts/testcase/fetch-test-case.js",
                 "scripts/testcase/main.js"
             ],
             "matches": [

@@ -6,7 +6,9 @@
  *                             or null if the fetch operation fails.
  */
 fetchTestCase = async (testcase, inOrOut = "in") => {
-    const source = `https://raw.githubusercontent.com/conlacda/atcoder-testcase/main/${getContestName()}/${getProblemName()}/${inOrOut}/${testcase}`;
+    const contest = getContestName();
+    const problem = getProblemName();
+    const source = `https://raw.githubusercontent.com/conlacda/atcoder-testcases/${contest}/${contest}/${problem}/${inOrOut}/${testcase}`;
     const res = await fetch(source);
     if (res.status !== 200) {
         return null;
