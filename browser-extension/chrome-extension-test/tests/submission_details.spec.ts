@@ -63,6 +63,6 @@ test.describe('Extension functions correctly on the submission details page', ()
     test('Debug button', async () => {
         const debugButton: Locator = page.locator('#debug-0');
         await debugButton.click();
-        await page.waitForURL('https://atcoder.jp/contests/abc347/custom_test?submissionId=51807898&testcase=00_sample_01.txt&problem=B');
+        await page.waitForURL('https://atcoder.jp/contests/abc347/custom_test?submissionId=51807898&testcase=00_sample_01&problem=B');
     });
 });

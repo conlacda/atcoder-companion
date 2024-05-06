@@ -11,7 +11,7 @@ let page: Page;
 
 test.beforeAll(async ({context}) => {
     page = await context.newPage();
-    await page.goto('https://atcoder.jp/contests/abc347/custom_test?submissionId=51807898&testcase=00_sample_01.txt&problem=B');
+    await page.goto('https://atcoder.jp/contests/abc347/custom_test?submissionId=51807898&testcase=00_sample_01&problem=B');
     const runButton: Locator = page.locator('a.btn.btn-primary:has-text("Run")').first();
     await runButton.click();
 });
