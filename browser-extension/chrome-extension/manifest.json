@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Useful atcoder",
-    "description": "Useful extension for atcoder",
-    "version": "1.0",
+    "description": "An useful extension for atcoder",
+    "version": "0.0.1",
     "action": {
         "default_popup": "index.html",
         "default_icon": {
@@ -12,9 +12,7 @@
             "128": "icons/icon-128.png"
         }
     },
-    "permissions": [],
     "content_scripts": [
-        // Common
         {
             "js": [
                 "scripts/shared/jquery_.js",
@@ -25,7 +23,6 @@
                 "*://atcoder.jp/*"
             ]
         },
-        // Add test cases to problem statement
         {
             "js": [
                 "scripts/testcase/main.js"
@@ -34,7 +31,6 @@
                 "*://atcoder.jp/contests/*/tasks/a*"
             ]
         },
-        // Mark solved problems in task list
         {
             "js": [
                 "scripts/mark-solved-problem/const.js",
@@ -46,7 +42,6 @@
                 "*://atcoder.jp/contests/*/tasks/"
             ]
         },
-        // Run on the submission-details page
         {
             "js": [
                 "scripts/submission-details/problem-info.js",
@@ -61,7 +56,6 @@
                 "*://atcoder.jp/contests/*/submissions/me*"
             ]
         },
-        // Debug on the custom test page
         {
             "js": [
                 "scripts/custom-test/custom-test.js"
@@ -70,7 +64,6 @@
                 "*://atcoder.jp/contests/*/custom_test?submissionId=*&testcase=*&problem=*"
             ]
         },
-        // Rating estimator during contest
         {
             "js": [
                 "scripts/rating-estimator/main.js"
