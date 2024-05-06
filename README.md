@@ -20,8 +20,9 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 
 ## Features I think I should implement
 * [] Predict rating during a contest
-* [] Add cronjob to download test cases
+* [x] Add cronjob to download test cases
 * [] Add setup page
+* [] Add performance graph
 
 ## Improvement
 * Upload to Chrome store, firefox
