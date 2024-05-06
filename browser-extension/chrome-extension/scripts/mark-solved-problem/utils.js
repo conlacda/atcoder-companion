@@ -46,7 +46,6 @@ const addStatusColumnToTable = (result) => {
     }
 }
 
-
 class Submission {
     constructor(tableRow) {
         const tds = tableRow.find('td')
@@ -61,9 +60,5 @@ class Submission {
         this.exec_time = isWJOrCE ? 0 : tds.eq(7).text();
         this.memory = isWJOrCE ? 0 : tds.eq(8).text();
         this.detail = isWJOrCE ? tds.eq(7).find('a:first').href : tds.eq(9).find('a:first').href;
-    }
-
-    isRunning() {
-        return this.status === 'WJ' || this.status === 'JD';
     }
 }

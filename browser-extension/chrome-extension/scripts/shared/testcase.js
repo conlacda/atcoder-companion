@@ -60,7 +60,7 @@ class Testcase {
             const lines = content.split('\n');
             for (let i = 0; i < lines.length - 1; i++) {
                 const [txtfile, inputsize, outputsize] = lines[i].split(',');
-                list.push(new Testcase(txtfile, inputsize, outputsize));
+                list.push(new Testcase(txtfile, parseInt(inputsize), parseInt(outputsize)));
             }
         }
         return list;
