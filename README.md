@@ -37,6 +37,9 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * [Chrome webstore documentation](https://developer.chrome.com/docs/webstore/)
 * [Chrome devconsole](https://chrome.google.com/webstore/devconsole/)
 
+## Apply for feature badge
+* [Fill out this form](https://support.google.com/chrome_webstore/contact/one_stop_support?hl=en)
+
 ## Develop
 ### .env
 Before running test, create .env as .env.example file then fill your atcoder account.
