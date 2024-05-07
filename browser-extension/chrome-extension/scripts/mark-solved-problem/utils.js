@@ -51,7 +51,7 @@ class Submission {
         const tds = tableRow.find('td')
         const isWJOrCE = tds.length === 8;
         this.time = tds.eq(0).text();
-        this.task = tds.eq(1).text()[0];
+        this.task = tds.eq(1).text().split('-')[0].trim();
         this.user = tds.eq(2).text();
         this.language = tds.eq(3).text();
         this.score = tds.eq(4).text();
