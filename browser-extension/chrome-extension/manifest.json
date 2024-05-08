@@ -19,6 +19,7 @@
         {
             "js": [
                 "scripts/shared/jquery_.js",
+                "scripts/shared/user_settings.js",
                 "scripts/shared/testcase.js",
                 "scripts/shared/utils.js"
             ],

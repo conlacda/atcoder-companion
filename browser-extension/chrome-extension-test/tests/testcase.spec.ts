@@ -18,10 +18,12 @@ test.afterAll(async () => {
 });
 
 test('More test cases should be added to problem statement.', async () => {
-    await page.goto('https://atcoder.jp/contests/abc347/tasks/abc347_a');
+    // TODO: should test when user settings's test case size is 0 or INF
+    // Scenario: assert default (test case with size not greater than 512KB should be shown)
+    // Go to the popup page https://playwright.dev/docs/chrome-extensions
+    // Set test case size to 0KB/INF then assert number of showing test cases
+    await page.goto('https://atcoder.jp/contests/agc062/tasks/agc062_b');
     const taskStatement: Locator = page.locator('#task-statement');
-    for (let i = 1; i <= 12; i++) {
-        await expect(taskStatement).toContainText(`Test Input ${i}`);
-        await expect(taskStatement).toContainText(`Test Output ${i}`);
-    }
+    await expect(taskStatement).toContainText(`04_handmade_03 Input`);
+    await expect(taskStatement).toContainText(`04_handmade_03 Output`);
 });

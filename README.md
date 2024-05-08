@@ -31,6 +31,7 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * Add badge when hover on status
 * Add dropdown list at the custom test page
 * Add firefox extension
+* Should I use [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator)
 
 ### Testing
 We need to test features when run on atcoder, also the settings popup

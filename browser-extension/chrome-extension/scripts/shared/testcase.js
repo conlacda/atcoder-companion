@@ -2,9 +2,10 @@ const SOURCE_PREFIX = "https://raw.githubusercontent.com/conlacda/atcoder-testca
 
 const SIZE_IN_BYTES = {
     'ZERO': 0,
-    'SMALL': 512 * 1024,
-    'BIG': 1000000000
+    'SMALL': 512,
+    'BIG': 100000000000000
 }
+
 /**
  * Represent a test case.
  * @class
@@ -69,7 +70,7 @@ class Testcase {
     }
 
     /**
-     * Fetch the content of testcases with size within constant SIZE_IN_BYTES.SMALL
+     * Fetch the content of testcases with size not greater than userSettings.testcaseSize
      * @async
      * @param {string} contest - The contest identifier (ex: abc123).
      * @param {string} problem - The problem identifier (ex: A).
@@ -79,7 +80,8 @@ class Testcase {
         let testcases = await this.fetchList(contest, problem);
         // get testcase size from user settings
         const USER_SETTING_KEY = "user_settings";
-        const userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, "{}"));
+        let userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, JSON.stringify(DEFAULT_USER_SETTINGS)));
+        
         testcases = testcases.filter((tc) => tc.inputsize <= userSettings.testcaseSize && tc.outputsize <= userSettings.testcaseSize);
         await Promise.all(testcases.map(async tc => {
             const input = await fetch(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/in/${tc.txtfile}`)

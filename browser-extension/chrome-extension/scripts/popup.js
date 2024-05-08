@@ -4,25 +4,28 @@ const readLocalStorage = async (key, defaultVal) => {
             resolve(result[key] ?? defaultVal);
         });
     });
-}
+};
 
 const writeLocalStorage = async (key, value) => {
     const obj = {};
     obj[key] = value;
     return chrome.storage.local.set(obj);
-}
+};
 
+const DEFAULT_USER_SETTINGS = {
+    testcaseSize: 512
+};
 
 (async () => {
     const USER_SETTING_KEY = "user_settings";
-    const userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, "{}"));
-
+    let userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, JSON.stringify(DEFAULT_USER_SETTINGS)));
+    
     document.getElementById('save-settings').onclick = async () => {
         userSettings.testcaseSize = parseInt(document.querySelector('input[name="testcase-size"]:checked').value);
         writeLocalStorage(USER_SETTING_KEY, JSON.stringify(userSettings));
     }
 
-    const sizes = [0, 512, 1000000000];
+    const sizes = [0, 512, 100000000000000];
     for (let i = 0; i < sizes.length; i++) {
         document.getElementById(`testcase-size-${sizes[i]}`).checked = (sizes[i] === userSettings.testcaseSize);
     }
