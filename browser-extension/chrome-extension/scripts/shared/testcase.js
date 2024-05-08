@@ -1,6 +1,10 @@
 const SOURCE_PREFIX = "https://raw.githubusercontent.com/conlacda/atcoder-testcases";
-const SMALL_FILE_SIZE = 512 * 1024; // bytes
 
+const SIZE_IN_BYTES = {
+    'ZERO': 0,
+    'SMALL': 512 * 1024,
+    'BIG': 1000000000
+}
 /**
  * Represent a test case.
  * @class
@@ -26,8 +30,7 @@ class Testcase {
      * @type {string}
      */
     get inputname() {
-        const [_, testname, num] = this.txtfile.split('.')[0].split('_');
-        return `${testname.charAt(0).toUpperCase() + testname.slice(1)} Input ${parseInt(num)}`;
+        return `${this.txtfile} Input`;
     }
 
     /**
@@ -36,8 +39,7 @@ class Testcase {
      * @type {string}
      */
     get outputname() {
-        const [_, testname, num] = this.txtfile.split('.')[0].split('_');
-        return `${testname.charAt(0).toUpperCase() + testname.slice(1)} Output ${parseInt(num)}`;
+        return `${this.txtfile} Output`;
     }
 
     isSample() {
@@ -67,7 +69,7 @@ class Testcase {
     }
 
     /**
-     * Fetch the content of testcases with size within constant SMALL_FILE_SIZE
+     * Fetch the content of testcases with size within constant SIZE_IN_BYTES.SMALL
      * @async
      * @param {string} contest - The contest identifier (ex: abc123).
      * @param {string} problem - The problem identifier (ex: A).
@@ -75,8 +77,10 @@ class Testcase {
      */
     static async fetchAll(contest, problem) {
         let testcases = await this.fetchList(contest, problem);
-        // Keep only small testcases
-        testcases = testcases.filter((tc) => tc.inputsize <= SMALL_FILE_SIZE && tc.outputsize <= SMALL_FILE_SIZE);
+        // get testcase size from user settings
+        const USER_SETTING_KEY = "user_settings";
+        const userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, "{}"));
+        testcases = testcases.filter((tc) => tc.inputsize <= userSettings.testcaseSize && tc.outputsize <= userSettings.testcaseSize);
         await Promise.all(testcases.map(async tc => {
             const input = await fetch(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/in/${tc.txtfile}`)
             tc.input = await input.text();

@@ -1,18 +1,47 @@
 <html>
 <style>
+    html {
+        width: 250px;
+        height: 200px;
+    }
+
+    .container {
+        font-size: 20px;
+    }
+
     .container img,
     .container h3 {
         display: inline-block;
         vertical-align: middle;
     }
+
+    button {
+        margin-top: 10px;
+    }
 </style>
 
 <body>
-    <div class="container" style="width: 130px;">
-        <img src="icons/icon-16.png" />
+    <div class="container" style="height: 70px;">
+        <img src="icons/icon-32.png" />
         <h3>Useful atcoder</h3>
     </div>
-    <script src="popup/popup.js"></script>
+    <fieldset name="testcase-size-form">
+        <legend>Settings</legend>
+        <div>
+            <input type="radio" id="testcase-size-0" name="testcase-size" value="0" />
+            <label>Show sample test cases only</label>
+        </div>
+        <div>
+            <input type="radio" id="testcase-size-512" name="testcase-size" value="512" checked />
+            <label>Show small test cases (<=512KB) </label>
+        </div>
+        <div>
+            <input type="radio" id="testcase-size-1000000000" name="testcase-size" value="1000000000" />
+            <label>Show all test cases</label>
+        </div>
+    </fieldset>
+    <button type="button" id="save-settings">Save settings</button>
+    <script src="scripts/popup.js"></script>
 </body>
 
 </html>

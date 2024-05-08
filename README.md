@@ -21,8 +21,9 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 ## Features I think I should implement
 * [] Predict rating during a contest
 * [x] Add cronjob to download test cases
-* [] Add setup page
+* [x] Add setup page
 * [] Add performance graph
+* [] Show difficulty of problems (get from kenkoo)
 
 ## Improvement
 * Upload to Chrome store, firefox
@@ -38,9 +39,7 @@ We need to test features when run on atcoder, also the settings popup
 ## Reference
 * [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
 * [Chrome webstore documentation](https://developer.chrome.com/docs/webstore/)
-* [Chrome devconsole](https://chrome.google.com/webstore/devconsole/)
-
-## Apply for feature badge
+* [Chrome devconsole]Apply for a feature badge
 * [Fill out this form](https://support.google.com/chrome_webstore/contact/one_stop_support?hl=en)
 
 ## Develop

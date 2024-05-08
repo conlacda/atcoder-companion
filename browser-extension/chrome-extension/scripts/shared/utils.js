@@ -55,3 +55,20 @@ const saveToLocal = async (content, fileName = "testcase.txt") => {
     URL.revokeObjectURL(url);
     document.body.removeChild(link);
 }
+
+// Read data by key from local storage
+// If key does not exist, defaultVal should be returned
+const readLocalStorage = async (key, defaultVal) => {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get([key], function (result) {
+            resolve(result[key] ?? defaultVal);
+        });
+    });
+}
+
+// Write data by {key: val} to local storage
+const writeLocalStorage = async (key, value) => {
+    const obj = {};
+    obj[key] = value;
+    return chrome.storage.local.set(obj);
+}
