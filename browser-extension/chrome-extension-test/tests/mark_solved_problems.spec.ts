@@ -26,7 +26,7 @@ test('Test status of a participated contest', async () => {
     const tbody: Locator = page.locator('table').locator('tbody');
     await expect(tbody.locator('tr').nth(0).locator('td').nth(0)).toHaveText('AC');
     await expect(tbody.locator('tr').nth(1).locator('td').nth(0)).toHaveText('AC');
-    await expect(tbody.locator('tr').nth(2).locator('td').nth(0)).toHaveText('TLE');
+    await expect(tbody.locator('tr').nth(2).locator('td').nth(0)).toHaveText('WA');
     await expect(tbody.locator('tr').nth(3).locator('td').nth(0)).toHaveText('AC');
     await expect(tbody.locator('tr').nth(4).locator('td').nth(0)).toHaveText('AC');
     await expect(tbody.locator('tr').nth(5).locator('td').nth(0)).toHaveText('');
