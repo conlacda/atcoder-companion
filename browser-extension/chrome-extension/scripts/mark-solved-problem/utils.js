@@ -38,9 +38,12 @@ const addStatusColumnToTable = (result) => {
         const newCell = $('<td></td>'); // Create a new cell
         if (result[problem]?.status) {
             newCell.html(BADGE[result[problem]?.status] ?? BADGE['JD'].replace('_STATUS_', result[problem]?.status)); // Add content to the cell
-            // TODO: add tooltip for new cell
-            // Add hover to status badge + last submission time - 1 hour ago, 3 days ago,... + status for all test cases (1WA + 2AC + 10TLE)
-            // Add link to navigate to submission page with filter
+            newCell.css('cursor', 'pointer');
+            newCell.children().css("cursor", "pointer");
+            newCell.on("click", () => {
+                const contest = getContest();
+                window.location.href = `/contests/${contest}/submissions/me?f.Task=${contest}_${problem.toLowerCase()}`;
+            });
         }
         newCell.insertBefore(firstCell);
     }
