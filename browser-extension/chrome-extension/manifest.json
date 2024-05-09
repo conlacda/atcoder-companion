@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Useful atcoder",
-    "description": "An useful extension for atcoder",
-    "version": "0.0.2",
+    "name": "Atcoder companion",
+    "description": "Enhance your experience by providing some useful features designed to streamline your workflow and boost your productivity.",
+    "version": "0.0.3",
     "action": {
         "default_popup": "index.html",
         "default_icon": {
