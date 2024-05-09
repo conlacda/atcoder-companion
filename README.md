@@ -28,10 +28,9 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 ## Improvement
 * Upload to Chrome store, firefox
 * Follow [best practices to claim badge](https://support.google.com/chrome_webstore/answer/1050673?hl=en&visit_id=638494791511429235-3837272215&p=cws_badges&rd=1#cws_badges&zippy=%2Cunderstand-chrome-web-store-badges)
-* Add badge when hover on status
 * Add dropdown list at the custom test page
 * Add firefox extension
-* Should I use [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator)
+* Should I use [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator)??
 
 ### Testing
 We need to test features when run on atcoder, also the settings popup
@@ -40,8 +39,7 @@ We need to test features when run on atcoder, also the settings popup
 ## Reference
 * [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
 * [Chrome webstore documentation](https://developer.chrome.com/docs/webstore/)
-* [Chrome devconsole]Apply for a feature badge
-* [Fill out this form](https://support.google.com/chrome_webstore/contact/one_stop_support?hl=en)
+* [Apply for a featured badge](https://support.google.com/chrome_webstore/contact/one_stop_support?hl=en)
 
 ## Develop
 ### .env
