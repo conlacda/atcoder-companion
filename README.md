@@ -32,6 +32,9 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * Add firefox extension
 * Should I use [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator)??
 
+## Ideas
+* Implement some features that codeforces is supporting (like check diff of 2 submissions)
+
 ### Testing
 We need to test features when run on atcoder, also the settings popup
 * [Chrome extension testing](https://developer.chrome.com/docs/extensions/how-to/test/end-to-end-testing)
