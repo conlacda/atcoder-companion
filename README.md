@@ -2,6 +2,8 @@
 
 [![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml)
 
+![marquee image](images/Atcoder%20Companion_1400x560.png)
+
 ## Some features
 ### Mark solved problems
 ![mark-solved-problems.png](images/mark-solved-problems.png)
