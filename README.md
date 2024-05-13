@@ -26,6 +26,8 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * [x] Add setup page
 * [] Add performance graph
 * [] Show difficulty of problems (get from kenkoo)
+* [] Number of submission, ration of AC (can enable, disable) - can calculate by using standings API - get inspired by [AtCoder ACer](https://chromewebstore.google.com/detail/atcoder-acer/pmdfjdiiiacncpgmjmeicdoidkaadjde)
+* [] Add status + test cases to printing page
 
 ## Improvement
 * Upload to Chrome store, firefox
