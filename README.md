@@ -1,4 +1,5 @@
-# An extension to enhance the experience for atcoder
+# Atcoder companion
+> An extension to enhance the experience for atcoder
 
 [![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml)
 
