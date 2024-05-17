@@ -1,7 +1,7 @@
 # Atcoder companion
 > An extension to enhance the experience for atcoder
 
-[![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml)
+[![Atcoder companion in Chrome Web Store](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/tbyBjqi7Zu733AAKA5n4.png 'Available in the Chrome Web Store')](https://chromewebstore.google.com/detail/atcoder-companion/bflhekmjlbpdlibcmojpikplaldgceec) [![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml) 
 
 ![marquee image](images/Atcoder%20Companion_1400x560.png)
 
@@ -38,10 +38,10 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * Should I use [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator)??
 
 ## Ideas
-* Implement some features that codeforces is supporting (like check diff of 2 submissions)
+* Implement some features that codeforces is supporting (like checking diff of 2 submissions)
 
 ### Testing
-We need to test features when run on atcoder, also the settings popup
+We need to test features when run on atcoder, as the settings popup
 * [Chrome extension testing](https://developer.chrome.com/docs/extensions/how-to/test/end-to-end-testing)
 
 ## Reference
