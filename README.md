@@ -48,6 +48,7 @@ We need to test features when run on atcoder, as the settings popup
 * [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
 * [Chrome webstore documentation](https://developer.chrome.com/docs/webstore/)
 * [Apply for a featured badge](https://support.google.com/chrome_webstore/contact/one_stop_support?hl=en)
+* A part of my source code is copied from [atcoder-rating-estimator](https://github.com/koba-e964/atcoder-rating-estimator)
 
 ## Develop
 ### .env

@@ -8,6 +8,7 @@ class RangeColor {
         '2000-2399': '<span class="user-yellow" style="font-weight: bold">{}</span>',
         '2400-2799': '<span class="user-orange" style="font-weight: bold">{}</span>',
         '2800-10000': '<span class="user-red" style="font-weight: bold">{}</span>',
+        'default': '<span>{}</span>',
     }
 
     static getColor(rating) {
@@ -17,6 +18,7 @@ class RangeColor {
                 return value.replace('{}', rating);
             }
         }
+        return this.rangeColors.default.replace('{}', rating);
     }
 }
 
@@ -40,7 +42,6 @@ class Color {
 
     static colorChange(oldRating, newRating) {
         const diff = newRating - oldRating;
-        console.log(newRating, oldRating, diff);
         if (diff === 0) {
             return '-';
         }
