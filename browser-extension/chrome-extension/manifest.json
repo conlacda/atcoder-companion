@@ -76,12 +76,18 @@
         },
         {
             "js": [
+                "scripts/rating-estimator/color.js",
+                "scripts/rating-estimator/past_contest.js",
+                "scripts/rating-estimator/standing_table.js",
                 "scripts/rating-estimator/main.js"
             ],
             "matches": [
                 "*://atcoder.jp/contests/abc*/standings",
+                "*://atcoder.jp/contests/abc*/standings?*",
                 "*://atcoder.jp/contests/arc*/standings",
-                "*://atcoder.jp/contests/agc*/standings"
+                "*://atcoder.jp/contests/arc*/standings?*",
+                "*://atcoder.jp/contests/agc*/standings",
+                "*://atcoder.jp/contests/agc*/standings?*"
             ]
         }
     ]
