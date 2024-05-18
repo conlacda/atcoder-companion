@@ -41,5 +41,7 @@ const waitForElm = (selector) => {
 
     // Wait until the table is loaded by Vue
     await waitForElm('table');
-    const standingTable = new StandingTable(finalResult);
+    if (finalResult.length > 0) {
+        const standingTable = new StandingTable(finalResult);
+    }
 })();
