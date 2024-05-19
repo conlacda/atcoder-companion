@@ -70,7 +70,7 @@ test.describe('Test download test cases', () => {
 
     test('Download test cases as a zip file', async () => {
         await page.goto('https://atcoder.jp/contests/abc346/tasks/abc346_c');
-        await expect(page.getByAltText('Download all test cases (31.5MB)')).toBeVisible();
+        await expect(page.getByText('Download all test cases (31.5MB)')).toBeVisible();
         const downloadButton: Locator = page.locator('#dltc');
         const downloadPromise = page.waitForEvent('download');
         await downloadButton.click();
