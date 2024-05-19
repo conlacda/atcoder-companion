@@ -1,7 +1,9 @@
 # Atcoder companion
 > An extension to enhance the experience for atcoder
 
-[![Atcoder companion in Chrome Web Store](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/tbyBjqi7Zu733AAKA5n4.png 'Available in the Chrome Web Store')](https://chromewebstore.google.com/detail/atcoder-companion/bflhekmjlbpdlibcmojpikplaldgceec) [![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml) 
+[![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml) 
+
+[![Atcoder companion in Chrome Web Store](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/tbyBjqi7Zu733AAKA5n4.png 'Available in the Chrome Web Store')](https://chromewebstore.google.com/detail/atcoder-companion/bflhekmjlbpdlibcmojpikplaldgceec)
 
 ![marquee image](images/Atcoder%20Companion_1400x560.png)
 
@@ -9,8 +11,10 @@
 ### Mark solved problems
 ![mark-solved-problems.png](images/mark-solved-problems.png)
 
-### Add more test cases to problem statement
+### Add more test cases to problem statement & allow downloading all test cases by one click
 ![add-test-cases.png](images/add-test-cases.png)
+
+![](images/download-testcases.png)
 
 ### Copy, download test cases and debug your code with those test cases
 ![copy-download-debug.png](images/copy-download-debug.png)
@@ -31,22 +35,18 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * [] Add status + test cases to printing page
 
 ## Improvement
-* Upload to Chrome store, firefox
+* Upload to the firefox store.
 * Follow [best practices to claim badge](https://support.google.com/chrome_webstore/answer/1050673?hl=en&visit_id=638494791511429235-3837272215&p=cws_badges&rd=1#cws_badges&zippy=%2Cunderstand-chrome-web-store-badges)
 * Add dropdown list at the custom test page
 * Add firefox extension
-* Should I use [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator)??
 
 ## Ideas
 * Implement some features that codeforces is supporting (like checking diff of 2 submissions)
-
-### Testing
-We need to test features when run on atcoder, as the settings popup
-* [Chrome extension testing](https://developer.chrome.com/docs/extensions/how-to/test/end-to-end-testing)
+* Run against test cases that have a size of less than 512KB
 
 ## Reference
 * [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
-* [Chrome webstore documentation](https://developer.chrome.com/docs/webstore/)
+* [Chrome web store documentation](https://developer.chrome.com/docs/webstore/)
 * [Apply for a featured badge](https://support.google.com/chrome_webstore/contact/one_stop_support?hl=en)
 * A part of my source code is copied from [atcoder-rating-estimator](https://github.com/koba-e964/atcoder-rating-estimator)
 

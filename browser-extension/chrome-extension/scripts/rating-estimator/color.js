@@ -46,8 +46,8 @@ class Color {
             return '-';
         }
         if (diff > 0) {
-            return `${RangeColor.getColor(oldRating)}⮥${RangeColor.getColor(newRating)}`;
+            return `${RangeColor.getColor(oldRating)}⭜${RangeColor.getColor(newRating)}`;
         }
-        return `${RangeColor.getColor(oldRating)}⮧${RangeColor.getColor(newRating)}`;
+        return `${RangeColor.getColor(oldRating)}⭝${RangeColor.getColor(newRating)}`;
     }
 }
