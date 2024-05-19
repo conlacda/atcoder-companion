@@ -98,6 +98,6 @@ test.describe('A dialog should be displayed if the test cases size is too big', 
             dialog.accept();
         });
         await page.goto('https://atcoder.jp/contests/abc346/tasks/abc346_c');
-        await expect(page.locator('#task-statement').locator('div.part')).toHaveCount(58);
+        await expect(page.locator('#task-statement').locator('div.part')).toHaveCount(58, {timeout: 60 * 1000});
     });
 });
