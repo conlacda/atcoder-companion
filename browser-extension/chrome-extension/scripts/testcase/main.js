@@ -2,10 +2,30 @@ const [contest, problem] = getProblemInfo();
 const copyButton = $('span[data-toggle="tooltip"]:visible').first();
 
 (async () => {
+    // Add download all test cases button
+    const allTestCasesSz = await sizeOfAllTestCases(contest, problem);
+    if (allTestCasesSz > 0) {
+        const downloadButton = (new DOMParser()).parseFromString(`<a class="btn btn-default btn-sm" id="dltc">Download all test cases (${humanReadable(allTestCasesSz)})</a>`, "text/html").body.children[0];
+        downloadButton.setAttribute('title', "Just click once to download.");
+        document.getElementById('main-container').querySelector('div').children.item(1).querySelector('span').appendChild(downloadButton);
+        downloadButton.onclick = () => { downloadAllTestCases(contest, problem); }
+    }
+
+    // confirm before loading all of test cases if they are too large.
+    const testCasesSzInBytes = await sizeOfTestCasesByUserSettings(contest, problem);
+    if (testCasesSzInBytes > LARGE_SIZE_IN_BYTES) {
+        if (!window.confirm(`The size of all the test cases is too large (${humanReadable(testCasesSzInBytes)}). Loading all of them might make the browser crash. Still load?`)) {
+            return;
+        }
+    }
+
+    // Add testcase to the test case section
     const taskStatement = document.getElementById('task-statement');
-    const testcases = await Testcase.fetchAll(contest, problem);
+    const testcases = await fetchTestCasesByUserSettings(contest, problem);
     testcases.forEach((tc) => {
-        if (tc.isSample()) return;
+        if (tc.isSample())
+            return;
+
         const inputElement = `
             <hr>
             <div class="part">

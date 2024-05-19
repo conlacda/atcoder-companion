@@ -10,7 +10,6 @@ class PastContest {
             return [];
 
         res = await res.json();
-        console.log(res);
         return res;
     }
 

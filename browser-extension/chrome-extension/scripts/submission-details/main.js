@@ -1,5 +1,5 @@
 (async () => {
-    const testcaseList = await Testcase.fetchList(getContestName(), getProblemName());
+    const testcaseList = await fetchTestCasesList(getContestName(), getProblemName());
     if (testcaseList.length > 0) {
         const resultTable = $('.table:last');
         addInputColumnToResultTable(resultTable);
