@@ -12,7 +12,7 @@ let _extensionId: string;
 
 test.beforeAll(async ({ context, extensionId }) => {
     page = await context.newPage();
-    // because we have the set up step, dont put extensionId into the following tests.
+    // because we have the set up step, dont put extensionId into the following tests directly like test('Test something', async ({extensionId}) => {}));
     // it makes the test run twice, then playwright will crash
     _extensionId = extensionId;
 });
