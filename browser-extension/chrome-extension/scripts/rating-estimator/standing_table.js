@@ -8,7 +8,7 @@ class StandingTable {
         this.addHeaderCells();
         this.fillDataToColumns();
 
-        this.observeFirstColumnChanged();
+        this.observeTableChanges();
     }
 
     #mapUserToResult(data) {
@@ -24,7 +24,7 @@ class StandingTable {
         }
     }
 
-    observeFirstColumnChanged() {
+    observeTableChanges() {
         const observer = new MutationObserver((mutations, observer) => {
             observer.disconnect();
             this.fillDataToColumns();
