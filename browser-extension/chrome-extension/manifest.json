@@ -82,8 +82,10 @@
         {
             "js": [
                 "scripts/rating-estimator/color.js",
-                "scripts/rating-estimator/past_contest.js",
+                "scripts/rating-estimator/contest.js",
                 "scripts/rating-estimator/standing_table.js",
+                "scripts/rating-estimator/fixed_standing_table.js",
+                "scripts/rating-estimator/predicted_standing_table.js",
                 "scripts/rating-estimator/main.js"
             ],
             "matches": [

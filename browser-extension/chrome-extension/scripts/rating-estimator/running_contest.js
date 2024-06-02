@@ -1,5 +1,0 @@
-class RunningContest {
-    constructor() {
-        // TODO
-    }
-}

@@ -11,6 +11,7 @@ class RangeColor {
         'default': '<span>{}</span>',
     }
 
+    // Get color for an arbitraty rating
     static getColor(rating) {
         for (const [key, value] of Object.entries(this.rangeColors)) {
             const [_min, _max] = key.split('-');
@@ -26,6 +27,7 @@ const diff = {
     'UP': '<span style="font-weight: bold; color: green">+{}</span>',
     'DOWN': '<span style="font-weight: bold; color: gray">{}</span>',
     'ZERO': '<span class="user-gray" style="font-weight: bold">0</span>',
+    'NOT_ENOUGH_DATA': '<span class="user-gray" style="font-weight: bold">?</span>'
 }
 
 class Color {
@@ -38,6 +40,7 @@ class Color {
         if (num == 0) return diff.ZERO;
         if (num > 0) return diff.UP.replace('{}', num);
         if (num < 0) return diff.DOWN.replace('{}', num);
+        return diff.NOT_ENOUGH_DATA;
     }
 
     static colorChange(oldRating, newRating) {

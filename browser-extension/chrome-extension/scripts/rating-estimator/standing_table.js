@@ -1,30 +1,13 @@
 class StandingTable {
-    constructor(data) {
+    result = new Map()
+
+    constructor() {
         this._table = document.querySelector('table');
-        this.#mapUserToResult(data);
         this.columnNum = this._table.querySelector('thead').querySelectorAll('th').length;
-
-        // Initially add 3 columns to table
         this.addHeaderCells();
-        this.fillDataToColumns();
-
-        this.observeTableChanges();
     }
 
-    #mapUserToResult(data) {
-        // To prevent performance that is less than zero, we use a function to make it positive
-        const positivize_performance = (r) => {
-            if (r >= 400.0)
-                return r;
-            return Math.floor(400.0 * Math.exp((r - 400.0) / 400.0));
-        }
-        this.finalResult = new Map();
-        for (let i = 0; i < data.length; i++) {
-            this.finalResult.set(data[i].UserScreenName, { ...data[i], Performance: positivize_performance(data[i].Performance) });
-        }
-    }
-
-    observeTableChanges() {
+    observeFirstColumnChanged() {
         const observer = new MutationObserver((mutations, observer) => {
             observer.disconnect();
             this.fillDataToColumns();
@@ -39,7 +22,7 @@ class StandingTable {
     fillDataToColumns() {
         const displayingUsers = this.getDisplayingUserList();
         const data = displayingUsers.map((userScreenName) => {
-            return this.finalResult.get(userScreenName);
+            return this.result.get(userScreenName);
         });
         const trows = this._table.querySelector('tbody').querySelectorAll('tr');
 
@@ -53,14 +36,19 @@ class StandingTable {
 
         // Add cells with new data
         for (let i = 0; i < trows.length - 2; i++) {
-            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${Color.performance(data[i].Performance)}</p></td>`);
+            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${Color.performance(data[i].performance)}</p></td>`);
 
-            let diff = data[i].IsRated ? Color.diff(data[i].NewRating - data[i].OldRating) : '-';
+            let diff;
+            // Do not predict rating change for new commers
+            if (data[i].competitionNum === 0)
+                diff = Color.diff();
+            else
+                diff = data[i].isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${diff}</p></td>`);
 
             let colorChange = '-';
-            if (data[i].IsRated) {
-                colorChange = Color.colorChange(data[i].OldRating, data[i].NewRating);
+            if (data[i].isRated) {
+                colorChange = Color.colorChange(data[i].oldRating, data[i].newRating);
             }
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${colorChange}</p></td>`);
         }
@@ -72,7 +60,6 @@ class StandingTable {
                     trows[i].insertAdjacentHTML('beforeend', '<td class="standings-result"><p>-</p></td>');
                 }
             }
-
         }
     }
 
@@ -105,5 +92,12 @@ class StandingTable {
         return [...trs].map((trow) => {
             return trow.querySelectorAll('td')[1].innerText.trim();
         });
+    }
+
+    // To prevent performance that is less than zero, we use a function to make it positive
+    positivize_performance(r) {
+        if (r < 400)
+            r = Math.floor(400.0 * Math.exp((r - 400.0) / 400.0))
+        return r;
     }
 }
