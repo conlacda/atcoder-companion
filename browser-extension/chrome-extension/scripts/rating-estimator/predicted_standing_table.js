@@ -12,7 +12,7 @@ class PredictedStandingTable extends StandingTable {
         for (let i = 0; i < standings["StandingsData"].length; i++) {
             const isRated = standings["StandingsData"][i].IsRated;
             const competitionNum = standings["StandingsData"][i].Competitions;
-            const oldRating = standings["StandingsData"][i].OldRating;
+            const oldRating = standings["StandingsData"][i].Rating;
             const performance = this.positivize_performance(performanceArr[ratedRanking] ?? 0); // prevents out of bound error when new users joined after the last generated time
             const newRating = isRated ? this.predictNewRating(oldRating, performance, competitionNum) : oldRating;
             const userScreenName = standings["StandingsData"][i].UserScreenName;
