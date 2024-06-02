@@ -35,14 +35,15 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * [] Add status + test cases to printing page
 
 ## Improvement
-* Upload to the firefox store.
+* Upload to the Firefox store.
 * Follow [best practices to claim badge](https://support.google.com/chrome_webstore/answer/1050673?hl=en&visit_id=638494791511429235-3837272215&p=cws_badges&rd=1#cws_badges&zippy=%2Cunderstand-chrome-web-store-badges)
-* Add dropdown list at the custom test page
+* Add a dropdown list at the custom test page
 * Add firefox extension
 
 ## Ideas
 * Implement some features that codeforces is supporting (like checking diff of 2 submissions)
 * Run against test cases that have a size of less than 512KB
+* Add themes (dark theme, ...)
 
 ## Reference
 * [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
