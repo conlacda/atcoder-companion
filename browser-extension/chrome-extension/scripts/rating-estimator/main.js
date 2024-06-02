@@ -28,7 +28,7 @@ const waitForElm = (selector) => {
 
     const finalResult = await contest.fetchFinalResultFromAtcoder();
     await waitForElm('table'); // Wait until the table is loaded by Vue
-    if (finalResult.length === 0) { // TODO: change to > 0 after testing
+    if (finalResult.length > 0) {
         new FixedStandingTable(finalResult);
     } else {
         const performanceArr = await contest.fetchPredictedPerfArr();
@@ -37,4 +37,5 @@ const waitForElm = (selector) => {
             new PredictedStandingTable(performanceArr, standings);
         }
     }
+    // TODO: add rating prediction for virtual contest + heuristic contest
 })();
