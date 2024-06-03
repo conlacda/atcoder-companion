@@ -14,7 +14,8 @@ class FixedStandingTable extends StandingTable {
                 userScreenName: fixedResult[i].UserScreenName,
                 oldRating: fixedResult[i].OldRating,
                 newRating: fixedResult[i].NewRating,
-                isRated: fixedResult[i].IsRated
+                isRated: fixedResult[i].IsRated,
+                competitionNum: fixedResult[i].Competitions
             });
         }
         return finalResult;

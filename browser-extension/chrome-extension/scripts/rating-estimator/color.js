@@ -24,10 +24,10 @@ class RangeColor {
 }
 
 const diff = {
-    'UP': '<span style="font-weight: bold; color: green">+{}</span>',
-    'DOWN': '<span style="font-weight: bold; color: gray">{}</span>',
-    'ZERO': '<span class="user-gray" style="font-weight: bold">0</span>',
-    'NOT_ENOUGH_DATA': '<span class="user-gray" style="font-weight: bold">?</span>'
+    UP: '<span style="font-weight: bold; color: green">+{}</span>',
+    DOWN: '<span style="font-weight: bold; color: gray">{}</span>',
+    ZERO: '<span class="user-gray" style="font-weight: bold">0</span>',
+    NOT_ENOUGH_DATA: '<span class="user-gray" style="font-weight: bold">?</span>'
 }
 
 class Color {

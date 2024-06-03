@@ -20,7 +20,7 @@ class Contest {
             return [];
 
         res = await res.json();
-        this.#setRatingToNearestUser(res);
+        this.#setPerformanceEqualToNearestUser(res);
         return res;
     }
 
@@ -35,7 +35,7 @@ class Contest {
         return res;
     }
 
-    #setRatingToNearestUser(res) {
+    #setPerformanceEqualToNearestUser(res) {
         let cur = 0;
         for (let i = res.length - 1; i >= 0; i--) {
             if (res[i].Performance === 0) {
