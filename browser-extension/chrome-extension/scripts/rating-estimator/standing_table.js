@@ -5,6 +5,7 @@ class StandingTable {
         this._table = document.querySelector('table');
         this.columnNum = this._table.querySelector('thead').querySelectorAll('th').length;
         this.addHeaderCells();
+        this.addFooterCells();
     }
 
     observeFirstColumnChanged() {
@@ -15,6 +16,8 @@ class StandingTable {
         });
         observer.observe(this._table, { childList: true, subtree: true });
     }
+
+    loadData() { }
 
     /**
      * Add data to the columns of performnace, diff, color change
@@ -39,11 +42,7 @@ class StandingTable {
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${Color.performance(data[i].performance)}</p></td>`);
 
             let diff;
-            // Do not predict rating change for new commers
-            if (data[i].competitionNum === 0)
-                diff = Color.diff();
-            else
-                diff = data[i].isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
+            diff = data[i].isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${diff}</p></td>`);
 
             let colorChange = '-';
@@ -52,22 +51,12 @@ class StandingTable {
             }
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${colorChange}</p></td>`);
         }
-
-        // Footer
-        for (let i = trows.length - 2; i < trows.length; i++) {
-            if (trows[i].querySelectorAll('td').length === this.columnNum - 2) {
-                for (let _ = 0; _ < 3; _++) {
-                    trows[i].insertAdjacentHTML('beforeend', '<td class="standings-result"><p>-</p></td>');
-                }
-            }
-        }
     }
 
     /**
      * Add columns for performance, diff, color change
      */
     addHeaderCells() {
-        // Add header
         const tr = this._table.querySelector('thead').querySelector('tr');
         const performanceTh = document.createElement('th');
         performanceTh.innerText = '⚡';
@@ -83,6 +72,17 @@ class StandingTable {
         tr.appendChild(lvlChangeTh);
     }
 
+    addFooterCells() {
+        const trows = this._table.querySelector('tbody').querySelectorAll('tr');
+        for (let i = trows.length - 2; i < trows.length; i++) {
+            // if (trows[i].querySelectorAll('td').length === this.columnNum - 2) {
+            for (let _ = 0; _ < 3; _++) {
+                trows[i].insertAdjacentHTML('beforeend', '<td class="standings-result"><p>-</p></td>');
+            }
+            // }
+        }
+    }
+
     /**
      * The displayed ranks array is the first column of the standings table.
      */
@@ -95,7 +95,7 @@ class StandingTable {
     }
 
     // To prevent performance that is less than zero, we use a function to make it positive
-    positivize_performance(r) {
+    static positivize_performance(r) {
         if (r < 400)
             r = Math.floor(400.0 * Math.exp((r - 400.0) / 400.0))
         return r;

@@ -26,8 +26,7 @@ class RangeColor {
 const diff = {
     UP: '<span style="font-weight: bold; color: green">+{}</span>',
     DOWN: '<span style="font-weight: bold; color: gray">{}</span>',
-    ZERO: '<span class="user-gray" style="font-weight: bold">0</span>',
-    NOT_ENOUGH_DATA: '<span class="user-gray" style="font-weight: bold">?</span>'
+    ZERO: '<span class="user-gray" style="font-weight: bold">±0</span>',
 }
 
 class Color {
@@ -40,7 +39,6 @@ class Color {
         if (num == 0) return diff.ZERO;
         if (num > 0) return diff.UP.replace('{}', num);
         if (num < 0) return diff.DOWN.replace('{}', num);
-        return diff.NOT_ENOUGH_DATA;
     }
 
     static colorChange(oldRating, newRating) {

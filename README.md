@@ -11,7 +11,7 @@
 ### Mark solved problems
 ![mark-solved-problems.png](images/mark-solved-problems.png)
 
-### Add more test cases to problem statement & allow downloading all test cases by one click
+### Add more test cases to the problem statement & allow downloading all test cases with one click
 ![add-test-cases.png](images/add-test-cases.png)
 
 ![](images/download-testcases.png)
@@ -31,8 +31,8 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * [x] Add setup page
 * [] Add performance graph
 * [] Show difficulty of problems (get from kenkoo)
-* [] Number of submission, ration of AC (can enable, disable) - can calculate by using standings API - get inspired by [AtCoder ACer](https://chromewebstore.google.com/detail/atcoder-acer/pmdfjdiiiacncpgmjmeicdoidkaadjde)
-* [] Add status + test cases to printing page
+* [] Number of submissions, the ratio of AC (can enable, disable) - can calculate by using standings API - get inspired by [AtCoder ACer](https://chromewebstore.google.com/detail/atcoder-acer/pmdfjdiiiacncpgmjmeicdoidkaadjde)
+* [] Add status + test cases to the printing page
 
 ## Improvement
 * Upload to the Firefox store.
@@ -51,12 +51,15 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * [Apply for a featured badge](https://support.google.com/chrome_webstore/contact/one_stop_support?hl=en)
 * A part of my source code is copied from [atcoder-rating-estimator](https://github.com/koba-e964/atcoder-rating-estimator)
 
+## Accuracy issue
+When creating prediction data, the backend will predict performance for rank as an integer, but in reality, rank can be rounded to 0.5 ([document (formula 2)](https://www.dropbox.com/scl/fo/kwegqfivzi6poaxrzjv5c/AHjoZ-NKH5T-1h5xG__eUbc?dl=0&e=1&preview=rating.pdf&rlkey=mdcoluspeabxfouitvoqdb8cd)). Therefore, there may be prediction errors.
+
 ## Develop
 ### .env
-Before running test, create .env as .env.example file then fill your atcoder account.
+Before running the tests, create .env as .env.example file then fill your atcoder account.
 
-### Run github action
-Turn self-hosted github action locally. It will listen for events defined at github action .yml file
+### Run Github action
+Turn self-hosted Github action locally. It will listen for events defined at Github action .yml file
 ```shell
 cd actions-runner
 ./run.cmd
