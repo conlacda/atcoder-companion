@@ -54,12 +54,12 @@ const isExtendedStandingPage = () => {
         // TODO
     } else {
         const finalResult = await contest.fetchFinalResultFromAtcoder();
-        // if (finalResult.length > 0) {
-        //     new FixedStandingTable(finalResult);
-        // } else {
+        if (finalResult.length > 0) {
+            new FixedStandingTable(finalResult);
+        } else {
             // Make prediction
             const performanceArr = await contest.fetchPredictedPerfArr();
-            console.log(performanceArr);
+            console.log(performanceArr)
             const standings = await contest.fetchStandingFromAtcoder();
             const contest_type = await contest.getContestType();
             if (contest_type === 'algo') {
@@ -74,7 +74,7 @@ const isExtendedStandingPage = () => {
                     new HeuristicPredictedStandingTable(performanceArr, standings);
                 }
             }
-        // }
+        }
     }
 })();
 /**
