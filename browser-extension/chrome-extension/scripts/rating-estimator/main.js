@@ -59,7 +59,6 @@ const isExtendedStandingPage = () => {
         } else {
             // Make prediction
             const performanceArr = await contest.fetchPredictedPerfArr();
-            console.log(performanceArr)
             const standings = await contest.fetchStandingFromAtcoder();
             const contest_type = await contest.getContestType();
             if (contest_type === 'algo') {

@@ -38,7 +38,6 @@ class Contest {
     async fetchPredictedPerfArr() {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_ranking_to_perf.json`;
         let res = await fetch(resourceUrl, { cache: "no-store" });
-        console.log(res);
         if (res.status !== 200)
             return [];
 
