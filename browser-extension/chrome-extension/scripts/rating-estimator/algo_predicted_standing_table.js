@@ -20,7 +20,7 @@ class AlgoPredictedStandingTable extends StandingTable {
             const upPerformance = performanceArr[Math.floor(rank) - 1] ?? 0;
             const downPerformance = performanceArr[Math.ceil(rank) - 1] ?? 0;
             const performance = StandingTable.positivize_performance(Math.floor((upPerformance + downPerformance) / 2)); // prevents out of bound error when new users joined after the last generated time
-            const newRating = isRated ? this.predictNewRating(oldRating, performance, competitionNum) : oldRating;
+            const newRating = isRated ? this.predictNewRatingFromLast(oldRating, performance, competitionNum) : oldRating;
             const userScreenName = standings["StandingsData"][i].UserScreenName;
             predictedResult.set(userScreenName, {
                 performance: performance,
@@ -36,7 +36,7 @@ class AlgoPredictedStandingTable extends StandingTable {
     }
 
     // Reference: https://github.com/koba-e964/atcoder-rating-estimator
-    predictNewRating(oldRating, performance, competitionNum) {
+    predictNewRatingFromLast(oldRating, performance, competitionNum) {
         const bigf = (n) => {
             let num = 1.0;
             let den = 1.0;
@@ -67,6 +67,13 @@ class AlgoPredictedStandingTable extends StandingTable {
         var rating = Math.log2(num / den) * 800.0;
         rating -= f(competitionNum + 1);
         return Math.ceil(positivize_rating(rating));
+    }
+
+    // TODO
+    calculateRatingFromPerfArr(perfArr) {
+        // This function runs slower but more accurate than predictNewRatingFromLast.
+        // predictNewRatingFromLast will fails when a user has just a few competitions
+        // But calculateRatingFromPerfArr can calculate with any competitions
     }
 
     /**
