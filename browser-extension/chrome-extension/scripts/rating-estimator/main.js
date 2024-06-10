@@ -59,19 +59,18 @@ const isExtendedStandingPage = () => {
         } else {
             // Make prediction
             const performanceArr = await contest.fetchPredictedPerfArr();
+            // check if performanceArr was created by backend.
+            if (performanceArr.length === 0)
+                return;
+
             const standings = await contest.fetchStandingFromAtcoder();
             const contest_type = await contest.getContestType();
             if (contest_type === 'algo') {
-                // check if performanceArr was created by backend.
-                if (performanceArr.length > 0) {
-                    new AlgoPredictedStandingTable(performanceArr, standings);
-                }
+                new AlgoPredictedStandingTable(performanceArr, standings);
             } else if (contest_type === 'heuristic') {
-                if (performanceArr.length > 0) {
-                    // TODO: also call to fetch history of all participants
-                    // To predict new rating, the heuristic contest needs perf history
-                    new HeuristicPredictedStandingTable(performanceArr, standings);
-                }
+                // TODO: also call to fetch history of all participants
+                // To predict new rating, the heuristic contest needs perf history
+                new HeuristicPredictedStandingTable(performanceArr, standings);
             }
         }
     }

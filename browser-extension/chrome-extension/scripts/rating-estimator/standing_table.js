@@ -75,11 +75,9 @@ class StandingTable {
     addFooterCells() {
         const trows = this._table.querySelector('tbody').querySelectorAll('tr');
         for (let i = trows.length - 2; i < trows.length; i++) {
-            // if (trows[i].querySelectorAll('td').length === this.columnNum - 2) {
             for (let _ = 0; _ < 3; _++) {
                 trows[i].insertAdjacentHTML('beforeend', '<td class="standings-result"><p>-</p></td>');
             }
-            // }
         }
     }
 

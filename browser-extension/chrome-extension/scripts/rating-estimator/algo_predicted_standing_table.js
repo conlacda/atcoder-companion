@@ -72,11 +72,12 @@ class AlgoPredictedStandingTable extends StandingTable {
     /**
      * Add the rated rank before calculating performance
      * Assume we have 3 people with the same rank at 2nd. The rank table that is showed in atcoder will like this
-     * 1      1
-     * 2      3
-     * 2  =>  3
-     * 2      3
-     * 5      5
+     * Displayed ranks    Ranks is used to calculate performance
+     *    1                    1
+     *    2                    3
+     *    2         =>         3
+     *    2                    3
+     *    5                    5
      * When calculate the performance of the participants, 3 people at 2nd position should be considered like 3rd.
      * Atcoder says "Note that the rank is the average of all tied places - for example, if four
                      people are tied from the 3rd place to the 6th place, the rank of these people
