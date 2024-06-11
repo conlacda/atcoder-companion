@@ -1,27 +1,42 @@
+/**
+ * Predict rating of rated participants while contest is running
+ * allPerfHistory is the past performance array of all rated participants
+ * performanceArr is the performance based on rank of each user, calculate by backend (fomular 2)
+ * standings is the current standings in the standing table
+ */
 class AlgoPredictedStandingTable extends StandingTable {
-    constructor(performanceArr, standings) {
+    constructor(allPerfHistory, performanceArr, standings) {
         super();
-        this.result = this.loadData(performanceArr, standings);
+        this.result = this.loadData(allPerfHistory, performanceArr, standings);
         this.fillDataToColumns();
         this.observeFirstColumnChanged();
     }
 
-    loadData(performanceArr, standings) {
+    loadData(allPerfHistory, performanceArr, standings) {
         standings = this.addRatedRank(standings);
 
         let predictedResult = new Map(); // map of {username: DataObject{}}
         let unratedCount = 0;
 
         for (let i = 0; i < standings.StandingsData.length; i++) {
+            const userScreenName = standings["StandingsData"][i].UserScreenName;
             const isRated = standings.StandingsData[i].IsRated;
-            const competitionNum = standings.StandingsData[i].Competitions;
             const oldRating = standings.StandingsData[i].Rating;
             const rank = standings.StandingsData[i].RatedRank; // rank has not been rounded
-            const upPerformance = performanceArr[Math.floor(rank) - 1] ?? 0;
+            const upPerformance = performanceArr[Math.floor(rank) - 1] ?? 0; // prevents out of bound error when new users joined after the last generated time
             const downPerformance = performanceArr[Math.ceil(rank) - 1] ?? 0;
-            const performance = StandingTable.positivize_performance(Math.floor((upPerformance + downPerformance) / 2)); // prevents out of bound error when new users joined after the last generated time
-            const newRating = isRated ? this.predictNewRatingFromLast(oldRating, performance, competitionNum) : oldRating;
-            const userScreenName = standings["StandingsData"][i].UserScreenName;
+            const performance = StandingTable.positivize_performance(Math.floor((upPerformance + downPerformance) / 2));
+            const competitionNum = standings.StandingsData[i].Competitions;
+            let newRating = oldRating;
+            if (isRated) {
+                // Prefer calculating based on the performance history to calculate based on last performance
+                if (userScreenName in allPerfHistory) {
+                    // TODO: check if server returns Performance array of all participants (not InnerPerformance)
+                    newRating = this.calculateRatingFromPerfArr(allPerfHistory[userScreenName], performance);
+                } else {
+                    newRating = this.predictNewRatingFromLast(oldRating, performance, competitionNum);
+                }
+            }
             predictedResult.set(userScreenName, {
                 performance: performance,
                 userScreenName: userScreenName,
@@ -35,45 +50,17 @@ class AlgoPredictedStandingTable extends StandingTable {
         return predictedResult;
     }
 
-    // Reference: https://github.com/koba-e964/atcoder-rating-estimator
     predictNewRatingFromLast(oldRating, performance, competitionNum) {
-        const bigf = (n) => {
-            let num = 1.0;
-            let den = 1.0;
-            for (let i = 0; i < n; ++i) {
-                num *= 0.81;
-                den *= 0.9;
-            }
-            num = (1 - num) * 0.81 / 0.19;
-            den = (1 - den) * 0.9 / 0.1;
-            return Math.sqrt(num) / den;
-        }
-        const f = (n) => {
-            var finf = bigf(400);
-            return (bigf(n) - finf) / (bigf(1) - finf) * 1200.0;
-        }
-        // (-inf, inf) -> (0, inf)
-        const positivize_rating = (r) => {
-            return (r < 400.0) ? 400.0 * Math.exp((r - 400.0) / 400.0) : r;
-        }
-
-        if (competitionNum === 0)
-            return 0;
-
-        oldRating += f(competitionNum);
-        var wei = 9 - 9 * 0.9 ** competitionNum;
-        var num = wei * (2 ** (oldRating / 800.0)) + 2 ** (performance / 800.0);
-        var den = 1 + wei;
-        var rating = Math.log2(num / den) * 800.0;
-        rating -= f(competitionNum + 1);
-        return Math.ceil(positivize_rating(rating));
+        return calc_rating_from_last(oldRating, performance, competitionNum);
     }
 
-    // TODO
-    calculateRatingFromPerfArr(perfArr) {
+    calculateRatingFromPerfArr(pastPerfArr, perfInContest) {
         // This function runs slower but more accurate than predictNewRatingFromLast.
         // predictNewRatingFromLast will fails when a user has just a few competitions
         // But calculateRatingFromPerfArr can calculate with any competitions
+        pastPerfArr.push(perfInContest);
+        const perfArr = pastPerfArr.reverse();
+        return calc_rating(perfArr);
     }
 
     /**

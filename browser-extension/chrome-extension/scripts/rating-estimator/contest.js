@@ -45,6 +45,18 @@ class Contest {
         return res;
     }
 
+    // Fetch the performance history of all participants ~ the data of a contest with 10k users is about 5MB.
+    async fetchAllPerformanceHistory(needTocache = false) {
+        const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_competition_history.json`;
+        const option = (needTocache) ? {} : { cache: "no-store" };
+        let res = await fetch(resourceUrl, option);
+        if (res.status !== 200)
+            return [];
+
+        res = await res.json();
+        return res;
+    }
+
     #setPerformanceEqualToNearestUser(res) {
         let cur = 0;
         for (let i = res.length - 1; i >= 0; i--) {

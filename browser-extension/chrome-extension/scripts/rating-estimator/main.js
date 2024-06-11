@@ -66,8 +66,8 @@ const isExtendedStandingPage = () => {
             const standings = await contest.fetchStandingFromAtcoder();
             const contest_type = await contest.getContestType();
             if (contest_type === 'algo') {
-                // TODO: fetch history of all participants then use in AlgoPredictedStandingTable.calculateRatingFromPerfArr
-                new AlgoPredictedStandingTable(performanceArr, standings);
+                const allPerfHistory = await contest.fetchAllPerformanceHistory();
+                new AlgoPredictedStandingTable(allPerfHistory, performanceArr, standings);
             } else if (contest_type === 'heuristic') {
                 // TODO: also call to fetch history of all participants
                 // To predict new rating, the heuristic contest needs perf history
