@@ -34,7 +34,14 @@ class Contest {
         return res;
     }
 
-    // Fetch the performance array which is predicted by backend server
+    /**
+     * Fetch the performance array which is predicted by backend server
+     * Do not to cache, because the size of this file is pretty small (an integer array of around 10k elements)
+     * But maybe it should be cached to improve performance.
+     * The reason to not cache here is at the first 10 minutes, the backend fetch data then calculate the predicted data
+     * If the extension send a request without specifying no-cache, the browser will return 404 response from cache
+     * How to not cache 404 response but cache 200 response??
+     */
     async fetchPredictedPerfArr() {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_ranking_to_perf.json`;
         let res = await fetch(resourceUrl, { cache: "no-store" });
@@ -45,9 +52,11 @@ class Contest {
         return res;
     }
 
-    // Fetch the performance history of all participants ~ the data of a contest with 10k users is about 5MB.
-    async fetchAllPerformanceHistory(needTocache = false) {
-        const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_competition_history.json`;
+    /**
+     * Fetch the rounded performance history of all participants before contest ~ the data of a contest with 10k users is about 5MB.
+     */
+    async fetchRoundedPerfHistory(needTocache = false) {
+        const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_rounded_perf_history.json`;
         const option = (needTocache) ? {} : { cache: "no-store" };
         let res = await fetch(resourceUrl, option);
         if (res.status !== 200)
