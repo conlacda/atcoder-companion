@@ -76,16 +76,3 @@ const isExtendedStandingPage = () => {
         }
     }
 })();
-/**
- * Trạng thái đang làm dở:
- * đang check xem là loại contest là algo hay heuristic
- * Do ko thể check được trực tiếp nên là mình sẽ dùng python để gen ra ngay sau khi capture được contest
- * Sau đó tại file contest.js mình sẽ call API để gọi tới lấy ra contest
- *      Đoạn này đơn giản là nếu abc, ahc, arc, agc thì làm như bình thường ko cần call API
- *      nếu tên đặc biệt như wtf, panasonic, ... thì sẽ call API để lấy
- * Sau khi lấy được contest type + isVirtual hay ko thì mk sẽ thêm code vào virtual_standing_table 
- * cũng như code sang cho heuristic
- * 
- * Check: do thời gian xử lý ban đầu khá là lâu, nếu mà người dùng yêu cầu dữ liệu tại lúc đó thì có khi làm 
- * dữ liệu bị cache -> khi xong rồi dữ liệu cũng ko được tải về nữa
- */
