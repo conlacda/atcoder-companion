@@ -147,6 +147,7 @@ const downloadAllTestCases = async (contest, problem) => {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         })
         .catch(error => {
             console.error("Error generating zip file:", error);

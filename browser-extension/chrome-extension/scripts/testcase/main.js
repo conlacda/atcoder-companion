@@ -4,11 +4,16 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
 (async () => {
     // Add download all test cases button
     const allTestCasesSz = await sizeOfAllTestCases(contest, problem);
-    if (allTestCasesSz > 0) {
-        const downloadButton = (new DOMParser()).parseFromString(`<a class="btn btn-default btn-sm" id="dltc">Download all test cases (${humanReadable(allTestCasesSz)})</a>`, "text/html").body.children[0];
-        downloadButton.setAttribute('title', "Just click once to download.");
-        document.getElementById('main-container').querySelector('div').children.item(1).querySelector('span').appendChild(downloadButton);
-        downloadButton.onclick = () => { downloadAllTestCases(contest, problem); }
+    if (allTestCasesSz === 0)
+        return;
+
+    const downloadButton = (new DOMParser()).parseFromString(`<button class="btn btn-default btn-sm" id="dltc">Download all test cases (${humanReadable(allTestCasesSz)})</button>`, "text/html").body.children[0];
+    downloadButton.setAttribute('title', "Just click once to download.");
+    document.getElementById('main-container').querySelector('div').children.item(1).querySelector('span').appendChild(downloadButton);
+    downloadButton.onclick = async () => {
+        downloadButton.disabled = true;
+        await downloadAllTestCases(contest, problem);
+        downloadButton.disabled = false;
     }
 
     // confirm before loading all of test cases if they are too large.
