@@ -20,9 +20,14 @@ const DEFAULT_USER_SETTINGS = {
     const USER_SETTING_KEY = "user_settings";
     let userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, JSON.stringify(DEFAULT_USER_SETTINGS)));
     
-    document.getElementById('save-settings').onclick = async () => {
+    const saveSettingsBtn = document.getElementById('save-settings');
+    saveSettingsBtn.onclick = async () => {
         userSettings.testcaseSize = parseInt(document.querySelector('input[name="testcase-size"]:checked').value);
-        writeLocalStorage(USER_SETTING_KEY, JSON.stringify(userSettings));
+        await writeLocalStorage(USER_SETTING_KEY, JSON.stringify(userSettings));
+        saveSettingsBtn.textContent = `Save settings \u{2705}`;
+        setTimeout(() => {
+            saveSettingsBtn.textContent = 'Save settings';
+        }, 300); 
     }
 
     const sizes = [0, 512, 100000000000000];

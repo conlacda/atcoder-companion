@@ -12,8 +12,12 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
     document.getElementById('main-container').querySelector('div').children.item(1).querySelector('span').appendChild(downloadButton);
     downloadButton.onclick = async () => {
         downloadButton.disabled = true;
+        downloadButton.textContent += '\u{231B}';
         await downloadAllTestCases(contest, problem);
-        downloadButton.disabled = false;
+        setTimeout(() => {
+            downloadButton.textContent = downloadButton.textContent.replace('⌛', '');
+            downloadButton.disabled = false;
+        }, 2000);
     }
 
     // confirm before loading all of test cases if they are too large.
