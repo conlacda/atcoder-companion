@@ -42,7 +42,7 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 
 ## Ideas
 * Implement some features that codeforces is supporting (like checking diff of 2 submissions)
-* Run against test cases that have a size of less than 512KB
+* Run against all test cases that have a size of less than 512KB
 * Add themes (dark theme, ...)
 
 ## Reference

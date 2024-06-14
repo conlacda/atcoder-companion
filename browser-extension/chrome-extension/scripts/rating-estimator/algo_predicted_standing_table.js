@@ -12,7 +12,7 @@ class AlgoPredictedStandingTable extends StandingTable {
         this.observeFirstColumnChanged();
     }
 
-    loadData(allPerfHistory, performanceArr, standings) {
+    loadData(allInnerPerfHistory, performanceArr, standings) {
         standings = this.addRatedRank(standings);
 
         let predictedResult = new Map(); // map of {username: DataObject{}}
@@ -30,9 +30,8 @@ class AlgoPredictedStandingTable extends StandingTable {
             let newRating = oldRating;
             if (isRated) {
                 // Prefer calculating based on the performance history to calculate based on last performance
-                if (userScreenName in allPerfHistory) {
-                    // TODO: check if server returns Performance array of all participants (not InnerPerformance)
-                    newRating = this.calculateRatingFromPerfArr(allPerfHistory[userScreenName], performance);
+                if (userScreenName in allInnerPerfHistory) {
+                    newRating = this.calculateRatingFromPerfArr(allInnerPerfHistory[userScreenName], performance);
                 } else {
                     newRating = this.predictNewRatingFromLast(oldRating, performance, competitionNum);
                 }
@@ -55,9 +54,9 @@ class AlgoPredictedStandingTable extends StandingTable {
     }
 
     calculateRatingFromPerfArr(pastPerfArr, perfInContest) {
-        // This function runs slower but more accurate than predictNewRatingFromLast.
-        // predictNewRatingFromLast will fails when a user has just a few competitions
-        // But calculateRatingFromPerfArr can calculate with any competitions
+        // This function runs slower but is more accurate than predictNewRatingFromLast.
+        // predictNewRatingFromLast will fail when an user has just a few number of competitions
+        // But calculateRatingFromPerfArr can be used to calculate with any number of competitions.
         pastPerfArr.push(perfInContest);
         const perfArr = pastPerfArr.reverse();
         return calc_rating(perfArr);
