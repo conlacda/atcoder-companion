@@ -99,7 +99,9 @@
                 "*://atcoder.jp/contests/*/standings*/json",
                 "*://atcoder.jp/contests/*/standings*/json",
                 "*://atcoder.jp/contests/*/standings*/json"
-            ]
+            ],
+            "run_at": "document_end",
+            "world": "MAIN"
         }
     ]
 }

@@ -44,9 +44,7 @@ const isExtendedStandingPage = () => {
         const finalResult = await contest.fetchFinalResultFromAtcoder();
         if (finalResult.length > 0) {
             const finalStandings = await contest.fetchStandingFromAtcoder();
-            // TODO: we dont actually need to call virtualStandings.
-            // convert Elapsed to "H:m" to compare result.
-            const virtualStandings = await contest.fetchVirtualStandingFromAtcoder();
+            const virtualStandings = vueStandings ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new VirtualStandingTable(virtualStandings, finalStandings, finalResult);
         }
     } else if (isExtendedStandingPage()) {
@@ -63,7 +61,7 @@ const isExtendedStandingPage = () => {
             if (performanceArr.length === 0)
                 return;
 
-            const standings = await contest.fetchStandingFromAtcoder();
+            const standings = vueStandings ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const contest_type = await contest.getContestType();
             if (contest_type === 'algo') {
                 const allPerfHistory = await contest.fetchRoundedPerfHistory();
