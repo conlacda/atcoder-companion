@@ -20,6 +20,9 @@ const waitForElm = (selector) => {
 }
 
 const isVirtualStandingPage = () => {
+    if (vueStandings && vueStandings.isVirtual)
+        return vueStandings.isVirtual ?? false;
+
     const curUrl = window.location.pathname;
     const regex = /contests\/(.*)\/standings\/virtual/gm;
     const match = regex.exec(curUrl);
@@ -27,29 +30,36 @@ const isVirtualStandingPage = () => {
 }
 
 const isExtendedStandingPage = () => {
+    if (vueStandings && vueStandings.isExtended)
+        return vueStandings.isExtended ?? false;
+
     const curUrl = window.location.pathname;
     const regex = /contests\/(.*)\/standings\/extended/gm;
     const match = regex.exec(curUrl);
     return match?.length > 0;
 }
 
-(async () => {
+const contestName = () => {
+    if (vueStandings && vueStandings.contestScreenName)
+        return vueStandings.contestScreenName;
+
     const regex = /contests\/(.*)\/standings/gm;
     const match = regex.exec(window.location.pathname);
-    const contestName = match[1];
-    const contest = new Contest(contestName);
+    return match[1];
+}
+
+(async () => {
+    const contest = new Contest(contestName());
     await waitForElm('table'); // Wait until the table is loaded by Vue
 
-    if (isVirtualStandingPage()) {
+    if (isVirtualStandingPage() || isExtendedStandingPage()) {
         const finalResult = await contest.fetchFinalResultFromAtcoder();
         if (finalResult.length > 0) {
             const finalStandings = await contest.fetchStandingFromAtcoder();
+            // https://img.atcoder.jp/public/a68b1c6/js/standings.js
             const virtualStandings = vueStandings ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new VirtualStandingTable(virtualStandings, finalStandings, finalResult);
         }
-    } else if (isExtendedStandingPage()) {
-        // Predict performance only
-        // TODO
     } else {
         const finalResult = await contest.fetchFinalResultFromAtcoder();
         if (finalResult.length > 0) {
@@ -63,13 +73,11 @@ const isExtendedStandingPage = () => {
 
             const standings = vueStandings ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const contest_type = await contest.getContestType();
+            const allPerfHistory = await contest.fetchRoundedPerfHistory();
             if (contest_type === 'algo') {
-                const allPerfHistory = await contest.fetchRoundedPerfHistory();
                 new AlgoPredictedStandingTable(allPerfHistory, performanceArr, standings);
             } else if (contest_type === 'heuristic') {
-                // TODO: also call to fetch history of all participants
-                // To predict new rating, the heuristic contest needs perf history
-                new HeuristicPredictedStandingTable(performanceArr, standings);
+                new HeuristicPredictedStandingTable(allPerfHistory, performanceArr, standings);
             }
         }
     }

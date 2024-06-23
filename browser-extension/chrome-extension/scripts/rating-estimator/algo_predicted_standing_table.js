@@ -12,7 +12,7 @@ class AlgoPredictedStandingTable extends StandingTable {
         this.observeFirstColumnChanged();
     }
 
-    loadData(allInnerPerfHistory, performanceArr, standings) {
+    loadData(allRoundedPerfHistory, performanceArr, standings) {
         standings = this.addRatedRank(standings);
 
         let predictedResult = new Map(); // map of {username: DataObject{}}
@@ -25,19 +25,20 @@ class AlgoPredictedStandingTable extends StandingTable {
             const rank = standings.StandingsData[i].RatedRank; // rank has not been rounded
             const upPerformance = performanceArr[Math.floor(rank) - 1] ?? 0; // prevents out of bound error when new users joined after the last generated time
             const downPerformance = performanceArr[Math.ceil(rank) - 1] ?? 0;
-            const performance = StandingTable.positivize_performance(Math.floor((upPerformance + downPerformance) / 2));
+            const perfInContest = positivize(Math.floor((upPerformance + downPerformance) / 2));
             const competitionNum = standings.StandingsData[i].Competitions;
             let newRating = oldRating;
             if (isRated) {
                 // Prefer calculating based on the performance history to calculate based on last performance
-                if (userScreenName in allInnerPerfHistory) {
-                    newRating = this.calculateRatingFromPerfArr(allInnerPerfHistory[userScreenName], performance);
+                if (userScreenName in allRoundedPerfHistory) {
+                    newRating = this.calculateRatingFromPerfArr(allRoundedPerfHistory[userScreenName], perfInContest);
                 } else {
-                    newRating = this.predictNewRatingFromLast(oldRating, performance, competitionNum);
+                    newRating = this.predictNewRatingFromLast(oldRating, perfInContest, competitionNum);
                 }
             }
+
             predictedResult.set(userScreenName, {
-                performance: performance,
+                performance: perfInContest,
                 userScreenName: userScreenName,
                 oldRating: oldRating,
                 newRating: newRating,
@@ -46,6 +47,7 @@ class AlgoPredictedStandingTable extends StandingTable {
             if (!isRated)
                 unratedCount++;
         }
+        
         return predictedResult;
     }
 

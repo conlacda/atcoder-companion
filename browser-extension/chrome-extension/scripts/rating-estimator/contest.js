@@ -40,11 +40,13 @@ class Contest {
      * But maybe it should be cached to improve performance.
      * The reason to not cache here is at the first 10 minutes, the backend fetch data then calculate the predicted data
      * If the extension send a request without specifying no-cache, the browser will return 404 response from cache
-     * How to not cache 404 response but cache 200 response??
+     * If need to cache, cache for algo contests only, do not cache for heuristic contests 
+     * because the number of participants is not fixed until the contest ends. 
      */
-    async fetchPredictedPerfArr() {
+    async fetchPredictedPerfArr(needTocache = false) {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_ranking_to_perf.json`;
-        let res = await fetch(resourceUrl, { cache: "no-store" });
+        const option = (needTocache) ? {} : { cache: "no-store" };
+        let res = await fetch(resourceUrl, option);
         if (res.status !== 200)
             return [];
 

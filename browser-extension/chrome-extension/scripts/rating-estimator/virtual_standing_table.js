@@ -47,7 +47,7 @@ class VirtualStandingTable extends StandingTable {
 
 
             virtualPerf.set(virtualStandings.StandingsData[i].UserScreenName, {
-                performance: isUnratedContest() ? '-' : StandingTable.positivize_performance(combinedContestResult[j].performance),
+                performance: isUnratedContest() ? '-' : positivize(combinedContestResult[j].performance),
                 userScreenName: virtualStandings.StandingsData[i].UserScreenName,
                 oldRating: 0,
                 newRating: 0,

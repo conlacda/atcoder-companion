@@ -34,7 +34,7 @@ function calc_rating(arr) {
     }
     var rating = Math.log2(num / den) * 800.0;
     rating -= f(n);
-    return Math.round(positivize_rating(rating));
+    return Math.round(positivize(rating));
 }
 
 // Takes and returns unpositivized ratings.
@@ -48,15 +48,15 @@ function calc_rating_from_last(last, perf, competitionNum) {
     var den = 1 + wei;
     var rating = Math.log2(num / den) * 800.0;
     rating -= f(competitionNum + 1);
-    return Math.round(positivize_rating(rating)); // Math.ceil??
+    return Math.round(positivize(rating)); // Math.ceil??
 }
 
 // (-inf, inf) -> (0, inf)
-function positivize_rating(r) {
-    if (r >= 400.0) {
-        return r;
-    }
-    return 400.0 * Math.exp((r - 400.0) / 400.0);
+// To prevent performance that is less than zero, we use a function to make it positive
+function positivize(r) {
+    if (r < 400)
+        r = Math.floor(400.0 * Math.exp((r - 400.0) / 400.0))
+    return r;
 }
 
 // (0, inf) -> (-inf, inf)

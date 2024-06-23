@@ -13,7 +13,7 @@ class FixedStandingTable extends StandingTable {
         const isUnratedContest = () => fixedResult.every((x) => !x.IsRated);
         for (let i = 0; i < fixedResult.length; i++) {
             finalResult.set(fixedResult[i].UserScreenName, {
-                performance: isUnratedContest() ? '-' : FixedStandingTable.positivize_performance(fixedResult[i].Performance),
+                performance: isUnratedContest() ? '-' : positivize(fixedResult[i].Performance),
                 userScreenName: fixedResult[i].UserScreenName,
                 oldRating: fixedResult[i].OldRating,
                 newRating: fixedResult[i].NewRating,

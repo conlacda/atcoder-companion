@@ -91,11 +91,4 @@ class StandingTable {
             return trow.querySelectorAll('td')[1].innerText.trim();
         });
     }
-
-    // To prevent performance that is less than zero, we use a function to make it positive
-    static positivize_performance(r) {
-        if (r < 400)
-            r = Math.floor(400.0 * Math.exp((r - 400.0) / 400.0))
-        return r;
-    }
 }
