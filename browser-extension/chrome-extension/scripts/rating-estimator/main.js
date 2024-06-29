@@ -61,6 +61,11 @@ const contestName = () => {
             new VirtualStandingTable(virtualStandings, finalStandings, finalResult);
         }
     } else {
+        /**
+         * Trick: after a contest, in order to check the accuracy of the prediction
+         * comment FixedStandingTable then use AlgoPredictedStandingTable to predict.
+         * Now the rating changes will be the difference between prediction and reality.
+         */
         const finalResult = await contest.fetchFinalResultFromAtcoder();
         if (finalResult.length > 0) {
             new FixedStandingTable(finalResult);
