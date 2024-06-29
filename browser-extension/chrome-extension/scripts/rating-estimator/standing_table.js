@@ -88,7 +88,8 @@ class StandingTable {
         const tbody = this._table.querySelector('#standings-tbody');
         const trs = tbody.querySelectorAll('tr');
         return [...trs].map((trow) => {
-            return trow.querySelectorAll('td')[1].innerText.trim();
+            const nameWithAffiliation = trow.querySelectorAll('td')[1].innerText.trim();
+            return nameWithAffiliation.split('\n')[0].trim();
         });
     }
 }
