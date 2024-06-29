@@ -26,9 +26,7 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 ![custom-page-in-out.png](images/custom-page-in-out.png)
 
 ## Features I think I should implement
-* [] Predict rating during a contest
-* [x] Add cronjob to download test cases
-* [x] Add setup page
+* [x] Predict rating during a contest (testing)
 * [] Add performance graph
 * [] Show difficulty of problems (get from kenkoo)
 * [] Number of submissions, the ratio of AC (can enable, disable) - can calculate by using standings API - get inspired by [AtCoder ACer](https://chromewebstore.google.com/detail/atcoder-acer/pmdfjdiiiacncpgmjmeicdoidkaadjde)
@@ -38,12 +36,12 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * Upload to the Firefox store.
 * Follow [best practices to claim badge](https://support.google.com/chrome_webstore/answer/1050673?hl=en&visit_id=638494791511429235-3837272215&p=cws_badges&rd=1#cws_badges&zippy=%2Cunderstand-chrome-web-store-badges)
 * Add a dropdown list at the custom test page
-* Add firefox extension
 
 ## Ideas
 * Implement some features that codeforces is supporting (like checking diff of 2 submissions)
 * Run against all test cases that have a size of less than 512KB
 * Add themes (dark theme, ...)
+* Allow changing fonts
 
 ## Reference
 * [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
