@@ -82,7 +82,7 @@ class StandingTable {
     }
 
     /**
-     * The displayed ranks array is the first column of the standings table.
+     * The displaying rank array is the first column of the standings table.
      */
     getDisplayingUserList() {
         const tbody = this._table.querySelector('#standings-tbody');

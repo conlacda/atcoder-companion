@@ -21,6 +21,7 @@ class AlgoPredictedStandingTable extends StandingTable {
         for (let i = 0; i < standings.StandingsData.length; i++) {
             const userScreenName = standings["StandingsData"][i].UserScreenName;
             const isRated = standings.StandingsData[i].IsRated;
+            const isDeleted = standings.StandingsData[i].UserIsDeleted;
             const oldRating = standings.StandingsData[i].Rating;
             const rank = standings.StandingsData[i].RatedRank; // rank has not been rounded
             const upPerformance = performanceArr[Math.floor(rank) - 1] ?? 0; // prevents out of bound error when new users joined after the last generated time
@@ -28,7 +29,7 @@ class AlgoPredictedStandingTable extends StandingTable {
             const perfInContest = positivize(Math.floor((upPerformance + downPerformance) / 2));
             const competitionNum = standings.StandingsData[i].Competitions;
             let newRating = oldRating;
-            if (isRated) {
+            if (isRated && !isDeleted) {
                 // Prefer calculating based on the performance history to calculate based on last performance
                 if (userScreenName in allRoundedPerfHistory) {
                     newRating = this.calculateRatingFromPerfArr(allRoundedPerfHistory[userScreenName], perfInContest);
