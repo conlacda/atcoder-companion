@@ -14,7 +14,17 @@ class Contest {
     }
 
     async fetchVirtualStandingFromAtcoder() {
-        const resourceUrl = `https://atcoder.jp/contests/${this.contestName}/standings/virtual/json`
+        const resourceUrl = `https://atcoder.jp/contests/${this.contestName}/standings/virtual/json`;
+        let res = await fetch(resourceUrl);
+        if (res.status !== 200)
+            return [];
+
+        res = await res.json();
+        return res;
+    }
+
+    async fetchExtendedStandingsFromAtcoder() {
+        const resourceUrl = `https://atcoder.jp/contests/${this.contestName}/standings/extended/json`;
         let res = await fetch(resourceUrl);
         if (res.status !== 200)
             return [];

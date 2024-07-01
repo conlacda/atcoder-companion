@@ -52,21 +52,23 @@ const contestName = () => {
     const contest = new Contest(contestName());
     await waitForElm('table'); // Wait until the table is loaded by Vue
 
-    if (isVirtualStandingPage() || isExtendedStandingPage()) {
-        const finalResult = await contest.fetchFinalResultFromAtcoder();
+    const finalResult = await contest.fetchFinalResultFromAtcoder();
+    if (isVirtualStandingPage()) {
         if (finalResult.length > 0) {
             const finalStandings = await contest.fetchStandingFromAtcoder();
             // https://img.atcoder.jp/public/a68b1c6/js/standings.js
             const virtualStandings = vueStandings ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new VirtualStandingTable(virtualStandings, finalStandings, finalResult);
         }
+    } else if (isExtendedStandingPage()) {
+        const extendedStandings = vueStandings ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
+        new ExtendedStandingTable(extendedStandings, finalResult);
     } else {
         /**
          * Trick: after a contest, in order to check the accuracy of the prediction
          * comment FixedStandingTable then use AlgoPredictedStandingTable to predict.
          * Now the rating changes will be the difference between prediction and reality.
          */
-        const finalResult = await contest.fetchFinalResultFromAtcoder();
         if (finalResult.length > 0) {
             new FixedStandingTable(finalResult);
         } else {
