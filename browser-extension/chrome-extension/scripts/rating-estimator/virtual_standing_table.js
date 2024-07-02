@@ -1,6 +1,6 @@
 /**
- * Predict performance for the virtual participation
- * This prediction run only we have the final result
+ * Estimate performance for the virtual participations
+ * This prediction runs only we have the final result
  */
 class VirtualStandingTable extends StandingTable {
     constructor(virtualStandings, finalStandings, finalResult) {
@@ -52,7 +52,7 @@ class VirtualStandingTable extends StandingTable {
                 userScreenName: userScreenName,
                 oldRating: 0,
                 newRating: 0,
-                isRated: false // dont use virtualStandings.StandingsData[i].IsRated
+                isRated: false // do not use virtualStandings.StandingsData[i].IsRated
             });
         }
 
