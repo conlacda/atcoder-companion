@@ -1,3 +1,4 @@
+// TODO: use storage to reduce the number of requests
 (async () => {
     const contest = getContest();
     const result = {};
@@ -6,10 +7,14 @@
         while (true) {
             // Fetch submisison page
             const MY_SUBMISSION_URL = `https://atcoder.jp/contests/${contest}/submissions/me?page=${page}`;
-            const res = await fetch(MY_SUBMISSION_URL);
-            if (res.status !== 200) {
-                await sleep(1000);
-                continue;
+            try {
+                const res = await fetch(MY_SUBMISSION_URL);
+                if (res.status !== 200) {
+                    await sleep(1000);
+                    continue;
+                }
+            } catch (e) {
+                console.log(e);
             }
             const pageContent = await res.text();
             // Extract submission result
