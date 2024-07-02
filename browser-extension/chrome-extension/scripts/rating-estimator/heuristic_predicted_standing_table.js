@@ -15,7 +15,7 @@ class HeuristicPredictedStandingTable extends StandingTable {
     }
 
     // TODO: copy from algo_predicted_standing_table.js
-    // need to be check
+    // need to be checked
     loadData(allRoundedPerfHistory, performanceArr, standings) {
         let predictedResult = new Map();
         let unratedCount = 0;
@@ -69,6 +69,6 @@ class HeuristicPredictedStandingTable extends StandingTable {
             num += Q[i] * Ri;
             den += Ri;
         }
-        return positivize(num / den);
+        return positivize(Math.floor(num / den));
     }
 }

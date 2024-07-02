@@ -20,7 +20,7 @@ class AlgoPredictedStandingTable extends StandingTable {
         let unratedCount = 0;
 
         for (let i = 0; i < standings.StandingsData.length; i++) {
-            const userScreenName = standings["StandingsData"][i].UserScreenName;
+            const userScreenName = standings.StandingsData[i].UserScreenName;
             const isRated = standings.StandingsData[i].IsRated;
             const isDeleted = standings.StandingsData[i].UserIsDeleted;
             const oldRating = standings.StandingsData[i].Rating;
