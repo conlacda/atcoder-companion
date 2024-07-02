@@ -4,8 +4,6 @@ class StandingTable {
     constructor() {
         this._table = document.querySelector('table');
         this.columnNum = this._table.querySelector('thead').querySelectorAll('th').length;
-        this.addHeaderCells();
-        this.addFooterCells();
     }
 
     observeFirstColumnChanged() {
@@ -53,6 +51,10 @@ class StandingTable {
         }
     }
 
+    addHeaderAndFooter() {
+        this.addHeaderCells();
+        this.addFooterCells();
+    }
     /**
      * Add columns for performance, diff, color change
      */
