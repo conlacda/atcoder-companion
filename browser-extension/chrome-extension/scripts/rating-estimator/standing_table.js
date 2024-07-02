@@ -15,8 +15,6 @@ class StandingTable {
         observer.observe(this._table, { childList: true, subtree: true });
     }
 
-    loadData() { }
-
     /**
      * Add data to the columns of performnace, diff, color change
      */

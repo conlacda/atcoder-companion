@@ -1,6 +1,6 @@
 /**
  * Predict performance for the virtual participation
- * This prediction will run only we have the final result
+ * This prediction run only we have the final result
  */
 class VirtualStandingTable extends StandingTable {
     constructor(virtualStandings, finalStandings, finalResult) {
@@ -46,9 +46,10 @@ class VirtualStandingTable extends StandingTable {
                 j++;
             }
 
-            virtualPerf.set(virtualStandings.StandingsData[i].UserScreenName, {
+            const userScreenName = virtualStandings.StandingsData[i].UserScreenName;
+            virtualPerf.set(userScreenName, {
                 performance: isUnratedContest() ? '-' : positivize(combinedContestResult[j]?.performance ?? 0),
-                userScreenName: virtualStandings.StandingsData[i].UserScreenName,
+                userScreenName: userScreenName,
                 oldRating: 0,
                 newRating: 0,
                 isRated: false // dont use virtualStandings.StandingsData[i].IsRated

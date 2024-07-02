@@ -30,7 +30,7 @@ const isVirtualStandingPage = () => {
 }
 
 const isExtendedStandingPage = () => {
-    if (vueStandings && vueStandings.isExtended)
+    if (vueStandings && vueStandings.hasOwnProperty('isExtended'))
         return vueStandings.isExtended ?? false;
 
     const curUrl = window.location.pathname;
@@ -40,7 +40,7 @@ const isExtendedStandingPage = () => {
 }
 
 const contestName = () => {
-    if (vueStandings && vueStandings.contestScreenName)
+    if (vueStandings && vueStandings.hasOwnProperty('contestScreenName'))
         return vueStandings.contestScreenName;
 
     const regex = /contests\/(.*)\/standings/gm;
@@ -55,10 +55,16 @@ const contestName = () => {
     const finalResult = await contest.fetchFinalResultFromAtcoder();
     if (isVirtualStandingPage()) {
         if (finalResult.length > 0) {
-            const finalStandings = await contest.fetchStandingFromAtcoder();
+            const standings = await contest.fetchStandingFromAtcoder();
             // https://img.atcoder.jp/public/a68b1c6/js/standings.js
-            const virtualStandings = vueStandings ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
-            new VirtualStandingTable(virtualStandings, finalStandings, finalResult);
+            const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
+            new VirtualStandingTable(virtualStandings, standings, finalResult);
+        } else {
+            // Estimate perf on the virtual standing page without the final result from Atcoder
+            const performanceArr = await contest.fetchPredictedPerfArr();
+            const standings = await contest.fetchStandingFromAtcoder();
+            const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
+            new PredictedVirtuakStandingTable(virtualStandings, standings, performanceArr);
         }
     } else if (isExtendedStandingPage()) {
         const extendedStandings = vueStandings ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
@@ -78,7 +84,7 @@ const contestName = () => {
             if (performanceArr.length === 0)
                 return;
 
-            const standings = vueStandings ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
+            const standings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const contest_type = await contest.getContestType();
             const allPerfHistory = await contest.fetchRoundedPerfHistory();
             if (contest_type === 'algo') {

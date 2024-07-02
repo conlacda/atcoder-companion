@@ -89,6 +89,7 @@
                 "scripts/rating-estimator/algo_predicted_standing_table.js",
                 "scripts/rating-estimator/heuristic_predicted_standing_table.js",
                 "scripts/rating-estimator/virtual_standing_table.js",
+                "scripts/rating-estimator/estimated_virtual_standing_table.js",
                 "scripts/rating-estimator/extended_standing_table.js",
                 "scripts/rating-estimator/main.js"
             ],
