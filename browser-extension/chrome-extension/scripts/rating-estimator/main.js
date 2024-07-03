@@ -48,7 +48,12 @@ const contestName = () => {
     return match[1];
 }
 
+const IGNORE_CONTESTS = ['hokudai-hitachi2019-1'];
+
 (async () => {
+    if (IGNORE_CONTESTS.includes(contestName()))
+        return;
+
     const contest = new Contest(contestName());
     await waitForElm('table'); // Wait until the table is loaded by Vue
 
@@ -67,7 +72,7 @@ const contestName = () => {
             new PredictedVirtuakStandingTable(virtualStandings, standings, performanceArr);
         }
     } else if (isExtendedStandingPage()) {
-        const extendedStandings = vueStandings ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
+        const extendedStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
         new ExtendedStandingTable(extendedStandings, finalResult);
     } else {
         /**
@@ -76,7 +81,8 @@ const contestName = () => {
          * Now the rating changes will be the difference between prediction and reality.
          */
         if (finalResult.length > 0) {
-            new FixedStandingTable(finalResult);
+            const standings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
+            new FixedStandingTable(standings, finalResult);
         } else {
             // Make prediction
             const performanceArr = await contest.fetchPredictedPerfArr();

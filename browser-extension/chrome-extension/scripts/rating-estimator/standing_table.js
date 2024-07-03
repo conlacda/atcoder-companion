@@ -35,7 +35,7 @@ class StandingTable {
 
         // Add cells with new data
         for (let i = 0; i < trows.length - 2; i++) {
-            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${Color.performance(data[i].performance)}</p></td>`);
+            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${Color.performance(data[i]?.performance ?? 0)}</p></td>`);
 
             let diff;
             diff = data[i].isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
@@ -87,7 +87,8 @@ class StandingTable {
     getDisplayingUserList() {
         const tbody = this._table.querySelector('#standings-tbody');
         const trs = tbody.querySelectorAll('tr');
-        return [...trs].map((trow) => {
+        const userRows = Array.from(trs);
+        return userRows.slice(0, -2).map((trow) => {
             const nameWithAffiliation = trow.querySelectorAll('td')[1].innerText.trim();
             return nameWithAffiliation.split('\n')[0].trim();
         });
