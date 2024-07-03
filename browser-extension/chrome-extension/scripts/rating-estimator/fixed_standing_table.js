@@ -3,8 +3,8 @@ class FixedStandingTable extends StandingTable {
         super();
         this.result = this.loadData(standings, fixedResult);
         this.fillDataToColumns();
-        this.addHeaderAndFooter();
         this.observeFirstColumnChanged();
+        this.addHeaderAndFooter();
     }
 
     loadData(standings, fixedResult) {

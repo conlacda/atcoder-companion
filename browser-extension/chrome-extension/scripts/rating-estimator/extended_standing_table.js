@@ -7,8 +7,8 @@ class ExtendedStandingTable extends StandingTable {
         super();
         this.result = this.loadData(extendedStandings.StandingsData, finalStandings);
         this.fillDataToColumns();
-        this.addHeaderAndFooter();
         this.observeFirstColumnChanged();
+        this.addHeaderAndFooter();
     }
 
     loadData(standingsData, finalStandings) {

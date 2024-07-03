@@ -7,8 +7,8 @@ class PredictedVirtuakStandingTable extends StandingTable {
         super();
         this.result = this.loadData(virtualStandings, standings, performanceArr);
         this.fillDataToColumns();
-        this.addHeaderAndFooter();
         this.observeFirstColumnChanged();
+        this.addHeaderAndFooter();
     }
 
     loadData(virtualStandings, standings, performanceArr) {
@@ -26,6 +26,8 @@ class PredictedVirtuakStandingTable extends StandingTable {
             }
         }
 
+        const isUnratedContest = (() => standings.StandingsData.every((user) => !user.IsRated))();
+
         // Estimate performance of (score, time) in virtualStandings
         let estimatedData = new Map();
         let pointer = 0;
@@ -41,7 +43,7 @@ class PredictedVirtuakStandingTable extends StandingTable {
             }
             const userScreenName = virtualStandings.StandingsData[i].UserScreenName;
             estimatedData.set(userScreenName, {
-                performance: positivize(sep[pointer]?.performance ?? 0),
+                performance: isUnratedContest ? '-' : positivize(sep[pointer]?.performance ?? 0),
                 userScreenName: userScreenName,
                 oldRating: 0,
                 newRating: 0,

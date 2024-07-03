@@ -10,8 +10,8 @@ class HeuristicPredictedStandingTable extends StandingTable {
         super();
         this.result = this.loadData(allPerfHistory, performanceArr, standings);
         this.fillDataToColumns();
-        this.addHeaderAndFooter();
         this.observeFirstColumnChanged();
+        this.addHeaderAndFooter();
     }
 
     // TODO: copy from algo_predicted_standing_table.js

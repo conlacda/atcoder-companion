@@ -48,10 +48,16 @@ const contestName = () => {
     return match[1];
 }
 
-const IGNORE_CONTESTS = ['hokudai-hitachi2019-1'];
+const shouldIgnore = (contestName) => {
+    let ignoreList = ['hokudai-hitachi2019-1'];
+    for (let i=1;i<=41;i++) {
+        ignoreList.push(`abc${i.toString().padStart(3, '0')}`);
+    }
+    return (ignoreList.includes(contestName));
+}
 
 (async () => {
-    if (IGNORE_CONTESTS.includes(contestName()))
+    if (shouldIgnore(contestName()))
         return;
 
     const contest = new Contest(contestName());

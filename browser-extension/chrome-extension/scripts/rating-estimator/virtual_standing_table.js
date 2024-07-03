@@ -7,8 +7,8 @@ class VirtualStandingTable extends StandingTable {
         super();
         this.result = this.loadData(virtualStandings, standings, finalResult);
         this.fillDataToColumns();
-        this.addHeaderAndFooter();
         this.observeFirstColumnChanged();
+        this.addHeaderAndFooter();
     }
 
     loadData(virtualStandings, standings, finalResult) {
