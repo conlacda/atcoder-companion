@@ -85,6 +85,12 @@ class StandingTable {
      * The displaying rank array is the first column of the standings table.
      */
     getDisplayingUserList() {
+        if (vueStandings?.currentStandings) {
+            return vueStandings.currentStandings.map((user) => {
+                return user.UserScreenName;
+            });
+        }
+
         const tbody = this._table.querySelector('#standings-tbody');
         const trs = tbody.querySelectorAll('tr');
         const userRows = Array.from(trs);
