@@ -6,8 +6,8 @@ const SIZE_IN_BYTES = {
     'BIG': 100000000000000
 }
 
-// If the size of test cases is larger than 25MB, a dialog should be displayed to warn the user.
-const LARGE_SIZE_IN_BYTES = 25 * 1024 * 1024;
+// If the size of test cases is larger than 10MB, a dialog should be displayed to warn the user.
+const LARGE_SIZE_IN_BYTES = 10 * 1024 * 1024;
 
 const USER_SETTING_KEY = "user_settings";
 
