@@ -16,7 +16,7 @@ class ExtendedStandingTable extends StandingTable {
         for (let i = 0; i < standingsData.length; i++) {
             const UserScreenName = standingsData[i].UserScreenName;
             finalResult.set(UserScreenName, {
-                performance: (finalStandings.length > i) ? finalStandings[i].Performance : 0,
+                performance: (finalStandings.length > i) ? positivize(finalStandings[i].Performance) : 0,
                 userScreenName: UserScreenName,
                 oldRating: 0,
                 newRating: 0,
