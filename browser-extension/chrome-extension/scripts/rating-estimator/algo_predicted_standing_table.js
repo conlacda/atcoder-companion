@@ -49,7 +49,7 @@ class AlgoPredictedStandingTable extends StandingTable {
             if (!isRated)
                 unratedCount++;
         }
-        
+
         return predictedResult;
     }
 
@@ -105,11 +105,10 @@ class AlgoPredictedStandingTable extends StandingTable {
         // add rated rank for the unrated participants
         let curRank = beforeRatedCount + 1;
         for (let i = standings.StandingsData.length - 1; i >= 0; i--) {
-            if (standings.StandingsData[i].IsRated) {
+            if (standings.StandingsData[i].IsRated)
                 curRank = standings.StandingsData[i].RatedRank;
-            } else {
+            else
                 standings.StandingsData[i].RatedRank = curRank;
-            }
         }
         return standings;
     }
