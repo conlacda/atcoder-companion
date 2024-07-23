@@ -13,7 +13,7 @@ const writeLocalStorage = async (key, value) => {
 };
 
 const DEFAULT_USER_SETTINGS = {
-    testcaseSize: 512
+    testcaseSize: 0 // 512
 };
 
 (async () => {
