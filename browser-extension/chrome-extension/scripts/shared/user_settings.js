@@ -1,3 +1,3 @@
 const DEFAULT_USER_SETTINGS = {
-    testcaseSize: 512
+    testcaseSize: SIZE_IN_BYTES.SMALL
 };
