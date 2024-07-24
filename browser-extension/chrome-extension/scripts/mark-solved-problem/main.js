@@ -7,17 +7,7 @@
         while (true) {
             // Fetch submisison page
             const MY_SUBMISSION_URL = `https://atcoder.jp/contests/${contest}/submissions/me?page=${page}`;
-            let res;
-            // Use try catch to avoid the 429 error that makes the page redirected.
-            try {
-                res = await fetch(MY_SUBMISSION_URL);
-                if (res.status !== 200) {
-                    await sleep(1000);
-                    continue;
-                }
-            } catch (e) {
-                console.log(e);
-            }
+            let res = await fetchWithRetry(MY_SUBMISSION_URL);
             const pageContent = await res.text();
             // Extract submission result
             const document = $($.parseHTML(pageContent));

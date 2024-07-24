@@ -1,3 +1,35 @@
+/**
+ * Sleep in miliseconds
+ * @param {number} ms - The number of milliseconds to sleep
+ * @returns {Promise<void>} - A Promise that resolves after the specified time
+ */
+const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Fetch data from a URL with retries in case of failure
+ * @param {string} url - The URL to fetch data from
+ * @param {number} [retryNum=10] - Number of retry attempts (default: 10)
+ * @returns {Promise<Response>} - A Promise that resolves to the Response object when successful
+ */
+const fetchWithRetry = async (url, retryNum = 10) => {
+    let sleepInMs = 500;
+    while (retryNum > 0) {
+        try {
+            res = await fetch(url);
+            if (res.status !== 200) {
+                await sleep(sleepInMs);
+                sleepInMs += 1000;
+            } else {
+                return res;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
 class Contest {
     constructor(contestName) {
         this.contestName = contestName;
@@ -5,7 +37,7 @@ class Contest {
 
     async fetchStandingFromAtcoder() {
         const resourceUrl = `https://atcoder.jp/contests/${this.contestName}/standings/json`;
-        let res = await fetch(resourceUrl);
+        let res = await fetchWithRetry(resourceUrl);
         if (res.status !== 200)
             return [];
 
@@ -15,7 +47,7 @@ class Contest {
 
     async fetchVirtualStandingFromAtcoder() {
         const resourceUrl = `https://atcoder.jp/contests/${this.contestName}/standings/virtual/json`;
-        let res = await fetch(resourceUrl);
+        let res = await fetchWithRetry(resourceUrl);
         if (res.status !== 200)
             return [];
 
@@ -25,7 +57,7 @@ class Contest {
 
     async fetchExtendedStandingsFromAtcoder() {
         const resourceUrl = `https://atcoder.jp/contests/${this.contestName}/standings/extended/json`;
-        let res = await fetch(resourceUrl);
+        let res = await fetchWithRetry(resourceUrl);
         if (res.status !== 200)
             return [];
 
@@ -35,7 +67,7 @@ class Contest {
 
     async fetchFinalResultFromAtcoder() {
         const resourceUrl = `https://atcoder.jp/contests/${this.contestName}/results/json`;
-        let res = await fetch(resourceUrl);
+        let res = await fetchWithRetry(resourceUrl);
         if (res.status !== 200)
             return [];
 
@@ -56,7 +88,7 @@ class Contest {
     async fetchPredictedPerfArr(needTocache = false) {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_ranking_to_perf.json`;
         const option = (needTocache) ? {} : { cache: "no-store" }; // headers: { 'Cache-Control': 'max-age=120' }
-        let res = await fetch(resourceUrl, option);
+        let res = await fetchWithRetry(resourceUrl, option);
         if (res.status !== 200)
             return [];
 
@@ -70,7 +102,7 @@ class Contest {
     async fetchRoundedPerfHistory(needTocache = false) {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_rounded_perf_history.json`;
         const option = (needTocache) ? {} : { cache: "no-store" }; // headers: { 'Cache-Control': 'max-age=120' }
-        let res = await fetch(resourceUrl, option);
+        let res = await fetchWithRetry(resourceUrl, option);
         if (res.status !== 200)
             return [];
 
@@ -105,7 +137,7 @@ class Contest {
         }
 
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_contest_type.json`;
-        let res = await fetch(resourceUrl, { cache: "no-store" }); // headers: { 'Cache-Control': 'max-age=120' }
+        let res = await fetchWithRetry(resourceUrl, { cache: "no-store" }); // headers: { 'Cache-Control': 'max-age=120' }
         if (res.status === 200) {
             res = await res.json();
             return res.type;

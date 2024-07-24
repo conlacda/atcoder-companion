@@ -8,7 +8,7 @@ const problem = urlParams.get('problem');
 // Get the submission's code
 (async () => {
     const SUBMISSION_URL = `https://atcoder.jp/contests/${contest}/submissions/${submissionId}`;
-    let res = await fetch(SUBMISSION_URL);
+    let res = await fetchWithRetry(SUBMISSION_URL);
     if (res.status !== 200) return;
     let document = $(await res.text());
     const submissionSourceCode = document.find('pre#submission-code').text();
@@ -23,13 +23,13 @@ const problem = urlParams.get('problem');
 
     // Get testcase then put to "Standard input"
     const TC_INPUT_URL = `https://raw.githubusercontent.com/conlacda/atcoder-testcases/${contest}/${contest}/${problem}/in/${testCase}`;
-    res = await fetch(TC_INPUT_URL);
+    res = await fetchWithRetry(TC_INPUT_URL);
     if (res.status !== 200) return;
     const inputTextArea = $("#input");
     inputTextArea.val(await res.text());
     // Add Standard output
     const TC_OUTPUT_URL = `https://raw.githubusercontent.com/conlacda/atcoder-testcases/${contest}/${contest}/${problem}/out/${testCase}`;
-    res = await fetch(TC_OUTPUT_URL);
+    res = await fetchWithRetry(TC_OUTPUT_URL);
     if (res.status !== 200) return;
     const standardInputDiv = inputTextArea.parent().parent();
     const expectedOutputDiv = $(`<div class="form-group"><label class="control-label col-sm-3 col-md-2">Expected Output</label><div class="col-sm-8"><textarea id="expected-output" rows="5" class="form-control customtest-textarea" readonly="readonly"></textarea><p><span class="gray">* There can be multiple outputs that are accepted as correct, depending on each problem.</span></p></div></div>`);

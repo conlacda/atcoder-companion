@@ -26,7 +26,7 @@ const fetchTestCasesList = async (contest, problem) => {
     }
 
     const listUrl = `${SOURCE_PREFIX}/${contest}/${contest}/${problem}/list.txt`;
-    const response = await fetch(listUrl);
+    const response = await fetchWithRetry(listUrl);
     if (response.status === 200) {
         const content = await response.text();
         const lines = content.split('\n');
@@ -54,9 +54,9 @@ const fetchTestCasesByUserSettings = async (contest, problem) => {
     testcases = testcases.filter((tc) => tc.inputsize <= userSettings.testcaseSize && tc.outputsize <= userSettings.testcaseSize);
 
     await Promise.all(testcases.map(async tc => {
-        const input = await fetch(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/in/${tc.txtfile}`)
+        const input = await fetchWithRetry(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/in/${tc.txtfile}`)
         tc.input = await input.text();
-        const output = await fetch(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/out/${tc.txtfile}`)
+        const output = await fetchWithRetry(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/out/${tc.txtfile}`)
         tc.output = await output.text();
     }));
 
@@ -132,9 +132,9 @@ const downloadAllTestCases = async (contest, problem) => {
 
     const testcases = await fetchTestCasesList(contest, problem);
     await Promise.all(testcases.map(async tc => {
-        const input = await fetch(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/in/${tc.txtfile}`);
+        const input = await fetchWithRetry(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/in/${tc.txtfile}`);
         zip.file(`${contest}-${problem}/in/${tc.txtfile}.txt`, await input.text());
-        const output = await fetch(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/out/${tc.txtfile}`);
+        const output = await fetchWithRetry(`${SOURCE_PREFIX}/${contest}/${contest}/${problem}/out/${tc.txtfile}`);
         zip.file(`${contest}-${problem}/out/${tc.txtfile}.txt`, await output.text());
     }));
 
