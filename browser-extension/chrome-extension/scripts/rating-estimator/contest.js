@@ -8,19 +8,20 @@ const sleep = (ms) => {
 }
 
 /**
- * Fetch data from a URL with retries in case of failure
+ * Fetch data from a URL with retries when reach the request limit.
  * @param {string} url - The URL to fetch data from
  * @param {number} [retryNum=10] - Number of retry attempts (default: 10)
  * @returns {Promise<Response>} - A Promise that resolves to the Response object when successful
  */
-const fetchWithRetry = async (url, retryNum = 10) => {
+const fetchWithRetry = async (url, options, retryNum = 10) => {
     let sleepInMs = 500;
     while (retryNum > 0) {
         try {
-            res = await fetch(url);
-            if (res.status !== 200) {
+            res = await fetch(url, options);
+            if (res.status === 429) {
                 await sleep(sleepInMs);
                 sleepInMs += 1000;
+                retryNum--;
             } else {
                 return res;
             }
