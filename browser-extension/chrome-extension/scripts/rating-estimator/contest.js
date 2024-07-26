@@ -13,7 +13,7 @@ const sleep = (ms) => {
  * @param {number} [retryNum=10] - Number of retry attempts (default: 10)
  * @returns {Promise<Response>} - A Promise that resolves to the Response object when successful
  */
-const fetchWithRetry = async (url, options, retryNum = 10) => {
+const fetchWithRetry = async (url, options = {}, retryNum = 10) => {
     let sleepInMs = 500;
     while (retryNum > 0) {
         try {

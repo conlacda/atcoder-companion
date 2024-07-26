@@ -73,7 +73,7 @@ const writeLocalStorage = async (key, value) => {
     return chrome.storage.local.set(obj);
 }
 
-const fetchWithRetry = async (url, options, retryNum = 10) => {
+const fetchWithRetry = async (url, options = {}, retryNum = 10) => {
     let sleepInMs = 500;
     while (retryNum > 0) {
         try {
