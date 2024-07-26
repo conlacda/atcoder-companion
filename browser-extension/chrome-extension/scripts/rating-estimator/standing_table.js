@@ -1,9 +1,7 @@
 class StandingTable {
-    result = new Map()
-
     constructor() {
+        this.result = new Map();
         this._table = document.querySelector('table');
-        this.columnNum = this._table.querySelector('thead').querySelectorAll('th').length;
     }
 
     observeFirstColumnChanged() {
@@ -26,26 +24,18 @@ class StandingTable {
         const trows = this._table.querySelector('tbody').querySelectorAll('tr');
 
         // Remove old cells
-        for (let i = 0; i < trows.length - 2; i++) {
-            let tds = trows[i].querySelectorAll('td');
-            for (let j = tds.length - 1; j >= this.columnNum; j--) {
-                tds[j]?.remove();
-            }
-        }
+        document.querySelectorAll('.ext-added').forEach(e => e.remove());
 
         // Add cells with new data
         for (let i = 0; i < trows.length - 2; i++) {
-            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${Color.performance(data[i]?.performance ?? 0)}</p></td>`);
+            const performanceSpan = data[i]?.performance ? Color.performance(data[i].performance) : '-';
+            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p>${performanceSpan}</p></td>`);
 
-            let diff;
-            diff = data[i].isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
-            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${diff}</p></td>`);
+            const diffSpan = data[i]?.isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
+            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p>${diffSpan}</p></td>`);
 
-            let colorChange = '-';
-            if (data[i].isRated) {
-                colorChange = Color.colorChange(data[i].oldRating, data[i].newRating);
-            }
-            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result"><p>${colorChange}</p></td>`);
+            const colorChangeSpan = data[i]?.isRated ? Color.colorChange(data[i].oldRating, data[i].newRating): '-';
+            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p>${colorChangeSpan}</p></td>`);
         }
     }
 

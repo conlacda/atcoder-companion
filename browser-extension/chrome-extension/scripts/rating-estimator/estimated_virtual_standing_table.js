@@ -2,11 +2,10 @@
  * Predict performance for the virtual participation
  * This prediction runs without the final result from Atcoder
  */
-class PredictedVirtuakStandingTable extends StandingTable {
+class PredictedVirtualStandingTable extends StandingTable {
     constructor(virtualStandings, standings, performanceArr) {
         super();
         this.result = this.loadData(virtualStandings, standings, performanceArr);
-        this.fillDataToColumns();
         this.observeFirstColumnChanged();
         this.addHeaderAndFooter();
     }

@@ -8,7 +8,6 @@ class AlgoPredictedStandingTable extends StandingTable {
     constructor(allPerfHistory, performanceArr, standings) {
         super();
         this.result = this.loadData(allPerfHistory, performanceArr, standings);
-        this.fillDataToColumns();
         this.observeFirstColumnChanged();
         this.addHeaderAndFooter();
     }

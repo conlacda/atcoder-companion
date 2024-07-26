@@ -2,7 +2,6 @@ class FixedStandingTable extends StandingTable {
     constructor(standings, fixedResult) {
         super();
         this.result = this.loadData(standings, fixedResult);
-        this.fillDataToColumns();
         this.observeFirstColumnChanged();
         this.addHeaderAndFooter();
     }

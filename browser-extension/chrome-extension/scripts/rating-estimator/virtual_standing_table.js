@@ -6,7 +6,6 @@ class VirtualStandingTable extends StandingTable {
     constructor(virtualStandings, standings, finalResult) {
         super();
         this.result = this.loadData(virtualStandings, standings, finalResult);
-        this.fillDataToColumns();
         this.observeFirstColumnChanged();
         this.addHeaderAndFooter();
     }

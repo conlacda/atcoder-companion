@@ -75,7 +75,7 @@ const shouldIgnore = (contestName) => {
             const performanceArr = await contest.fetchPredictedPerfArr();
             const standings = await contest.fetchStandingFromAtcoder();
             const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
-            new PredictedVirtuakStandingTable(virtualStandings, standings, performanceArr);
+            new PredictedVirtualStandingTable(virtualStandings, standings, performanceArr);
         }
     } else if (isExtendedStandingPage()) {
         const extendedStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
