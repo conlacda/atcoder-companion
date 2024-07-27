@@ -8,6 +8,10 @@
 ![marquee image](images/Atcoder%20Companion_1400x560.png)
 
 ## Some features
+
+### Estimate rating
+![](images/estimate-rating.png)
+
 ### Mark solved problems
 ![mark-solved-problems.png](images/mark-solved-problems.png)
 
@@ -57,8 +61,10 @@ When creating prediction data, the backend will predict performance for rank as 
 Before running the tests, create .env as .env.example file then fill your atcoder account.
 
 ### Run Github action
-Turn self-hosted Github action locally. It will listen for events defined at Github action .yml file
+Turn self-hosted Github action locally. It will listen for events defined at the GitHub action's .yml file
 ```shell
 cd actions-runner
 ./run.cmd
 ```
+## TODO
+* Automatically update the predicted performance & rating when the standing table is updated.
