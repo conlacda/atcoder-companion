@@ -31,10 +31,10 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 
 ## Features I think I should implement
 * [x] Predict rating during a contest (testing)
-* [] Add performance graph
-* [] Show difficulty of problems (get from kenkoo)
-* [] Number of submissions, the ratio of AC (can enable, disable) - can calculate by using standings API - get inspired by [AtCoder ACer](https://chromewebstore.google.com/detail/atcoder-acer/pmdfjdiiiacncpgmjmeicdoidkaadjde)
-* [] Add status + test cases to the printing page
+* [ ] Add performance graph
+* [ ] Show difficulty of problems (get from kenkoo)
+* [ ] Number of submissions, the ratio of AC (can enable, disable) - can calculate by using standings API - get inspired by [AtCoder ACer](https://chromewebstore.google.com/detail/atcoder-acer/pmdfjdiiiacncpgmjmeicdoidkaadjde)
+* [ ] Add status + test cases to the printing page
 
 ## Improvement
 * Upload to the Firefox store.
@@ -68,3 +68,5 @@ cd actions-runner
 ```
 ## TODO
 * Automatically update the predicted performance & rating when the standing table is updated.
+* Set the default performance array when the prediction is being calculating.
+* Allow disabling prediction.
