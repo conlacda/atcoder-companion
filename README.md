@@ -67,6 +67,4 @@ cd actions-runner
 ./run.cmd
 ```
 ## TODO
-* Automatically update the predicted performance & rating when the standing table is updated.
-* Set the default performance array when the prediction is being calculating.
 * Allow disabling prediction.

@@ -35,6 +35,10 @@ class Color {
         return RangeColor.getColor(num);
     }
 
+    static rating(num) {
+        return RangeColor.getColor(num);
+    }
+
     static diff(num) {
         if (num == 0) return diff.ZERO;
         if (num > 0) return diff.UP.replace('{}', num);

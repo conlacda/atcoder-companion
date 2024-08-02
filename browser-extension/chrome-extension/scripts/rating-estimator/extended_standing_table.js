@@ -5,23 +5,23 @@
 class ExtendedStandingTable extends StandingTable {
     constructor(extendedStandings, finalStandings) {
         super();
-        this.result = this.loadData(extendedStandings.StandingsData, finalStandings);
-        this.observeFirstColumnChanged();
-        this.addHeaderAndFooter();
+        this.extendedStandings = extendedStandings;
+        this.finalStandings = finalStandings;
+        this.calPerfAndRating();
+        this.fillDataToColumns();
     }
 
-    loadData(standingsData, finalStandings) {
-        let finalResult = new Map();
-        for (let i = 0; i < standingsData.length; i++) {
-            const UserScreenName = standingsData[i].UserScreenName;
-            finalResult.set(UserScreenName, {
-                performance: (finalStandings.length > i) ? positivize(finalStandings[i].Performance) : 0,
-                userScreenName: UserScreenName,
+    calPerfAndRating() {
+        this.perfRatingData = new Map();
+        for (let i = 0; i < this.extendedStandings.StandingsData.length; i++) {
+            const userScreenName = this.extendedStandings.StandingsData[i].UserScreenName;
+            this.perfRatingData.set(userScreenName, {
+                performance: (this.finalStandings.length > i) ? positivize(this.finalStandings[i].Performance) : 0,
+                userScreenName: userScreenName,
                 oldRating: 0,
                 newRating: 0,
                 isRated: false
             });
         }
-        return finalResult;
     }
 }

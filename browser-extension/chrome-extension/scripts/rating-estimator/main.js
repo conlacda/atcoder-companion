@@ -63,46 +63,46 @@ const shouldIgnore = (contestName) => {
     const contest = new Contest(contestName());
     await waitForElm('table'); // Wait until the table is loaded by Vue
 
-    const finalResult = await contest.fetchFinalResultFromAtcoder();
+    const fixedResult = await contest.fetchFinalResultFromAtcoder();
     if (isVirtualStandingPage()) {
-        if (finalResult.length > 0) {
+        if (fixedResult.length > 0) {
             const standings = await contest.fetchStandingFromAtcoder();
             // https://img.atcoder.jp/public/a68b1c6/js/standings.js
             const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
-            new VirtualStandingTable(virtualStandings, standings, finalResult);
+            new VirtualStandingTable(virtualStandings, standings, fixedResult);
         } else {
             // Estimate perf on the virtual standing page without the final result from Atcoder
-            const performanceArr = await contest.fetchPredictedPerfArr();
+            const rank2Perf = await contest.fetchPredictedPerfArr();
             const standings = await contest.fetchStandingFromAtcoder();
             const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
-            new PredictedVirtualStandingTable(virtualStandings, standings, performanceArr);
+            new PredictedVirtualStandingTable(virtualStandings, standings, rank2Perf);
         }
     } else if (isExtendedStandingPage()) {
         const extendedStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
-        new ExtendedStandingTable(extendedStandings, finalResult);
+        new ExtendedStandingTable(extendedStandings, fixedResult);
     } else {
         /**
          * Trick: after a contest, in order to check the accuracy of the prediction
          * comment FixedStandingTable then use AlgoPredictedStandingTable to predict.
          * Now the rating changes will be the difference between prediction and reality.
          */
-        if (finalResult.length > 0) {
+        if (fixedResult.length > 0) {
             const standings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
-            new FixedStandingTable(standings, finalResult);
+            new FixedStandingTable(standings, fixedResult);
         } else {
             // Make prediction
-            const performanceArr = await contest.fetchPredictedPerfArr();
-            // check if performanceArr was created by backend.
-            if (performanceArr.length === 0)
+            const rank2Perf = await contest.fetchPredictedPerfArr();
+            // check if rank2Perf was created by backend.
+            if (rank2Perf.length === 0)
                 return;
 
             const standings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const contest_type = await contest.getContestType();
-            const allPerfHistory = await contest.fetchRoundedPerfHistory();
+            const roundedPerfHistories = await contest.fetchRoundedPerfHistory();
             if (contest_type === 'algo') {
-                new AlgoPredictedStandingTable(allPerfHistory, performanceArr, standings);
+                new AlgoPredictedStandingTable(roundedPerfHistories, rank2Perf, standings);
             } else if (contest_type === 'heuristic') {
-                new HeuristicPredictedStandingTable(allPerfHistory, performanceArr, standings);
+                new HeuristicPredictedStandingTable(roundedPerfHistories, rank2Perf, standings);
             }
         }
     }

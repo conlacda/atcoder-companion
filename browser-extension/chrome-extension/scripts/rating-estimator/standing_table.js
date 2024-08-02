@@ -1,25 +1,20 @@
 class StandingTable {
     constructor() {
-        this.result = new Map();
+        this.perfRatingData = new Map();
         this._table = document.querySelector('table');
-    }
-
-    observeFirstColumnChanged() {
-        const observer = new MutationObserver((mutations, observer) => {
-            observer.disconnect();
-            this.fillDataToColumns();
-            observer.observe(this._table, { childList: true, subtree: true });
-        });
-        observer.observe(this._table, { childList: true, subtree: true });
+        this.observer = new MutationObserver(() => this.fillDataToColumns());
+        this.listenStandingsChange();
     }
 
     /**
      * Add data to the columns of performnace, diff, color change
      */
     fillDataToColumns() {
+        this.observer.disconnect();
+
         const displayingUsers = this.getDisplayingUserList();
         const data = displayingUsers.map((userScreenName) => {
-            return this.result.get(userScreenName);
+            return this.perfRatingData.get(userScreenName);
         });
         const trows = this._table.querySelector('tbody').querySelectorAll('tr');
 
@@ -34,39 +29,45 @@ class StandingTable {
             const diffSpan = data[i]?.isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p>${diffSpan}</p></td>`);
 
-            const colorChangeSpan = data[i]?.isRated ? Color.colorChange(data[i].oldRating, data[i].newRating): '-';
+            let colorChangeSpan = '-';
+            if (data[i]?.isRated)
+                colorChangeSpan = (data[i].oldRating === data[i].newRating) ? Color.rating(data[i].newRating) : Color.colorChange(data[i].oldRating, data[i].newRating);
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p>${colorChangeSpan}</p></td>`);
         }
+
+        // Add header & footer cells
+        this.addHeaderAndFooter();
+
+        this.observer.observe(this._table, { childList: true, subtree: true });
     }
 
-    addHeaderAndFooter() {
-        this.addHeaderCells();
-        this.addFooterCells();
-    }
     /**
      * Add columns for performance, diff, color change
      */
-    addHeaderCells() {
+    addHeaderAndFooter() {
+        // Header
         const tr = this._table.querySelector('thead').querySelector('tr');
-        const performanceTh = document.createElement('th');
-        performanceTh.innerText = '⚡';
-        performanceTh.setAttribute('title', 'Performance');
-        const diffTh = document.createElement('th');
-        diffTh.innerText = '🔺';
-        diffTh.setAttribute('title', 'Diff')
-        const lvlChangeTh = document.createElement('th');
-        lvlChangeTh.innerText = '🌈';
-        lvlChangeTh.setAttribute('title', 'Color change');
-        tr.appendChild(performanceTh);
-        tr.appendChild(diffTh);
-        tr.appendChild(lvlChangeTh);
-    }
+        tr.appendChild(Object.assign(document.createElement('th'), {
+            innerText: '⚡',
+            title: 'Performance',
+            className: 'ext-added',
+        }));
+        tr.appendChild(Object.assign(document.createElement('th'), {
+            innerText: '🔺',
+            title: 'Diff',
+            className: 'ext-added',
+        }));
+        tr.appendChild(Object.assign(document.createElement('th'), {
+            innerText: '🌈',
+            title: 'Color change',
+            className: 'ext-added',
+        }));
 
-    addFooterCells() {
+        // Footer
         const trows = this._table.querySelector('tbody').querySelectorAll('tr');
         for (let i = trows.length - 2; i < trows.length; i++) {
             for (let _ = 0; _ < 3; _++) {
-                trows[i].insertAdjacentHTML('beforeend', '<td class="standings-result"><p>-</p></td>');
+                trows[i].insertAdjacentHTML('beforeend', '<td class="standings-result ext-added"><p>-</p></td>');
             }
         }
     }
@@ -88,5 +89,25 @@ class StandingTable {
             const nameWithAffiliation = trow.querySelectorAll('td')[1].innerText.trim();
             return nameWithAffiliation.split('\n')[0].trim();
         });
+    }
+
+    /**
+     * Listen the standings data changes when users click the refresh button
+     */
+    listenStandingsChange() {
+        // Intercept XMLHttpRequest
+        const originalXhrOpen = XMLHttpRequest.prototype.open;
+        const standingTable = this;
+        XMLHttpRequest.prototype.open = function (...args) {
+            const xhr = this;
+            xhr.addEventListener('load', () => {
+                if (this.responseURL.endsWith(`contests/${contestName()}/standings/json`) && this.status === 200) {
+                    standingTable.standings = JSON.parse(this.responseText);
+                    standingTable.calPerfAndRating();
+                    standingTable.fillDataToColumns();
+                }
+            });
+            return originalXhrOpen.apply(this, args);
+        };
     }
 }

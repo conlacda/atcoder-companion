@@ -10,4 +10,5 @@ Check performance of new comers
 https://atcoder.jp/contests/agc032/standings - page 128
 https://atcoder.jp/contests/agc021/standings/virtual - page 1
 Check when "Show favs only" check box is clicked
+Test when click the refesh button or execute "vueStandings.refresh()"
 */

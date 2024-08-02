@@ -5,40 +5,43 @@
  * standings is the current standings in the standing table
  */
 class AlgoPredictedStandingTable extends StandingTable {
-    constructor(allPerfHistory, performanceArr, standings) {
+    constructor(roundedPerfHistories, rank2Perf, standings) {
         super();
-        this.result = this.loadData(allPerfHistory, performanceArr, standings);
-        this.observeFirstColumnChanged();
-        this.addHeaderAndFooter();
+        this.roundedPerfHistories = roundedPerfHistories;
+        this.rank2Perf = rank2Perf;
+        this.standings = standings;
+        this.calPerfAndRating();
+        this.fillDataToColumns();
     }
 
-    loadData(allRoundedPerfHistory, performanceArr, standings) {
-        standings = this.addRatedRank(standings);
+    calPerfAndRating() {
+        this.addRatedRankToStandings();
 
-        let predictedResult = new Map(); // map of {username: DataObject{}}
+        this.perfRatingData = new Map(); // map of {username: DataObject{}}
         let unratedCount = 0;
 
-        for (let i = 0; i < standings.StandingsData.length; i++) {
-            const userScreenName = standings.StandingsData[i].UserScreenName;
-            const isRated = standings.StandingsData[i].IsRated;
-            const isDeleted = standings.StandingsData[i].UserIsDeleted;
-            const oldRating = standings.StandingsData[i].Rating;
-            const rank = standings.StandingsData[i].RatedRank; // rank has not been rounded
-            const upPerformance = performanceArr[Math.floor(rank) - 1] ?? 0; // prevents out of bound error when new users joined after the last generated time
-            const downPerformance = performanceArr[Math.ceil(rank) - 1] ?? 0;
+        const standingsData = this.standings.StandingsData;
+        for (let i = 0; i < standingsData.length; i++) {
+            const userScreenName = standingsData[i].UserScreenName;
+            const isRated = standingsData[i].IsRated;
+            const isDeleted = standingsData[i].UserIsDeleted;
+            const oldRating = standingsData[i].Rating;
+            const rank = standingsData[i].RatedRank; // rank has not been rounded
+            const upPerformance = this.rank2Perf[Math.floor(rank) - 1] ?? 0; // prevents out of bound error when new users joined after the last generated time
+            const downPerformance = this.rank2Perf[Math.ceil(rank) - 1] ?? 0;
             const perfInContest = positivize(Math.floor((upPerformance + downPerformance) / 2));
-            const competitionNum = standings.StandingsData[i].Competitions;
+            const competitionNum = standingsData[i].Competitions;
             let newRating = oldRating;
             if (isRated && !isDeleted) {
                 // Prefer calculating based on the performance history to calculate based on last performance
-                if (userScreenName in allRoundedPerfHistory) {
-                    newRating = this.calculateRatingFromPerfArr(allRoundedPerfHistory[userScreenName], perfInContest);
+                if (userScreenName in this.roundedPerfHistories) {
+                    newRating = this.calculateRatingFromPerfArr(this.roundedPerfHistories[userScreenName], perfInContest);
                 } else {
                     newRating = this.predictNewRatingFromLast(oldRating, perfInContest, competitionNum);
                 }
             }
 
-            predictedResult.set(userScreenName, {
+            this.perfRatingData.set(userScreenName, {
                 performance: perfInContest,
                 userScreenName: userScreenName,
                 oldRating: oldRating,
@@ -48,8 +51,6 @@ class AlgoPredictedStandingTable extends StandingTable {
             if (!isRated)
                 unratedCount++;
         }
-
-        return predictedResult;
     }
 
     predictNewRatingFromLast(oldRating, performance, competitionNum) {
@@ -60,9 +61,7 @@ class AlgoPredictedStandingTable extends StandingTable {
         // This function runs slower but is more accurate than predictNewRatingFromLast.
         // predictNewRatingFromLast will fail when an user has just a few number of competitions
         // But calculateRatingFromPerfArr can be used to calculate with any number of competitions.
-        pastPerfArr.push(perfInContest);
-        const perfArr = pastPerfArr.reverse();
-        return calc_rating(perfArr);
+        return calc_rating([...pastPerfArr, perfInContest].toReversed());
     }
 
     /**
@@ -79,22 +78,22 @@ class AlgoPredictedStandingTable extends StandingTable {
                      people are tied from the 3rd place to the 6th place, the rank of these people
                      is 4.5."
      */
-    addRatedRank(standings) {
+    addRatedRankToStandings() {
         // add rated rank for the rated participants
-        const len = standings.StandingsData.length;
+        const len = this.standings.StandingsData.length;
         let startIndex = 0, endIndex = 0;
         let beforeRatedCount = 0;
         while (endIndex < len) {
             let ratedCount = 0;
-            while (endIndex + 1 < len && standings.StandingsData[endIndex + 1].Rank === standings.StandingsData[startIndex].Rank) {
+            while (endIndex + 1 < len && this.standings.StandingsData[endIndex + 1].Rank === this.standings.StandingsData[startIndex].Rank) {
                 endIndex++;
             }
             for (let i = startIndex; i <= endIndex; i++)
-                if (standings.StandingsData[i].IsRated) ratedCount++;
+                if (this.standings.StandingsData[i].IsRated) ratedCount++;
 
             const actualRatedRank = (beforeRatedCount + 1 + beforeRatedCount + ratedCount) / 2;
             for (let i = startIndex; i <= endIndex; i++)
-                standings.StandingsData[i].RatedRank = actualRatedRank;
+                this.standings.StandingsData[i].RatedRank = actualRatedRank;
 
             beforeRatedCount += ratedCount;
             endIndex++;
@@ -103,12 +102,11 @@ class AlgoPredictedStandingTable extends StandingTable {
 
         // add rated rank for the unrated participants
         let curRank = beforeRatedCount + 1;
-        for (let i = standings.StandingsData.length - 1; i >= 0; i--) {
-            if (standings.StandingsData[i].IsRated)
-                curRank = standings.StandingsData[i].RatedRank;
+        for (let i = this.standings.StandingsData.length - 1; i >= 0; i--) {
+            if (this.standings.StandingsData[i].IsRated)
+                curRank = this.standings.StandingsData[i].RatedRank;
             else
-                standings.StandingsData[i].RatedRank = curRank;
+                this.standings.StandingsData[i].RatedRank = curRank;
         }
-        return standings;
     }
 }
