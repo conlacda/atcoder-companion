@@ -18,7 +18,6 @@ class AlgoPredictedStandingTable extends StandingTable {
         this.addRatedRankToStandings();
 
         this.perfRatingData = new Map(); // map of {username: DataObject{}}
-        let unratedCount = 0;
 
         const standingsData = this.standings.StandingsData;
         for (let i = 0; i < standingsData.length; i++) {
@@ -48,8 +47,6 @@ class AlgoPredictedStandingTable extends StandingTable {
                 newRating: newRating,
                 isRated: isRated
             });
-            if (!isRated)
-                unratedCount++;
         }
     }
 
