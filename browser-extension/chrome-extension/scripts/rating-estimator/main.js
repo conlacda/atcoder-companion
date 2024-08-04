@@ -48,18 +48,7 @@ const contestName = () => {
     return match[1];
 }
 
-const shouldIgnore = (contestName) => {
-    let ignoreList = ['hokudai-hitachi2019-1'];
-    for (let i=1;i<=41;i++) {
-        ignoreList.push(`abc${i.toString().padStart(3, '0')}`);
-    }
-    return (ignoreList.includes(contestName));
-}
-
 (async () => {
-    if (shouldIgnore(contestName()))
-        return;
-
     const contest = new Contest(contestName());
     await waitForElm('table'); // Wait until the table is loaded by Vue
 

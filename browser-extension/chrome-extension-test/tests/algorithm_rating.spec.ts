@@ -1,15 +1,13 @@
-// TODO
 /*
-Test against a running contest
-Test against a past contest
-Test for old contest abc040 (not have rating changes)
-https://atcoder.jp/contests/wtf22-day1-open/standings/ - same standing should have same performance
-Check performance of newcomers
+TODO: test the data's correctness
+* https://atcoder.jp/contests/wtf22-day1-open/standings/ - same standing should have same performance
+* Check performance of newcomers
+* Test when click the refresh button or execute "vueStandings.refresh()"
+* Rating should never be negative
 
-https://atcoder.jp/contests/agc032/standings - page 128
-https://atcoder.jp/contests/agc021/standings/virtual - page 1
-Check when "Show favs only" check box is clicked
-Test when click the refresh button or execute "vueStandings.refresh()"
+TODO: test against a running contest
+* Algo
+* Heuristic 
 */
 
 import {test, expect} from '../fixtures';
@@ -86,9 +84,9 @@ const testTable = async () => {
     }
     // Check content format of the added cells
     const tdCells: Locator = page.locator('td.ext-added');
-    const tdTextContent: Array<string> = await tdCells.allTextContents();
-    for (const text of tdTextContent) {
-        let match = false;
+    const tdTextContents: Array<string> = await tdCells.allTextContents();
+    for (const text of tdTextContents) {
+        let match: boolean = false;
         match ||= /^\d+$/gm.test(text); // 2400
         match ||= /^[\+\-±]\d+$/gm.test(text); // +20 -20
         match ||= /^\d+[⭜⭝]\d+$/gm.test(text); // 1500⭜1600 1600⭝1500
@@ -97,11 +95,29 @@ const testTable = async () => {
     }
 }
 
+const checkIfThereArePerfOnly = async (): Promise<void> => {
+    // Test the performance column
+    const allTextContents: string[] = await page.locator('td.ext-added').allTextContents();
+    const perfs: string[] = allTextContents.filter((value, i) => {
+        if (i % 3 == 0 && i < tableConfigures.perPage * 3) return value;
+    });
+    for (const perf in perfs) {
+        expect(perf).not.toBeNaN();
+    }
+
+    // Test the diff & color change column
+    const diffsAndColorChanges: string[] = allTextContents.filter((value, i) => {
+        if (i % 3 != 0 && i < tableConfigures.perPage * 3) return value;
+    });
+    for (const item of diffsAndColorChanges) {
+        expect(item === '-').toBe(true);
+    }
+}
+
 test.describe('Test against the contests that have fixed result', (): void => {
     test('The 3 columns should be added by the extension', async (): Promise<void> => {
         await page.goto('https://atcoder.jp/contests/abc360/standings');
         await resetSettings();
-        let perPage = 20;
         await testTable();
 
         await setPerPage(50);
@@ -118,12 +134,46 @@ test.describe('Test against the contests that have fixed result', (): void => {
         await showFavOnly();
         await testTable();
     });
-    
-    test('Unrated contests', () => {
-        // TODO: https://atcoder.jp/contests/abc306/standings
+
+    test('Unrated contests', async (): Promise<void> => {
+        await page.goto('https://atcoder.jp/contests/abc306/standings');
+        const tdTextContents: Array<string> = await page.locator('td.ext-added').allTextContents();
+        for (const text of tdTextContents) {
+            expect(text).toBe('-');
+        }
     });
-    
-    test('Old contests', () => {
-       // TODO: abc040 
+});
+
+test.describe('Test the virtual standings tables', (): void => {
+    test('Algorithm contests', async (): Promise<void> => {
+        await page.goto('https://atcoder.jp/contests/abc365/standings/virtual');
+        await resetSettings();
+        await setPerPage(100);
+        await testTable();
+        await checkIfThereArePerfOnly();
+        await changePage(2);
+        await testTable();
+        await checkIfThereArePerfOnly();
+    });
+
+    test('Heuristic contests', async (): Promise<void> => {
+        await page.goto('https://atcoder.jp/contests/ahc033/standings/virtual');
+        await resetSettings();
+        await setPerPage(10);
+        await testTable();
+        await checkIfThereArePerfOnly();
+        await changePage(2);
+        await testTable();
+        await checkIfThereArePerfOnly();
+    });
+});
+
+test.describe('Test the extended standings tables', () => {
+    test('Heuristic contest\'s extended standings table', async () => {
+        await page.goto('https://atcoder.jp/contests/ahc033/standings/extended ');
+        await resetSettings();
+        await setPerPage(1000);
+        await testTable();
+        await checkIfThereArePerfOnly();
     });
 });
