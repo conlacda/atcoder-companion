@@ -84,13 +84,13 @@ class AlgoPredictedStandingTable extends StandingTable {
             let ratedCount = 0;
             while (endIndex + 1 < len && this.standings.StandingsData[endIndex + 1].Rank === this.standings.StandingsData[startIndex].Rank)
                 endIndex++;
-            
+
             for (let i = startIndex; i <= endIndex; i++)
                 if (this.standings.StandingsData[i].IsRated) ratedCount++;
 
             let actualRatedRank = (beforeRatedCount + 1 + beforeRatedCount + ratedCount) / 2;
             if (actualRatedRank < 1) actualRatedRank = 1;
-            
+
             for (let i = startIndex; i <= endIndex; i++)
                 this.standings.StandingsData[i].RatedRank = actualRatedRank;
 

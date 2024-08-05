@@ -142,6 +142,12 @@ test.describe('Test against the contests that have fixed result', (): void => {
             expect(text).toBe('-');
         }
     });
+
+    test('Old contests with data is not correct', async(): Promise<void> => {
+        // https://atcoder.jp/contests/agc033/standings - last page
+        // Some unrated users contain IsRated = true
+        // TODO
+    });
 });
 
 test.describe('Test the virtual standings tables', (): void => {

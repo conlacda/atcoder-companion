@@ -68,3 +68,4 @@ cd actions-runner
 ```
 ## TODO
 * Allow disabling prediction.
+* Fix the prediction for top 1 users from bottom

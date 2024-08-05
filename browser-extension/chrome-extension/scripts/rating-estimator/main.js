@@ -77,7 +77,8 @@ const contestName = () => {
          */
         if (fixedResult.length > 0) {
             const standings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
-            new FixedStandingTable(standings, fixedResult);
+            const rank2Perf = await contest.fetchPredictedPerfArr(needTocache = true);
+            new FixedStandingTable(standings, fixedResult, rank2Perf);
         } else {
             // Make prediction
             const rank2Perf = await contest.fetchPredictedPerfArr();
