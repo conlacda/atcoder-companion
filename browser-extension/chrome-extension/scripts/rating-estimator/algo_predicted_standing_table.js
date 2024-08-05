@@ -82,28 +82,21 @@ class AlgoPredictedStandingTable extends StandingTable {
         let beforeRatedCount = 0;
         while (endIndex < len) {
             let ratedCount = 0;
-            while (endIndex + 1 < len && this.standings.StandingsData[endIndex + 1].Rank === this.standings.StandingsData[startIndex].Rank) {
+            while (endIndex + 1 < len && this.standings.StandingsData[endIndex + 1].Rank === this.standings.StandingsData[startIndex].Rank)
                 endIndex++;
-            }
+            
             for (let i = startIndex; i <= endIndex; i++)
                 if (this.standings.StandingsData[i].IsRated) ratedCount++;
 
-            const actualRatedRank = (beforeRatedCount + 1 + beforeRatedCount + ratedCount) / 2;
+            let actualRatedRank = (beforeRatedCount + 1 + beforeRatedCount + ratedCount) / 2;
+            if (actualRatedRank < 1) actualRatedRank = 1;
+            
             for (let i = startIndex; i <= endIndex; i++)
                 this.standings.StandingsData[i].RatedRank = actualRatedRank;
 
             beforeRatedCount += ratedCount;
             endIndex++;
             startIndex = endIndex;
-        }
-
-        // add rated rank for the unrated participants
-        let curRank = beforeRatedCount + 1;
-        for (let i = this.standings.StandingsData.length - 1; i >= 0; i--) {
-            if (this.standings.StandingsData[i].IsRated)
-                curRank = this.standings.StandingsData[i].RatedRank;
-            else
-                this.standings.StandingsData[i].RatedRank = curRank;
         }
     }
 }
