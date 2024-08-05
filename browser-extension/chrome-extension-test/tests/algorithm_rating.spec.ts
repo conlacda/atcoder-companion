@@ -4,6 +4,7 @@ TODO: test the data's correctness
 * Check performance of newcomers
 * Test when click the refresh button or execute "vueStandings.refresh()"
 * Rating should never be negative
+* Performance of a user with lower rank should be less than or equal to users with higher rank
 
 TODO: test against a running contest
 * Algo

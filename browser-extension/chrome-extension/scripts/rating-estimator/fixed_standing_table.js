@@ -65,6 +65,18 @@ class FixedStandingTable extends StandingTable {
                 isRated: this.fixedResult[i].IsRated
             });
         }
+
+        // Correct data - the lower rank users should have lower performance
+        let curPerf = 5000;
+        for (let i = 0; i < this.standings.StandingsData.length; i++) {
+            const userScreenName = this.standings.StandingsData[i].UserScreenName;
+            const userData = this.perfRatingData.get(userScreenName);
+            if (userData.performance > curPerf) {
+                userData.performance = curPerf;
+            } else {
+                curPerf = userData.performance;
+            }
+        }
     }
 
     /* 
