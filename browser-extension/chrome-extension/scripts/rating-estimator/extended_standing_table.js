@@ -20,7 +20,8 @@ class ExtendedStandingTable extends StandingTable {
                 userScreenName: userScreenName,
                 oldRating: 0,
                 newRating: 0,
-                isRated: false
+                isRated: false,
+                confident: true
             });
         }
     }

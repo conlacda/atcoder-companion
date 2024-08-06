@@ -23,8 +23,12 @@ class StandingTable {
 
         // Add cells with new data
         for (let i = 0; i < trows.length - 2; i++) {
-            const performanceSpan = data[i]?.performance ? Color.performance(data[i].performance) : '-';
-            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p>${performanceSpan}</p></td>`);
+            const confident = (data[i]?.confident === false) ? false: true;
+            let performanceSpan = data[i]?.performance ? Color.performance(data[i].performance): '-';
+            if (!confident)
+                performanceSpan += '*';
+
+            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p ${confident ? '': 'title="not sure"'}>${performanceSpan}</p></td>`);
 
             const diffSpan = data[i]?.isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p>${diffSpan}</p></td>`);

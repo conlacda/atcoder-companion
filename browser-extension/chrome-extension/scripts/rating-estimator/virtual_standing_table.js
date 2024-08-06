@@ -64,7 +64,8 @@ class VirtualStandingTable extends StandingTable {
                 userScreenName: userScreenName,
                 oldRating: 0,
                 newRating: 0,
-                isRated: false // do not use virtualStandings.StandingsData[i].IsRated
+                isRated: false, // do not use virtualStandings.StandingsData[i].IsRated,
+                confident: true
             });
         }
     }

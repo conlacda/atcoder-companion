@@ -39,7 +39,8 @@ class HeuristicPredictedStandingTable extends StandingTable {
                 userScreenName: userScreenName,
                 oldRating: oldRating,
                 newRating: newRating,
-                isRated: isRated
+                isRated: isRated,
+                confident: true
             });
             if (!isRated)
                 unratedCount++;

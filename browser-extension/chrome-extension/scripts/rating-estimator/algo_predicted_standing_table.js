@@ -19,6 +19,12 @@ class AlgoPredictedStandingTable extends StandingTable {
 
         this.perfRatingData = new Map(); // map of {username: DataObject{}}
 
+        /**
+         * Get bottom rank
+         * In the present, the rank of the bottom users is not accurate. (ABC has difference of ~10, ARC: 40)
+         * Add "confident" to perfRatingData to indicate that.
+         */
+        const bottomRatedRank = this.standings.StandingsData.at(-1).RatedRank;
         const standingsData = this.standings.StandingsData;
         for (let i = 0; i < standingsData.length; i++) {
             const userScreenName = standingsData[i].UserScreenName;
@@ -45,7 +51,8 @@ class AlgoPredictedStandingTable extends StandingTable {
                 userScreenName: userScreenName,
                 oldRating: oldRating,
                 newRating: newRating,
-                isRated: isRated
+                isRated: isRated,
+                confident: (bottomRatedRank === rank) ? false: true
             });
         }
     }
