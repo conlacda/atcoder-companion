@@ -19,9 +19,15 @@ require('dotenv').config({path: './.env'});
 test.describe.configure({mode: 'serial'});
 
 let page: Page;
+let _extensionId: string;
 
-test.beforeAll(async ({context}) => {
+test.beforeAll(async ({ context, extensionId }) => {
     page = await context.newPage();
+    _extensionId = extensionId;
+
+    await page.goto(`chrome-extension://${_extensionId}/index.html`);
+    await page.locator('#prediction-0').click();
+    await page.locator('#save-settings').click();
 });
 
 test.afterAll(async () => {
