@@ -1,4 +1,9 @@
 /**
+ * Constants
+ */
+const USER_SETTING_KEY = "user_settings";
+
+/**
  * Retrieve information about the current problem from the URL path.
  * @returns {Array<string>} An array containing contest name and problem code extracted from the URL path.
  *                           - The first element is the contest name.

@@ -18,6 +18,11 @@
     button {
         margin-top: 10px;
     }
+
+    h4 {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
 </style>
 
 <body>
@@ -26,18 +31,33 @@
         <h3>Atcoder Companion</h3>
     </div>
     <fieldset name="testcase-size-form">
-        <legend>Settings</legend>
+        <legend><strong>Settings</strong></legend>
+        <h4>Test cases</h4>
         <div>
-            <input type="radio" id="testcase-size-0" name="testcase-size" value="0" />
+            <input type="radio" id="testcase-size-0" name="testcase-size" value="0" checked />
             <label>Show sample test cases only</label>
         </div>
         <div>
-            <input type="radio" id="testcase-size-512" name="testcase-size" value="512" checked />
+            <input type="radio" id="testcase-size-512" name="testcase-size" value="512" />
             <label>Show small test cases (<=512KB) </label>
         </div>
         <div>
             <input type="radio" id="testcase-size-100000000000000" name="testcase-size" value="100000000000000" />
             <label>Show all test cases</label>
+        </div>
+
+        <h4>Performance & rating prediction</h4>
+        <div>
+            <input type="radio" id="prediction-0" name="prediction" value="0" checked />
+            <label>Always show predictions</label>
+        </div>
+        <div>
+            <input type="radio" id="prediction-1" name="prediction" value="1" />
+            <label>Past contests only</label>
+        </div>
+        <div>
+            <input type="radio" id="prediction-2" name="prediction" value="2" />
+            <label>Disable this feature</label>
         </div>
     </fieldset>
     <button type="button" id="save-settings">Save settings</button>

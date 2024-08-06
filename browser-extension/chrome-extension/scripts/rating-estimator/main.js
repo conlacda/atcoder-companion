@@ -48,7 +48,24 @@ const contestName = () => {
     return match[1];
 }
 
+const getUserSettings = () => {
+    const meta = document.querySelector('meta[name="user_settings_ext_added"]');
+    return JSON.parse(meta.content);
+}
+
+const USER_SETTINGS = {
+    PREDICT: {
+        ALWAYS: 0,
+        PAST_CONTESTS_ONLY: 1,
+        DISABLED: 2
+    }
+};
+
 (async () => {
+    const userSettings = getUserSettings();
+    if (userSettings.prediction === USER_SETTINGS.PREDICT.DISABLED)
+        return;
+
     const contest = new Contest(contestName());
     await waitForElm('table'); // Wait until the table is loaded by Vue
 
@@ -80,6 +97,8 @@ const contestName = () => {
             const rank2Perf = await contest.fetchPredictedPerfArr(needTocache = true);
             new FixedStandingTable(standings, fixedResult, rank2Perf);
         } else {
+            if (userSettings.prediction === USER_SETTINGS.PREDICT.PAST_CONTESTS_ONLY)
+                return;
             // Make prediction
             const rank2Perf = await contest.fetchPredictedPerfArr();
             // check if rank2Perf was created by backend.

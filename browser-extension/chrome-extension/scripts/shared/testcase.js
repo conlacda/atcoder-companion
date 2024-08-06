@@ -9,8 +9,6 @@ const SIZE_IN_BYTES = {
 // If the size of test cases is larger than 10MB, a dialog should be displayed to warn the user.
 const LARGE_SIZE_IN_BYTES = 10 * 1024 * 1024;
 
-const USER_SETTING_KEY = "user_settings";
-
 let testCasesList = [];
 
 /**

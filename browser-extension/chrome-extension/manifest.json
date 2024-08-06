@@ -30,13 +30,14 @@
             "js": [
                 "scripts/shared/jquery_.js",
                 "scripts/shared/jszip.min.js",
+                "scripts/shared/utils.js",
                 "scripts/shared/testcase.js",
-                "scripts/shared/user_settings.js",
-                "scripts/shared/utils.js"
+                "scripts/shared/user_settings.js"
             ],
             "matches": [
                 "*://atcoder.jp/*"
-            ]
+            ],
+            "run_at": "document_start"
         },
         {
             "js": [

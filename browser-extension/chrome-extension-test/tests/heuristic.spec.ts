@@ -1,1 +1,0 @@
-// TODO: test against a heuristic contest
