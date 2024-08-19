@@ -42,7 +42,7 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 * Add a dropdown list at the custom test page
 
 ## Ideas
-* Implement some features that codeforces is supporting (like checking diff of 2 submissions)
+* Implement some features that Codeforces is supporting (like checking diff of 2 submissions)
 * Run against all test cases that have a size of less than 512KB
 * Add themes (dark theme, ...)
 * Allow changing fonts
@@ -66,6 +66,3 @@ Turn self-hosted Github action locally. It will listen for events defined at the
 cd actions-runner
 ./run.cmd
 ```
-## TODO
-* Allow disabling prediction.
-* Fix the prediction for top 1 users from bottom
