@@ -27,7 +27,7 @@ const TOOLTIP = {
 // https://atcoder.jp/contests/cn2016summer-practice/
 
 const PRIORITY_LEVEL = {
-    'AC': 2,
+    'AC': 1,
     'WA': 0,
     'TLE': 0,
     'MLE': 0,
@@ -35,6 +35,6 @@ const PRIORITY_LEVEL = {
     'OLE': 0,
     'IE': 0,
     'CE': 0,
-    'WJ': 1,
+    'WJ': 2,
     'JD': 1
 }

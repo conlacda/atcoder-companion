@@ -64,4 +64,8 @@ class Submission {
         this.memory = isWJOrCE ? 0 : tds.eq(8).text();
         this.detail = isWJOrCE ? tds.eq(7).find('a:first').href : tds.eq(9).find('a:first').href;
     }
+
+    static isJudging(status) {
+        return status === 'WJ' || status === 'JD' || status.includes('/');
+    }
 }

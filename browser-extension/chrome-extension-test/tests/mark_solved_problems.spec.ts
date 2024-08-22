@@ -53,3 +53,11 @@ test('Click on the status badge to move to the page that contains the user\'s su
         await expect(tr.locator('td').nth(1)).toHaveText('B - Yellow and Red Card');
     }
 });
+
+/*
+* TODO: 
+*  Test cases:
+*   WJ, JD should be displayed over any other status
+*   WJ, JD are not persistent on local storage (be discarded before storing into persistent storage)
+*   First submission runs slow at time 1, second submission is executed later, but finish sooner, so the last_update should be the first submission's time.
+* */
