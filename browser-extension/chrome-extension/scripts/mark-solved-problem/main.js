@@ -1,7 +1,7 @@
 (async () => {
     const contest = getContest();
     const lastUpdateKey = `${contest}_last_update`;
-    let last_update = await readLocalStorage(lastUpdateKey, '2000-01-01 01:01:01');
+    const last_update = await readLocalStorage(lastUpdateKey, '2000-01-01 01:01:01');
     let currentSessionLastUpdate = last_update;
     
     const submissionStatusKey = `${contest}_submission_status`;

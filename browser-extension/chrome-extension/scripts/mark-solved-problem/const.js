@@ -36,5 +36,5 @@ const PRIORITY_LEVEL = {
     'IE': 0,
     'CE': 0,
     'WJ': 2,
-    'JD': 1
+    'JD': 2
 }
