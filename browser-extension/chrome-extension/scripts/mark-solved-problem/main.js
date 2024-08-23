@@ -29,7 +29,7 @@
                     currentSessionLastUpdate = submission.time;
                 }
                 
-                if (Submission.isJudging(submission.status)) {
+                if (isJudging(submission.status)) {
                     currentSessionLastUpdate = submission.time;
                 }
                 
@@ -53,7 +53,7 @@
     addStatusColumnToTable(submissionStt);
     // Discard WJ, JD then store to local storge. WJ, JD just are for showing in the current session not persistent.
     for (const [task, submission] of Object.entries(submissionStt)) {
-        if (Submission.isJudging(submission.status))
+        if (isJudging(submission.status))
             delete submissionStt[task];
     }
     await writeLocalStorage(lastUpdateKey, currentSessionLastUpdate);

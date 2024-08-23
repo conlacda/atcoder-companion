@@ -1,5 +1,5 @@
 /**
- * Check if the provided HTML contains a next page link.
+ * Check if there is the next submission page or not.
  * @param {string} pageContent - The HTML content of the current page.
  * @returns {boolean} Returns true if the HTML contains a next page link, otherwise false.
  */
@@ -64,8 +64,13 @@ class Submission {
         this.memory = isWJOrCE ? 0 : tds.eq(8).text();
         this.detail = isWJOrCE ? tds.eq(7).find('a:first').href : tds.eq(9).find('a:first').href;
     }
+}
 
-    static isJudging(status) {
-        return status === 'WJ' || status === 'JD' || status.includes('/');
-    }
+/**
+ * Check if a submission is judging or not
+ * @param {string} stats - A submission's status
+ * @returns {boolean}
+ */
+const isJudging = (status) => {
+    return status === 'WJ' || status === 'JD' || status.includes('/');
 }
