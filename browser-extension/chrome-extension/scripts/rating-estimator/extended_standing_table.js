@@ -8,6 +8,7 @@ class ExtendedStandingTable extends StandingTable {
         this.extendedStandings = extendedStandings;
         this.finalStandings = finalStandings;
         this.calPerfAndRating();
+        this.correctPerformance();
         this.fillDataToColumns();
     }
 

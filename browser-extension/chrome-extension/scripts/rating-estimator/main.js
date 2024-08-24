@@ -71,15 +71,14 @@ const USER_SETTINGS = {
 
     const fixedResult = await contest.fetchFinalResultFromAtcoder();
     if (isVirtualStandingPage()) {
+        const standings = await contest.fetchStandingFromAtcoder();
         if (fixedResult.length > 0) {
-            const standings = await contest.fetchStandingFromAtcoder();
             // https://img.atcoder.jp/public/a68b1c6/js/standings.js
             const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new VirtualStandingTable(virtualStandings, standings, fixedResult);
         } else {
             // Estimate perf on the virtual standing page without the final result from Atcoder
             const rank2Perf = await contest.fetchPredictedPerfArr();
-            const standings = await contest.fetchStandingFromAtcoder();
             const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new PredictedVirtualStandingTable(virtualStandings, standings, rank2Perf);
         }

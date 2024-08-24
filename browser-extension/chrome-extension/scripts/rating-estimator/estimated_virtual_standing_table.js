@@ -8,7 +8,7 @@ class PredictedVirtualStandingTable extends StandingTable {
         this.virtualStandings = virtualStandings;
         this.standings = standings;
         this.rank2Perf = rank2Perf;
-        this.result = this.calPerfAndRating();
+        this.calPerfAndRating();
         this.fillDataToColumns();
     }
 

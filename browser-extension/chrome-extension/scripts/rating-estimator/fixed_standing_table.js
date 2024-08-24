@@ -13,11 +13,11 @@ class FixedStandingTable extends StandingTable {
         this.fixedResult = fixedResult;
         this.rank2Perf = rank2Perf;
         this.calPerfAndRating();
+        this.correctPerformance();
         this.fillDataToColumns();
     }
 
     calPerfAndRating() {
-        this.correctPerformance();
         this.addRatedRankToStandings();
 
         this.perfRatingData = new Map(); // map of {username: DataObject{}}
@@ -65,37 +65,6 @@ class FixedStandingTable extends StandingTable {
                     this.perfRatingData.get(this.standings.StandingsData[i].UserScreenName).performance = performance;
                 }
             }
-        }
-
-        // Correct data - the lower rank users should have lower performance
-        let curPerf = 5000;
-        for (let i = 0; i < this.standings.StandingsData.length; i++) {
-            const userScreenName = this.standings.StandingsData[i].UserScreenName;
-            const userData = this.perfRatingData.get(userScreenName);
-            if (userData.performance > curPerf) {
-                userData.performance = curPerf;
-            } else {
-                curPerf = userData.performance;
-            }
-        }
-    }
-
-    /* 
-    * Correct input data
-    * Check https://atcoder.jp/contests/wtf22-day1-open/standings/ rank 271
-    * Many people with same rank but not same performance
-    */
-    correctPerformance() {
-        let rank2Perf = new Map();
-        for (let i = 0; i < this.fixedResult.length; i++) {
-            if (!rank2Perf.has(this.fixedResult[i].Place)) {
-                rank2Perf.set(this.fixedResult[i].Place, this.fixedResult[i].Performance);
-            } else {
-                rank2Perf.set(this.fixedResult[i].Place, Math.max(this.fixedResult[i].Performance, rank2Perf.get(this.fixedResult[i].Place)));
-            }
-        }
-        for (let i = 0; i < this.fixedResult.length; i++) {
-            this.fixedResult[i].Performance = rank2Perf.get(this.fixedResult[i].Place);
         }
     }
 

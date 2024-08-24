@@ -13,9 +13,7 @@ class StandingTable {
         this.observer.disconnect();
 
         const displayingUsers = this.getDisplayingUserList();
-        const data = displayingUsers.map((userScreenName) => {
-            return this.perfRatingData.get(userScreenName);
-        });
+        const data = displayingUsers.map(userScreenName => this.perfRatingData.get(userScreenName));
         const trows = this._table.querySelector('tbody').querySelectorAll('tr');
 
         // Remove old cells
@@ -23,12 +21,10 @@ class StandingTable {
 
         // Add cells with new data
         for (let i = 0; i < trows.length - 2; i++) {
-            const confident = (data[i]?.confident === false) ? false: true;
-            let performanceSpan = data[i]?.performance ? Color.performance(data[i].performance): '-';
-            if (!confident)
-                performanceSpan += '*';
-
-            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p ${confident ? '': 'title="not sure"'}>${performanceSpan}</p></td>`);
+            const confident = (data[i]?.confident === false) ? false : true;
+            
+            const performanceSpan = (data[i]?.performance ? Color.performance(data[i].performance) : '-') + (confident ? '' : '*');
+            trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p ${confident ? '' : 'title="not sure"'}>${performanceSpan}</p></td>`);
 
             const diffSpan = data[i]?.isRated ? Color.diff(data[i].newRating - data[i].oldRating) : '-';
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p>${diffSpan}</p></td>`);
@@ -43,6 +39,21 @@ class StandingTable {
         this.addHeaderAndFooter();
 
         this.observer.observe(this._table, { childList: true, subtree: true });
+    }
+
+    /**
+     * Correct data - the lower rank users should have lower performance
+     * Check the bottom users
+     *     https://atcoder.jp/contests/wtf22-day1-open/standings/
+     *     https://atcoder.jp/contests/ahc035/standings/extended
+     * Many people with same rank but not same performance
+     */
+    correctPerformance() {
+        let maxPerf = 5000;
+        this.perfRatingData.forEach((data, user) => {
+            maxPerf = Math.min(maxPerf, data.performance);
+            data.performance = maxPerf;
+        });
     }
 
     /**
