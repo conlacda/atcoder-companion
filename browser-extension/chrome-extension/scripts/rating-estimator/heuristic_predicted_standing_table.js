@@ -20,7 +20,10 @@ class HeuristicPredictedStandingTable extends StandingTable {
         let unratedCount = 0;
         for (let i = 0; i < this.standings.StandingsData.length; i++) {
             const userScreenName = this.standings["StandingsData"][i].UserScreenName;
-            const isRated = this.standings.StandingsData[i].IsRated;
+            // do not use this.standings.StandingsData[i].IsRated
+            // in a heuristic contest, IsRated is always true, but if a user does not submit
+            // that user is considered as unrated
+            const isRated = this.standings.StandingsData[i].TotalResult.Count > 0;
             const isDeleted = this.standings.StandingsData[i].UserIsDeleted;
             const oldRating = this.standings.StandingsData[i].Rating;
             const rank = this.standings.StandingsData[i].RatedRank; // rank has not been rounded
