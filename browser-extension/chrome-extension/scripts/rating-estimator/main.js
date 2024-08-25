@@ -20,7 +20,7 @@ const waitForElm = (selector) => {
 }
 
 const isVirtualStandingPage = () => {
-    if (vueStandings && vueStandings.isVirtual)
+    if (typeof vueStandings !== 'undefined' && vueStandings.isVirtual)
         return vueStandings.isVirtual ?? false;
 
     const curUrl = window.location.pathname;
@@ -30,7 +30,7 @@ const isVirtualStandingPage = () => {
 }
 
 const isExtendedStandingPage = () => {
-    if (vueStandings && vueStandings.hasOwnProperty('isExtended'))
+    if (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('isExtended'))
         return vueStandings.isExtended ?? false;
 
     const curUrl = window.location.pathname;
@@ -40,7 +40,7 @@ const isExtendedStandingPage = () => {
 }
 
 const contestName = () => {
-    if (vueStandings && vueStandings.hasOwnProperty('contestScreenName'))
+    if (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('contestScreenName'))
         return vueStandings.contestScreenName;
 
     const regex = /contests\/(.*)\/standings/gm;
@@ -74,16 +74,16 @@ const USER_SETTINGS = {
         const standings = await contest.fetchStandingFromAtcoder();
         if (fixedResult.length > 0) {
             // https://img.atcoder.jp/public/a68b1c6/js/standings.js
-            const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
+            const virtualStandings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new VirtualStandingTable(virtualStandings, standings, fixedResult);
         } else {
             // Estimate perf on the virtual standing page without the final result from Atcoder
             const rank2Perf = await contest.fetchPredictedPerfArr();
-            const virtualStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
+            const virtualStandings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new PredictedVirtualStandingTable(virtualStandings, standings, rank2Perf);
         }
     } else if (isExtendedStandingPage()) {
-        const extendedStandings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
+        const extendedStandings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
         new ExtendedStandingTable(extendedStandings, fixedResult);
     } else {
         /**
@@ -92,7 +92,7 @@ const USER_SETTINGS = {
          * Now the rating changes will be the difference between prediction and reality.
          */
         if (fixedResult.length > 0) {
-            const standings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
+            const standings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const rank2Perf = await contest.fetchPredictedPerfArr(needTocache = true);
             new FixedStandingTable(standings, fixedResult, rank2Perf);
         } else {
@@ -104,7 +104,7 @@ const USER_SETTINGS = {
             if (rank2Perf.length === 0)
                 return;
 
-            const standings = (vueStandings && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
+            const standings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const contest_type = await contest.getContestType();
             const roundedPerfHistories = await contest.fetchRoundedPerfHistory();
             if (contest_type === 'algo') {
