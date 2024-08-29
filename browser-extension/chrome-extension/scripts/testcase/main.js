@@ -7,9 +7,8 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
     if (allTestCasesSz === 0)
         return;
 
-    const downloadButton = (new DOMParser()).parseFromString(`<button class="btn btn-default btn-sm" id="dltc">Download all test cases (${humanReadable(allTestCasesSz)})</button>`, "text/html").body.children[0];
-    downloadButton.setAttribute('title', "Just click once to download.");
-    document.getElementById('main-container').querySelector('div').children.item(1).querySelector('span').appendChild(downloadButton);
+    const downloadButton = (new DOMParser()).parseFromString(`<button class="btn btn-default btn-sm" id="dltc" title="Just click once to download.">Download all test cases (${humanReadable(allTestCasesSz)})</button>`, "text/html").body.children[0];
+    document.querySelector('span.h2').appendChild(downloadButton);
     downloadButton.onclick = async () => {
         downloadButton.disabled = true;
         downloadButton.textContent += '\u{231B}';
