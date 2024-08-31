@@ -36,7 +36,7 @@ const DEFAULT_USER_SETTINGS = {
     for (let i = 0; i < sizes.length; i++) {
         document.getElementById(`testcase-size-${sizes[i]}`).checked = (sizes[i] === userSettings.testcaseSize);
     }
-    
+
     for (let i = 0; i < 3; i++) {
         document.getElementById(`prediction-${i}`).checked = (i == userSettings.prediction);
     }
