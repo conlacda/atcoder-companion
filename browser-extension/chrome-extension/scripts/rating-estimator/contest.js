@@ -86,9 +86,9 @@ class Contest {
      * If need to cache, cache for algo contests only, do not cache for heuristic contests 
      * because the number of participants is not fixed until the contest ends. 
      */
-    async fetchPredictedPerfArr(needTocache = false) {
+    async fetchPredictedPerfArr(needToCache = false) {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_ranking_to_perf.json`;
-        const option = (needTocache) ? {} : { cache: "no-store" }; // headers: { 'Cache-Control': 'max-age=120' }
+        const option = (needToCache) ? {} : { cache: "no-store" }; // headers: { 'Cache-Control': 'max-age=120' }
         let res = await fetchWithRetry(resourceUrl, option);
         if (res.status !== 200)
             return [];
@@ -100,9 +100,9 @@ class Contest {
     /**
      * Fetch the rounded performance history of all participants before contest ~ the data of a contest with 10k users is about 5MB.
      */
-    async fetchRoundedPerfHistory(needTocache = false) {
+    async fetchRoundedPerfHistory(needToCache = false) {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_rounded_perf_history.json`;
-        const option = (needTocache) ? {} : { cache: "no-store" }; // headers: { 'Cache-Control': 'max-age=120' }
+        const option = (needToCache) ? {} : { cache: "no-store" }; // headers: { 'Cache-Control': 'max-age=120' }
         let res = await fetchWithRetry(resourceUrl, option);
         if (res.status !== 200)
             return [];

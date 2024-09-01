@@ -53,6 +53,21 @@ const getUserSettings = () => {
     return JSON.parse(meta.content);
 }
 
+const joinedAsRatedUser = (standings, userScreenName) => {
+    for (let i = 0; i < standings.StandingsData.length; i++) {
+        if (standings.StandingsData[i].UserScreenName === userScreenName && standings.StandingsData[i].IsRated) {
+            return true;
+        }
+    }
+    return false;
+}
+
+const getPerfHistory = async (userScreenName, contest_type) => {
+    const res = await fetchWithRetry(`https://atcoder.jp/users/${userScreenName}/history/json?contestType=${contest_type}`);
+    const userPerfHistory = await res.json();
+    return userPerfHistory.filter(item => item.IsRated).map(item => item.Performance);
+}
+
 const USER_SETTINGS = {
     PREDICT: {
         ALWAYS: 0,
@@ -93,7 +108,7 @@ const USER_SETTINGS = {
          */
         if (fixedResult.length > 0) {
             const standings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
-            const rank2Perf = await contest.fetchPredictedPerfArr(needTocache = true);
+            const rank2Perf = await contest.fetchPredictedPerfArr(needToCache = true);
             new FixedStandingTable(standings, fixedResult, rank2Perf);
         } else {
             if (userSettings.prediction === USER_SETTINGS.PREDICT.PAST_CONTESTS_ONLY)
@@ -107,6 +122,10 @@ const USER_SETTINGS = {
             const standings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const contest_type = await contest.getContestType();
             const roundedPerfHistories = await contest.fetchRoundedPerfHistory();
+            // userScreenName is the currently logged-in user and defined on Atcoder
+            if (joinedAsRatedUser(standings, userScreenName) && !(userScreenName in roundedPerfHistories)) {
+                roundedPerfHistories[userScreenName] = await getPerfHistory(userScreenName, contest_type);
+            }
             if (contest_type === 'algo') {
                 new AlgoPredictedStandingTable(roundedPerfHistories, rank2Perf, standings);
             } else if (contest_type === 'heuristic') {

@@ -29,7 +29,7 @@ class HeuristicPredictedStandingTable extends StandingTable {
             const rank = this.standings.StandingsData[i].RatedRank; // rank has not been rounded
             const upPerformance = this.rank2Perf[Math.floor(rank) - 1] ?? 0; // prevents out of bound error when new users joined after the last generated time
             const downPerformance = this.rank2Perf[Math.ceil(rank) - 1] ?? 0;
-            const perfInContest = positivize(Math.floor((upPerformance + downPerformance) / 2));
+            const perfInContest = Math.floor((upPerformance + downPerformance) / 2);
             let newRating = oldRating;
             if (isRated && !isDeleted) {
                 // Prefer calculating based on the performance history to calculate based on last performance
@@ -38,7 +38,7 @@ class HeuristicPredictedStandingTable extends StandingTable {
             }
 
             this.perfRatingData.set(userScreenName, {
-                performance: perfInContest,
+                performance: positivize(perfInContest),
                 userScreenName: userScreenName,
                 oldRating: oldRating,
                 newRating: newRating,
