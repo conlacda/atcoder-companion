@@ -1,0 +1,111 @@
+{
+    "manifest_version": 3,
+    "name": "Atcoder Companion",
+    "description": "Enhance your experience by providing some useful features designed to streamline your workflow and boost your productivity.",
+    "version": "0.2.0",
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "icons/icon-16.png",
+            "32": "icons/icon-32.png",
+            "48": "icons/icon-48.png",
+            "128": "icons/icon-128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon-16.png",
+        "32": "icons/icon-32.png",
+        "48": "icons/icon-48.png",
+        "128": "icons/icon-128.png"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/shared/jquery_.js",
+                "scripts/shared/jszip.min.js",
+                "scripts/shared/utils.js",
+                "scripts/shared/testcase.js",
+                "scripts/shared/user_settings.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "js": [
+                "scripts/testcase/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/tasks/a*"
+            ]
+        },
+        {
+            "js": [
+                "scripts/mark-solved-problem/const.js",
+                "scripts/mark-solved-problem/utils.js",
+                "scripts/mark-solved-problem/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/tasks",
+                "*://atcoder.jp/contests/*/tasks/"
+            ]
+        },
+        {
+            "js": [
+                "scripts/submission-details/problem-info.js",
+                "scripts/submission-details/testcase-downloader.js",
+                "scripts/submission-details/dom.js",
+                "scripts/submission-details/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/submissions/*"
+            ],
+            "exclude_matches": [
+                "*://atcoder.jp/contests/*/submissions/me*"
+            ]
+        },
+        {
+            "js": [
+                "scripts/custom-test/custom-test.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/custom_test?submissionId=*&testcase=*&problem=*"
+            ]
+        },
+        {
+            "js": [
+                "scripts/rating-estimator/color.js",
+                "scripts/rating-estimator/rating.js",
+                "scripts/rating-estimator/contest.js",
+                "scripts/rating-estimator/standing_table.js",
+                "scripts/rating-estimator/fixed_standing_table.js",
+                "scripts/rating-estimator/algo_predicted_standing_table.js",
+                "scripts/rating-estimator/heuristic_predicted_standing_table.js",
+                "scripts/rating-estimator/virtual_standing_table.js",
+                "scripts/rating-estimator/estimated_virtual_standing_table.js",
+                "scripts/rating-estimator/extended_standing_table.js",
+                "scripts/rating-estimator/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/standings*"
+            ],
+            "exclude_matches": [
+                "*://atcoder.jp/contests/*/standings*/json",
+                "*://atcoder.jp/contests/*/standings*/json",
+                "*://atcoder.jp/contests/*/standings*/json"
+            ],
+            "run_at": "document_idle",
+            "world": "MAIN"
+        }
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{f5d8b2e1-b16a-4c5d-83d0-3f6a2b1e8c9b}",
+            "strict_min_version": "109.0"
+        }
+    }
+}
