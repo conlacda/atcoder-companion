@@ -31,14 +31,10 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 
 ## Features I think I should implement
 * [x] Predict rating during a contest (testing)
-* [ ] Add performance graph
 * [ ] Show difficulty of problems (get from kenkoo)
-* [ ] Number of submissions, the ratio of AC (can enable, disable) - can calculate by using standings API - get inspired by [AtCoder ACer](https://chromewebstore.google.com/detail/atcoder-acer/pmdfjdiiiacncpgmjmeicdoidkaadjde)
 * [ ] Add status + test cases to the printing page
 
 ## Improvement
-* Upload to the Firefox store.
-* Follow [best practices to claim badge](https://support.google.com/chrome_webstore/answer/1050673?hl=en&visit_id=638494791511429235-3837272215&p=cws_badges&rd=1#cws_badges&zippy=%2Cunderstand-chrome-web-store-badges)
 * Add a dropdown list at the custom test page
 
 ## Ideas
