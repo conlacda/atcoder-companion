@@ -3,9 +3,9 @@
 
 [![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml) 
 
-[![Atcoder companion in Chrome Web Store](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/tbyBjqi7Zu733AAKA5n4.png 'Available in the Chrome Web Store')](https://chromewebstore.google.com/detail/atcoder-companion/bflhekmjlbpdlibcmojpikplaldgceec)
+[![Atcoder companion in Chrome Web Store](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/tbyBjqi7Zu733AAKA5n4.png 'Available in the Chrome Web Store')](https://chromewebstore.google.com/detail/atcoder-companion/bflhekmjlbpdlibcmojpikplaldgceec) [![Atcoder companion in Firefox add-ons](https://extensionworkshop.com/assets/img/documentation/publish/get-the-addon-178x60px.dad84b42.png 'Available in the Firefox add-ons')](https://addons.mozilla.org/en-US/firefox/addon/atcoder-companion/)
 
-![marquee image](images/Atcoder%20Companion_1400x560.png)
+
 
 ## Some features
 
