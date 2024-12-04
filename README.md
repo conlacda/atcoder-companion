@@ -3,24 +3,25 @@
 
 [![Playwright Tests](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml/badge.svg)](https://github.com/conlacda/useful-atcoder/actions/workflows/playwright.yml) 
 
-[![Atcoder companion in Chrome Web Store](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/tbyBjqi7Zu733AAKA5n4.png 'Available in the Chrome Web Store')](https://chromewebstore.google.com/detail/atcoder-companion/bflhekmjlbpdlibcmojpikplaldgceec) [![Atcoder companion in Firefox add-ons](https://extensionworkshop.com/assets/img/documentation/publish/get-the-addon-178x60px.dad84b42.png 'Available in the Firefox add-ons')](https://addons.mozilla.org/en-US/firefox/addon/atcoder-companion/)
+[![Atcoder companion in Chrome Web Store](/images/available_chome_webstore.png 'Available in the Chrome Web Store')](https://chromewebstore.google.com/detail/atcoder-companion/bflhekmjlbpdlibcmojpikplaldgceec) [![Atcoder companion in Firefox add-ons](/images/available_firefox_webstore.png 'Available in the Firefox add-ons')](https://addons.mozilla.org/en-US/firefox/addon/atcoder-companion/)
 
 
-
-## Some features
+## Features
 
 ### Estimate rating
 ![](images/estimate-rating.png)
 
-### Mark solved problems
+### Show status of solved problems
 ![mark-solved-problems.png](images/mark-solved-problems.png)
 
-### Add more test cases to the problem statement & allow downloading all test cases with one click
+### Test cases
+You can add more test cases to the problem statement and download all test cases with one click.
+
 ![add-test-cases.png](images/add-test-cases.png)
 
 ![](images/download-testcases.png)
 
-### Copy, download test cases and debug your code with those test cases
+You can also copy and download test cases and debug your code with those test cases.
 ![copy-download-debug.png](images/copy-download-debug.png)
 
 ### Debug with custom test
@@ -29,24 +30,14 @@ Click one of the ![](images/bug.svg) buttons you see above and a custom test pag
 ![custom-page-source-code.png](images/custom-page-source-code.png)
 ![custom-page-in-out.png](images/custom-page-in-out.png)
 
-## Features I think I should implement
-* [x] Predict rating during a contest (testing)
-* [ ] Show difficulty of problems (get from kenkoo)
-* [ ] Add status + test cases to the printing page
-
-## Improvement
-* Add a dropdown list at the custom test page
-
 ## Ideas
 * Implement some features that Codeforces is supporting (like checking diff of 2 submissions)
 * Run against all test cases that have a size of less than 512KB
 * Add themes (dark theme, ...)
 * Allow changing fonts
+* Add a dropdown list at the custom test page
 
 ## Reference
-* [Chrome extension samples](https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/api-samples/alarms)
-* [Chrome web store documentation](https://developer.chrome.com/docs/webstore/)
-* [Apply for a featured badge](https://support.google.com/chrome_webstore/contact/one_stop_support?hl=en)
 * A part of my source code is copied from [atcoder-rating-estimator](https://github.com/koba-e964/atcoder-rating-estimator)
 
 ## Accuracy issue
