@@ -14,7 +14,8 @@ const getProblemInfo = () => {
     const regex = /contests\/.*\/tasks\/(.*)_(.*)/;
     const match = regex.exec(curPath);
     const contest = match[1];
-    const problem = match[2].toUpperCase();
+    const title = document.querySelector('span.h2').innerText;
+    const problem = (title.length > 0) ? title[0]: match[2].toUpperCase();
     return [contest, problem];
 }
 

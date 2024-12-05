@@ -22,7 +22,7 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
     // confirm before loading all of test cases if they are too large.
     const testCasesSzInBytes = await sizeOfTestCasesByUserSettings(contest, problem);
     if (testCasesSzInBytes > LARGE_SIZE_IN_BYTES) {
-        if (!window.confirm(`The size of all the test cases is too large (${humanReadable(testCasesSzInBytes)}). Loading all of them might make the browser crash. Still load?`)) {
+        if (!window.confirm(`The size of all the test cases is too large (${humanReadable(testCasesSzInBytes)}). Loading all of them might make your browser crash. Still load?`)) {
             return;
         }
     }
