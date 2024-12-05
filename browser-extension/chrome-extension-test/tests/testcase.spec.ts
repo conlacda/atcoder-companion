@@ -94,7 +94,7 @@ test.describe('A dialog should be displayed if the test cases size is too big', 
     test('Accept the dialog', async () => {
         // Accept the dialog should be tested after dismissing. Because we cannot rewrite page.on('dialog')
         page.on('dialog', dialog => {
-            expect(dialog.message() === 'The size of all the test cases is too large (31.5MB). Loading all of them might make the browser crash. Still load?').toBeTruthy();
+            expect(dialog.message() === 'The size of all the test cases is too large (31.5MB). Loading all of them might make your browser crash. Still load?').toBeTruthy();
             dialog.accept();
         });
         await page.goto('https://atcoder.jp/contests/abc346/tasks/abc346_c');
