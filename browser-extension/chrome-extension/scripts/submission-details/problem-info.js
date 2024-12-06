@@ -12,18 +12,15 @@ getContestName = () => {
 };
 
 /**
- * Retrieve the problem name
+ * Retrieve the problem ID
  * @example A, B, C or D
- * @returns {string} The problem name
+ * @returns {string} The problem ID
  */
-getProblemName = () => {
-    return $(".table")                // Selecting the "Submission Info" table
-        .first()
-        .find('tr')               // The second row contains problem name
-        .eq(1)
-        .find('a')                // <a> contains url of the problem
-        .attr('href')
-        .at(-1)                   // Last character of url is the problem nam (A, B, C, D)
+getProblemID = () => {
+    return document.querySelector('.table')
+        .querySelectorAll('tr')[1]
+        .querySelector('a')
+        .innerText[0]
         .toUpperCase();
 };
 

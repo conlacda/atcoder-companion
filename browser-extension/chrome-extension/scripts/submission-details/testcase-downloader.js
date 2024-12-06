@@ -7,7 +7,7 @@
  */
 fetchTestCase = async (testcase, inOrOut = "in") => {
     const contest = getContestName();
-    const problem = getProblemName();
+    const problem = getProblemID();
     const source = `https://raw.githubusercontent.com/conlacda/atcoder-testcases/${contest}/${contest}/${problem}/${inOrOut}/${testcase}`;
     const res = await fetchWithRetry(source);
     if (res.status !== 200) {
