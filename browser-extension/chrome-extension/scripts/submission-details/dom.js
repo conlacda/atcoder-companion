@@ -84,7 +84,7 @@ addDebugColumnToResultTable = (resultTable) => {
         debugIcon.attr('id', `debug-${index}`);
         debugIcon.css('cursor', 'pointer');
         debugIcon.on("click", () => {
-            window.location.href = `https://atcoder.jp/contests/${getContestName()}/custom_test?submissionId=${getSubmissionId()}&testcase=${tcfile}&problem=${getProblemName()}`;
+            window.location.href = `https://atcoder.jp/contests/${getContestName()}/custom_test?submissionId=${getSubmissionId()}&testcase=${tcfile}&problem=${getProblemID()}`;
         });
         const cell = $('<td class="text-right"></td>');
         cell.append(debugIcon);
