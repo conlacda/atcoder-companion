@@ -5,7 +5,7 @@
  * @returns {Promise<?string>} A Promise that resolves with the content of the test case file if successful,
  *                             or null if the fetch operation fails.
  */
-fetchTestCase = async (testcase, inOrOut = "in") => {
+const fetchTestCase = async (testcase, inOrOut = "in") => {
     const contest = getContestName();
     const problem = getProblemID();
     const source = `https://raw.githubusercontent.com/conlacda/atcoder-testcases/${contest}/${contest}/${problem}/${inOrOut}/${testcase}`;

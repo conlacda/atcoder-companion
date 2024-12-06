@@ -1,4 +1,4 @@
-addInOutColumnToResultTable = (resultTable, inOrOut) => {
+const addInOutColumnToResultTable = (resultTable, inOrOut) => {
     const thead = resultTable.find('thead');
     const tbody = resultTable.find('tbody');
     let rows = tbody.find('tr');
@@ -58,15 +58,15 @@ addInOutColumnToResultTable = (resultTable, inOrOut) => {
     });
 }
 
-addInputColumnToResultTable = (resultTable) => {
+const addInputColumnToResultTable = (resultTable) => {
     addInOutColumnToResultTable(resultTable, "in");
 }
 
-addOutputColumnToResultTable = (resultTable) => {
+const addOutputColumnToResultTable = (resultTable) => {
     addInOutColumnToResultTable(resultTable, "out");
 }
 
-addDebugColumnToResultTable = (resultTable) => {
+const addDebugColumnToResultTable = (resultTable) => {
     const thead = resultTable.find('thead');
     const tbody = resultTable.find('tbody');
 

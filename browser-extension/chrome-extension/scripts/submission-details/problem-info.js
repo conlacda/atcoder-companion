@@ -5,7 +5,7 @@ const curPath = window.location.pathname;
  * @example abc123, arc102
  * @returns {string} The name of the contest extracted from the current path.
  */
-getContestName = () => {
+const getContestName = () => {
     const regex = /contests\/(.*)\/submissions/gm;
     const match = regex.exec(curPath);
     return match[1];
@@ -13,10 +13,11 @@ getContestName = () => {
 
 /**
  * Retrieve the problem ID
+ * Do not use the problem's URL to extract the problem ID. See issue #4 & #5 for more details.
  * @example A, B, C or D
  * @returns {string} The problem ID
  */
-getProblemID = () => {
+const getProblemID = () => {
     return document.querySelector('.table')
         .querySelectorAll('tr')[1]
         .querySelector('a')
@@ -28,7 +29,7 @@ getProblemID = () => {
  * Retrieves the submission ID from the current path.
  * @returns {string} The submission ID extracted from the current path.
  */
-getSubmissionId = () => {
+const getSubmissionId = () => {
     const regex = /contests\/.*\/submissions\/(.*)/gm;
     const match = regex.exec(curPath);
     return match[1];
