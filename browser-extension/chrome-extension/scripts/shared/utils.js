@@ -5,9 +5,7 @@ const USER_SETTING_KEY = "user_settings";
 
 /**
  * Retrieve information about the current problem from the URL path.
- * @returns {Array<string>} An array containing contest name and problem code extracted from the URL path.
- *                           - The first element is the contest name.
- *                           - The second element is the problem code in uppercase.
+ * @returns {{string, string}} An object containing contest name and problem code extracted from the URL path.
  */
 const getProblemInfo = () => {
     const curPath = window.location.pathname;
@@ -15,8 +13,8 @@ const getProblemInfo = () => {
     const match = regex.exec(curPath);
     const contest = match[1];
     const title = document.querySelector('span.h2').innerText;
-    const problem = (title.length > 0) ? title[0]: match[2].toUpperCase();
-    return [contest, problem];
+    const problemID = title.includes('-') ? title.split('-')[0].trim() : match[2].toUpperCase();
+    return {contest, problemID};
 }
 
 /**
@@ -51,7 +49,7 @@ const copyToClipboard = async (clipboard) => {
 
 // save file content to local
 const saveToLocal = async (content, fileName = "testcase.txt") => {
-    const blob = new Blob([content], {type: 'text/plain'});
+    const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;

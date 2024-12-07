@@ -61,14 +61,21 @@ test.describe('Test cases should be added as the user settings', () => {
 
 test.describe('Test download test cases', () => {
     test('Download test cases button should be displayed', async () => {
+        // Normal problem
         await page.goto('https://atcoder.jp/contests/agc062/tasks/agc062_b');
         await expect(page.getByText('Download all test cases (43KB)')).toBeVisible();
 
-        await page.goto('https://atcoder.jp/contests/abc350/tasks/abc350_g');
-        await expect(page.getByText('Download all test cases (249.5MB)')).toBeVisible();
+        // Extended problem. Its url is abc256_h but its name starts with "Ex - "
+        await page.goto('https://atcoder.jp/contests/abc256/tasks/abc256_h');
+        await expect(page.getByText('Download all test cases (109.5MB)')).toBeVisible();
+
+        // Problem that has test case mapping to ARC contest
+        // Ex: test case of abc044_a is mapping to arc060_a
+        await page.goto('https://atcoder.jp/contests/abc044/tasks/abc044_a');
+        await expect(page.getByText('Download all test cases (242B)')).toBeVisible();
     });
 
-    test('Download test cases as a zip file', async () => {
+    test('Download test cases as a zip file - normal problem', async () => {
         await page.goto('https://atcoder.jp/contests/abc346/tasks/abc346_c');
         await expect(page.getByText('Download all test cases (31.5MB)')).toBeVisible();
         const downloadButton: Locator = page.locator('#dltc');
@@ -76,6 +83,28 @@ test.describe('Test download test cases', () => {
         await downloadButton.click();
         const download: Download = await downloadPromise;
         expect(download.suggestedFilename()).toBe("abc346-C.zip");
+        await download.saveAs(download.suggestedFilename());
+        // TODO: It should be better to test unzip and then check the folder structure and file contents.
+    });
+
+    test('Download test cases as a zip file - extended problem', async () => {
+        await page.goto('https://atcoder.jp/contests/abc256/tasks/abc256_h');
+        const downloadButton: Locator = page.locator('#dltc');
+        const downloadPromise = page.waitForEvent('download');
+        await downloadButton.click();
+        const download: Download = await downloadPromise;
+        expect(download.suggestedFilename()).toBe("abc256-Ex.zip");
+        await download.saveAs(download.suggestedFilename());
+        // TODO: It should be better to test unzip and then check the folder structure and file contents.
+    });
+
+    test('Download test cases as a zip file - mapping problem', async () => {
+        await page.goto('https://atcoder.jp/contests/abc044/tasks/abc044_a');
+        const downloadButton: Locator = page.locator('#dltc');
+        const downloadPromise = page.waitForEvent('download');
+        await downloadButton.click();
+        const download: Download = await downloadPromise;
+        expect(download.suggestedFilename()).toBe("arc060-A.zip");
         await download.saveAs(download.suggestedFilename());
         // TODO: It should be better to test unzip and then check the folder structure and file contents.
     });
