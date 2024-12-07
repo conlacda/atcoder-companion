@@ -2,8 +2,10 @@
     const testcaseList = await fetchTestCasesList(getContestName(), getProblemID());
     if (testcaseList.length > 0) {
         const resultTable = $('.table:last');
-        addInputColumnToResultTable(resultTable);
-        addOutputColumnToResultTable(resultTable);
-        addDebugColumnToResultTable(resultTable);
+        if (resultTable.text().toLowerCase().includes('case name')) {
+            addInputColumnToResultTable(resultTable);
+            addOutputColumnToResultTable(resultTable);
+            addDebugColumnToResultTable(resultTable);
+        }
     }
 })();

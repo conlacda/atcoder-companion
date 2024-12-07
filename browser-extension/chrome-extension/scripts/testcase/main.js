@@ -1,9 +1,10 @@
-const [contest, problem] = getProblemInfo();
+let {contest, problemID} = getProblemInfo();
+contest = mappingForTestCase[contest] ?? contest;
 const copyButton = $('span[data-toggle="tooltip"]:visible').first();
 
 (async () => {
     // Add download all test cases button
-    const allTestCasesSz = await sizeOfAllTestCases(contest, problem);
+    const allTestCasesSz = await sizeOfAllTestCases(contest, problemID);
     if (allTestCasesSz === 0)
         return;
 
@@ -12,7 +13,7 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
     downloadButton.onclick = async () => {
         downloadButton.disabled = true;
         downloadButton.textContent += '\u{231B}';
-        await downloadAllTestCases(contest, problem);
+        await downloadAllTestCases(contest, problemID);
         setTimeout(() => {
             downloadButton.textContent = downloadButton.textContent.replace('⌛', '');
             downloadButton.disabled = false;
@@ -20,7 +21,7 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
     }
 
     // confirm before loading all of test cases if they are too large.
-    const testCasesSzInBytes = await sizeOfTestCasesByUserSettings(contest, problem);
+    const testCasesSzInBytes = await sizeOfTestCasesByUserSettings(contest, problemID);
     if (testCasesSzInBytes > LARGE_SIZE_IN_BYTES) {
         if (!window.confirm(`The size of all the test cases is too large (${humanReadable(testCasesSzInBytes)}). Loading all of them might make your browser crash. Still load?`)) {
             return;
@@ -29,7 +30,7 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
 
     // Add testcase to the test case section
     const taskStatement = document.getElementById('task-statement');
-    const testcases = await fetchTestCasesByUserSettings(contest, problem);
+    const testcases = await fetchTestCasesByUserSettings(contest, problemID);
     testcases.forEach((tc) => {
         if (tc.isSample())
             return;

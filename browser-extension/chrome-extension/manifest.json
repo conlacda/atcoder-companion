@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Atcoder Companion",
     "description": "Enhance your experience by providing some useful features designed to streamline your workflow and boost your productivity.",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "action": {
         "default_popup": "index.html",
         "default_icon": {
@@ -41,10 +41,14 @@
         },
         {
             "js": [
+                "scripts/shared/testcase_mapping.js",
                 "scripts/testcase/main.js"
             ],
             "matches": [
-                "*://atcoder.jp/contests/*/tasks/a*"
+                "*://atcoder.jp/contests/*/tasks/*"
+            ],
+            "exclude_matches": [
+                "*://atcoder.jp/contests/*/tasks/"
             ]
         },
         {
@@ -60,6 +64,7 @@
         },
         {
             "js": [
+                "scripts/shared/testcase_mapping.js",
                 "scripts/submission-details/problem-info.js",
                 "scripts/submission-details/testcase-downloader.js",
                 "scripts/submission-details/dom.js",

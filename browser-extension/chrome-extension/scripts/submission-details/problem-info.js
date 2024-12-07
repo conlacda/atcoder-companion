@@ -8,7 +8,10 @@ const curPath = window.location.pathname;
 const getContestName = () => {
     const regex = /contests\/(.*)\/submissions/gm;
     const match = regex.exec(curPath);
-    return match[1];
+    // In some old contests, ABC & ARC contests share a part of problems. 
+    // To download the test cases, we need to convert it to the correct contest that has uploaded test cases.
+    const contest = match[1];
+    return mappingForTestCase[contest] ?? contest;
 };
 
 /**
@@ -21,8 +24,9 @@ const getProblemID = () => {
     return document.querySelector('.table')
         .querySelectorAll('tr')[1]
         .querySelector('a')
-        .innerText[0]
-        .toUpperCase();
+        .innerText
+        .split('-')[0]
+        .trim();
 };
 
 /**
