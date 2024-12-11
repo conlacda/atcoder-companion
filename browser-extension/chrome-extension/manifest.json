@@ -48,7 +48,8 @@
                 "*://atcoder.jp/contests/*/tasks/*"
             ],
             "exclude_matches": [
-                "*://atcoder.jp/contests/*/tasks/"
+                "*://atcoder.jp/contests/*/tasks/",
+                "*://atcoder.jp/contests/*/tasks/*/*"
             ]
         },
         {

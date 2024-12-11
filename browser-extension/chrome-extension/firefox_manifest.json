@@ -37,10 +37,15 @@
         },
         {
             "js": [
+                "scripts/shared/testcase_mapping.js",
                 "scripts/testcase/main.js"
             ],
             "matches": [
-                "*://atcoder.jp/contests/*/tasks/a*"
+                "*://atcoder.jp/contests/*/tasks/*"
+            ],
+            "exclude_matches": [
+                "*://atcoder.jp/contests/*/tasks/",
+                "*://atcoder.jp/contests/*/tasks/*/*"
             ]
         },
         {
@@ -56,6 +61,7 @@
         },
         {
             "js": [
+                "scripts/shared/testcase_mapping.js",
                 "scripts/submission-details/problem-info.js",
                 "scripts/submission-details/testcase-downloader.js",
                 "scripts/submission-details/dom.js",

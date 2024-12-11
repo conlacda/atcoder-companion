@@ -130,3 +130,11 @@ test.describe('A dialog should be displayed if the test cases size is too big', 
         await expect(page.locator('#task-statement').locator('div.part')).toHaveCount(58, {timeout: 60 * 1000});
     });
 });
+
+test.describe('Do not show the download test cases button on a page that is not a problem statement page', () => {
+    test('Do not show in the editorial page', async () => {
+        await page.goto('https://atcoder.jp/contests/dp/tasks/dp_a/editorial');
+        const button = page.locator('text=/^Download all test cases.*/');
+        await expect(button).toHaveCount(0);
+    });
+});
