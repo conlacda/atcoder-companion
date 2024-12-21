@@ -4,6 +4,8 @@
  * If they are different, we need to map them.
  */
 const mappingForTestCase = {
+    "abc042": "arc058",
+    "abc043": "arc059",
     "abc044": "arc060",
     "abc045": "arc061",
     "abc046": "arc062",
