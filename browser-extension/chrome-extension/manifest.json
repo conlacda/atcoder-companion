@@ -110,7 +110,7 @@
             ],
             "run_at": "document_idle",
             "world": "MAIN"
-        }, 
+        },
         {
             "js": [
                 "scripts/tasks_print/main.js"
