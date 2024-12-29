@@ -8,7 +8,7 @@ const copyButton = $('span[data-toggle="tooltip"]:visible').first();
     if (allTestCasesSz === 0)
         return;
 
-    const downloadButton = (new DOMParser()).parseFromString(`<button class="btn btn-default btn-sm" id="dltc" title="Just click once to download.">Download all test cases (${humanReadable(allTestCasesSz)})</button>`, "text/html").body.children[0];
+    const downloadButton = (new DOMParser()).parseFromString(`<button class="btn btn-default btn-sm" id="dltc" title="Just click once to download.">Download all test cases (${humanReadable(allTestCasesSz)})</button>`, "text/html").body.firstChild;
     document.querySelector('span.h2').appendChild(downloadButton);
     downloadButton.onclick = async () => {
         downloadButton.disabled = true;
