@@ -37,7 +37,7 @@ const isVirtualStandingPage = () => {
 }
 
 const isExtendedStandingPage = () => {
-    if (isVuePresent() && vueStandings.hasOwnProperty('isExtended'))
+    if (isVuePresent('isExtended'))
         return vueStandings.isExtended ?? false;
 
     const curUrl = window.location.pathname;
@@ -47,7 +47,7 @@ const isExtendedStandingPage = () => {
 }
 
 const contestName = () => {
-    if (isVuePresent() && vueStandings.hasOwnProperty('contestScreenName'))
+    if (isVuePresent('contestScreenName'))
         return vueStandings.contestScreenName;
 
     const regex = /contests\/(.*)\/standings/gm;
