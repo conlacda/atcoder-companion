@@ -19,8 +19,15 @@ const waitForElm = (selector) => {
     });
 }
 
+const isVuePresent = (property = '') => {
+    let present = typeof vueStandings !== 'undefined';
+    if (property != '')
+        present = present && vueStandings.hasOwnProperty(property);
+    return present;
+};
+
 const isVirtualStandingPage = () => {
-    if (typeof vueStandings !== 'undefined' && vueStandings.isVirtual)
+    if (isVuePresent() && vueStandings.isVirtual)
         return vueStandings.isVirtual ?? false;
 
     const curUrl = window.location.pathname;
@@ -30,7 +37,7 @@ const isVirtualStandingPage = () => {
 }
 
 const isExtendedStandingPage = () => {
-    if (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('isExtended'))
+    if (isVuePresent() && vueStandings.hasOwnProperty('isExtended'))
         return vueStandings.isExtended ?? false;
 
     const curUrl = window.location.pathname;
@@ -40,7 +47,7 @@ const isExtendedStandingPage = () => {
 }
 
 const contestName = () => {
-    if (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('contestScreenName'))
+    if (isVuePresent() && vueStandings.hasOwnProperty('contestScreenName'))
         return vueStandings.contestScreenName;
 
     const regex = /contests\/(.*)\/standings/gm;
@@ -89,16 +96,16 @@ const USER_SETTINGS = {
         const standings = await contest.fetchStandingFromAtcoder();
         if (fixedResult.length > 0) {
             // https://img.atcoder.jp/public/a68b1c6/js/standings.js
-            const virtualStandings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
+            const virtualStandings = isVuePresent('standings') ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new VirtualStandingTable(virtualStandings, standings, fixedResult);
         } else {
             // Estimate perf on the virtual standing page without the final result from Atcoder
             const rank2Perf = await contest.fetchPredictedPerfArr();
-            const virtualStandings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
+            const virtualStandings = isVuePresent('standings') ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new PredictedVirtualStandingTable(virtualStandings, standings, rank2Perf);
         }
     } else if (isExtendedStandingPage()) {
-        const extendedStandings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
+        const extendedStandings = isVuePresent('standings') ? vueStandings.standings : (await contest.fetchExtendedStandingsFromAtcoder());
         new ExtendedStandingTable(extendedStandings, fixedResult);
     } else {
         /**
@@ -115,14 +122,16 @@ const USER_SETTINGS = {
                 return;
             // Make prediction
             const rank2Perf = await contest.fetchPredictedPerfArr();
-            // check if rank2Perf was created by backend.
+            // check if rank2Perf has been created by backend.
             if (rank2Perf.length === 0)
                 return;
 
             const standings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const contest_type = await contest.getContestType();
             const roundedPerfHistories = await contest.fetchRoundedPerfHistory();
-            // userScreenName is the currently logged-in user and defined on Atcoder
+            // Check if user joined then submit, but the backend has not created data for them
+            // Fetch their competition history directly from Atcoder
+            // TODO: after update, the structure of roundedPerfHistories changed and differs for algo & heuristic contest
             if (joinedAsRatedUser(standings, userScreenName) && !(userScreenName in roundedPerfHistories)) {
                 roundedPerfHistories[userScreenName] = await getPerfHistory(userScreenName, contest_type);
             }
