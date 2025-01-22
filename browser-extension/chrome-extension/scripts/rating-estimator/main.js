@@ -21,7 +21,7 @@ const waitForElm = (selector) => {
 
 const isVuePresent = (property = '') => {
     let present = typeof vueStandings !== 'undefined';
-    if (property != '')
+    if (property)
         present = present && vueStandings.hasOwnProperty(property);
     return present;
 };
@@ -72,7 +72,13 @@ const joinedAsRatedUser = (standings, userScreenName) => {
 const getPerfHistory = async (userScreenName, contest_type) => {
     const res = await fetchWithRetry(`https://atcoder.jp/users/${userScreenName}/history/json?contestType=${contest_type}`);
     const userPerfHistory = await res.json();
-    return userPerfHistory.filter(item => item.IsRated).map(item => item.Performance);
+    userPerfHistory = userPerfHistory.filter(item => item.IsRated);
+    const perfs = userPerfHistory.map(item => item.Performance);
+    if (contest_type == 'algo')
+        return perfs;
+
+    const contests = userPerfHistory.map(item => item.ContestScreenName.split('.')[0]);
+    return [perfs, contests];
 }
 
 const USER_SETTINGS = {
@@ -114,7 +120,7 @@ const USER_SETTINGS = {
          * Now the rating changes will be the difference between prediction and reality.
          */
         if (fixedResult.length > 0) {
-            const standings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
+            const standings = isVuePresent('standings') ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const rank2Perf = await contest.fetchPredictedPerfArr(needToCache = true);
             new FixedStandingTable(standings, fixedResult, rank2Perf);
         } else {
@@ -126,18 +132,16 @@ const USER_SETTINGS = {
             if (rank2Perf.length === 0)
                 return;
 
-            const standings = (typeof vueStandings !== 'undefined' && vueStandings.hasOwnProperty('standings')) ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
+            const standings = isVuePresent('standings') ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
             const contest_type = await contest.getContestType();
             const roundedPerfHistories = await contest.fetchRoundedPerfHistory();
-            // Check if user joined then submit, but the backend has not created data for them
-            // Fetch their competition history directly from Atcoder
-            // TODO: after update, the structure of roundedPerfHistories changed and differs for algo & heuristic contest
             if (joinedAsRatedUser(standings, userScreenName) && !(userScreenName in roundedPerfHistories)) {
                 roundedPerfHistories[userScreenName] = await getPerfHistory(userScreenName, contest_type);
             }
             if (contest_type === 'algo') {
                 new AlgoPredictedStandingTable(roundedPerfHistories, rank2Perf, standings);
             } else if (contest_type === 'heuristic') {
+                // TODO: fetch the list of contests, implement new AHC rating formula
                 new HeuristicPredictedStandingTable(roundedPerfHistories, rank2Perf, standings);
             }
         }
