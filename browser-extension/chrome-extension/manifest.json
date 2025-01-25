@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Atcoder Companion",
     "description": "Enhance your experience by providing some useful features designed to streamline your workflow and boost your productivity.",
-    "version": "0.2.6",
+    "version": "0.2.9",
     "action": {
         "default_popup": "index.html",
         "default_icon": {
@@ -96,7 +96,7 @@
                 "scripts/rating-estimator/algo_predicted_standing_table.js",
                 "scripts/rating-estimator/heuristic_predicted_standing_table.js",
                 "scripts/rating-estimator/virtual_standing_table.js",
-                "scripts/rating-estimator/estimated_virtual_standing_table.js",
+                "scripts/rating-estimator/predicted_virtual_standing_table.js",
                 "scripts/rating-estimator/extended_standing_table.js",
                 "scripts/rating-estimator/main.js"
             ],

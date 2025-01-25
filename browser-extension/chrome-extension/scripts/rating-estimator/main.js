@@ -46,7 +46,7 @@ const isExtendedStandingPage = () => {
     return match?.length > 0;
 }
 
-const contestName = () => {
+const getContestName = () => {
     if (isVuePresent('contestScreenName'))
         return vueStandings.contestScreenName;
 
@@ -94,7 +94,7 @@ const USER_SETTINGS = {
     if (userSettings.prediction === USER_SETTINGS.PREDICT.DISABLED)
         return;
 
-    const contest = new Contest(contestName());
+    const contest = new Contest(getContestName());
     await waitForElm('table'); // Wait until the table is loaded by Vue
 
     const fixedResult = await contest.fetchFinalResultFromAtcoder();
@@ -141,8 +141,8 @@ const USER_SETTINGS = {
             if (contest_type === 'algo') {
                 new AlgoPredictedStandingTable(roundedPerfHistories, rank2Perf, standings);
             } else if (contest_type === 'heuristic') {
-                // TODO: fetch the list of contests, implement new AHC rating formula
-                new HeuristicPredictedStandingTable(roundedPerfHistories, rank2Perf, standings);
+                const heuristicContests = await contest.getHeuristicContestList();
+                new HeuristicPredictedStandingTable(roundedPerfHistories, rank2Perf, standings, heuristicContests);
             }
         }
     }

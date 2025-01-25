@@ -98,7 +98,10 @@ class Contest {
     }
 
     /**
-     * Fetch the rounded performance history of all participants before contest ~ the data of a contest with 10k users is about 5MB.
+     * Fetch the rounded performance history of all participants before contest, the data of a contest with 10k users is about 5MB.
+     * Note that the file format of the algo and heuristic contests are different
+     * an algo contest contains a map of user to perf array [p1, p2, ...]
+     * but a heuristic contest contains a map of user to pert array and rated contests [[p1, p2, ...], [contest1, contest2, ...]]
      */
     async fetchRoundedPerfHistory(needToCache = false) {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_rounded_perf_history.json`;
@@ -144,5 +147,22 @@ class Contest {
             return res.type;
         }
         return 'algo';
+    }
+
+    /**
+     * Fetch a list of information of all heuristic contests.
+     * @returns {object[]}
+     */
+    async getHeuristicContestList() {
+        const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/refs/heads/main/data/heuristic_contests.json`;
+        let res = await fetchWithRetry(resourceUrl, { cache: "no-store" });
+        let contests = {};
+        if (res.status === 200) {
+            const contestList = await res.json();
+            for (const contest of contestList) {
+                contests[contest.short_name] = contest;
+            }
+        }
+        return contests;
     }
 }

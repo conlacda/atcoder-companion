@@ -27,13 +27,12 @@ class PredictedVirtualStandingTable extends StandingTable {
             }
         }
 
-        const isUnratedContest = (() => this.standings.StandingsData.every((user) => !user.IsRated))();
+        const isUnratedContest = this.standings.StandingsData.every(user => !user.IsRated);
 
         // Estimate performance of (score, time) in virtualStandings
         this.perfRatingData = new Map();
         let pointer = 0;
         for (let i = 0; i < this.virtualStandings.StandingsData.length; i++) {
-            // for (let i=0;i<1;i++) {
             const score = this.virtualStandings.StandingsData[i].TotalResult.Score;
             const elapsed = this.virtualStandings.StandingsData[i].TotalResult.Elapsed;
             while (pointer < sep.length && score < sep[pointer].score) {
