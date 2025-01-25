@@ -95,7 +95,7 @@ const USER_SETTINGS = {
         return;
 
     const contest = new Contest(getContestName());
-    await waitForElm('table'); // Wait until the table is loaded by Vue
+    await waitForElm('table');
 
     const fixedResult = await contest.fetchFinalResultFromAtcoder();
     if (isVirtualStandingPage()) {

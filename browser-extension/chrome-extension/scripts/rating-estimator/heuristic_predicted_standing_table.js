@@ -10,17 +10,17 @@ class HeuristicPredictedStandingTable extends StandingTable {
         super();
         this.roundedPerfHistories = roundedPerfHistories;
         this.rank2Perf = rank2Perf;
-        this.standings = this.addRatedRankToStandings(standings);
+        this.standings = standings;
         this.heuristicContests = heuristicContests;
         this.calPerfAndRating();
         this.fillDataToColumns();
     }
 
     calPerfAndRating() {
+        this.addRatedRankToStandings();
         this.perfRatingData = new Map();
-        let unratedCount = 0;
         for (let i = 0; i < this.standings.StandingsData.length; i++) {
-            const userScreenName = this.standings["StandingsData"][i].UserScreenName;
+            const userScreenName = this.standings.StandingsData[i].UserScreenName;
             // do not use this.standings.StandingsData[i].IsRated
             // in a heuristic contest, IsRated is always true, but if a user does not submit
             // that user is considered as unrated
@@ -35,9 +35,10 @@ class HeuristicPredictedStandingTable extends StandingTable {
             if (isRated && !isDeleted) {
                 // It’s better to calculate based on performance history rather than just the most recent performance.
                 if (userScreenName in this.roundedPerfHistories) {
-                    this.roundedPerfHistories[userScreenName][0].push(perfInContest);
-                    this.roundedPerfHistories[userScreenName][1].push(getContestName());
-                    const decayedPerfsAndWeights = this.getDecayedPerfsAndWeights(userScreenName);
+                    const decayedPerfsAndWeights = this.getDecayedPerfsAndWeights(
+                        [...this.roundedPerfHistories[userScreenName][0], perfInContest],
+                        [...this.roundedPerfHistories[userScreenName][1], getContestName()]
+                    );
                     newRating = this.calculateRatingFromPerfArr(decayedPerfsAndWeights);
                 }
             }
@@ -50,8 +51,6 @@ class HeuristicPredictedStandingTable extends StandingTable {
                 isRated: isRated,
                 confident: true
             });
-            if (!isRated)
-                unratedCount++;
         }
     }
 
@@ -69,23 +68,23 @@ class HeuristicPredictedStandingTable extends StandingTable {
                      people are tied from the 3rd place to the 6th place, the rank of these people
                     is 4.5."
     */
-    addRatedRankToStandings(standings) {
+    addRatedRankToStandings() {
         // add rated rank for the rated participants
-        const len = standings.StandingsData.length;
+        const len = this.standings.StandingsData.length;
         let startIndex = 0, endIndex = 0;
         let beforeRatedCount = 0;
         while (endIndex < len) {
             let ratedCount = 0;
-            while (endIndex + 1 < len && standings.StandingsData[endIndex + 1].Rank === standings.StandingsData[startIndex].Rank)
+            while (endIndex + 1 < len && this.standings.StandingsData[endIndex + 1].Rank === this.standings.StandingsData[startIndex].Rank)
                 endIndex++;
 
             for (let i = startIndex; i <= endIndex; i++)
-                if (standings.StandingsData[i].IsRated)
+                if (this.standings.StandingsData[i].IsRated)
                     ratedCount++;
 
             const actualRatedRank = (beforeRatedCount + 1 + beforeRatedCount + ratedCount) / 2;
             for (let i = startIndex; i <= endIndex; i++)
-                standings.StandingsData[i].RatedRank = actualRatedRank;
+                this.standings.StandingsData[i].RatedRank = actualRatedRank;
 
             beforeRatedCount += ratedCount;
             endIndex++;
@@ -94,13 +93,12 @@ class HeuristicPredictedStandingTable extends StandingTable {
 
         // add rated rank for the unrated participants
         let curRank = beforeRatedCount + 1;
-        for (let i = standings.StandingsData.length - 1; i >= 0; i--) {
-            if (standings.StandingsData[i].IsRated)
-                curRank = standings.StandingsData[i].RatedRank;
+        for (let i = this.standings.StandingsData.length - 1; i >= 0; i--) {
+            if (this.standings.StandingsData[i].IsRated)
+                curRank = this.standings.StandingsData[i].RatedRank;
             else
-                standings.StandingsData[i].RatedRank = curRank;
+                this.standings.StandingsData[i].RatedRank = curRank;
         }
-        return standings;
     }
 
     /**
@@ -125,12 +123,12 @@ class HeuristicPredictedStandingTable extends StandingTable {
 
     /**
      * Calculate the decayed performance array of user by the formula: p = p' + 150 - 100 * d / 365
+     * @param {number[]} perfs
+     * @param {string[]} contestNames
      * @param {string} userScreenName
      * @returns {[number[], number[]]}
      */
-    getDecayedPerfsAndWeights(userScreenName) {
-        const perfs = [...this.roundedPerfHistories[userScreenName][0]];
-        const contestNames = this.roundedPerfHistories[userScreenName][1];
+    getDecayedPerfsAndWeights(perfs, contestNames) {
         const lastContest = contestNames[contestNames.length - 1];
 
         const weights = [];

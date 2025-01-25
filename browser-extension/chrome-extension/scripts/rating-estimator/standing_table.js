@@ -91,7 +91,7 @@ class StandingTable {
      * The displaying rank array is the first column of the standings table.
      */
     getDisplayingUserList() {
-        if (typeof vueStandings !== 'undefined' && vueStandings.currentStandings) {
+        if (isVuePresent('currentStandings')) {
             return vueStandings.currentStandings.map(user => user.UserScreenName);
         }
 
@@ -105,7 +105,7 @@ class StandingTable {
     }
 
     /**
-     * Listen the standings data changes when users click the refresh button
+     * Listen the standings data changes when user click the refresh button
      */
     listenStandingsChange() {
         // Intercept XMLHttpRequest

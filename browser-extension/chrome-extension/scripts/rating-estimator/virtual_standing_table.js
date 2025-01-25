@@ -39,7 +39,7 @@ class VirtualStandingTable extends StandingTable {
             });
         }
 
-        const isUnratedContest = (() => ratedResult.length === 0)();
+        const isUnratedContest = ratedResult.length === 0;
 
         // Calculate the virtual performance
         this.perfRatingData = new Map();
