@@ -9,16 +9,23 @@ class AlgoPredictedStandingTable extends StandingTable {
         super();
         this.roundedPerfHistories = roundedPerfHistories;
         this.rank2Perf = rank2Perf;
+        this.perfRatingData = new Map(); // map of {username: DataObject{}}
         this.standings = standings;
+    }
+
+    get standings() {
+        return this._standings;
+    }
+
+    set standings(newStandings) {
+        this._standings = newStandings;
+        this.addRatedRankToStandings();
+        this.perfRatingData.clear();
         this.calPerfAndRating();
         this.fillDataToColumns();
     }
 
     calPerfAndRating() {
-        this.addRatedRankToStandings();
-
-        this.perfRatingData = new Map(); // map of {username: DataObject{}}
-
         /**
          * Get bottom rank
          * In the present, the rank of the bottom users is not accurate. (ABC has difference of ~10, ARC: 40)

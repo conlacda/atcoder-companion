@@ -113,11 +113,10 @@ class StandingTable {
         const standingTable = this;
         XMLHttpRequest.prototype.open = function (...args) {
             const xhr = this;
-            xhr.addEventListener('load', () => {
-                if (this.responseURL.endsWith(`contests/${contestName()}/standings/json`) && this.status === 200) {
+            xhr.addEventListener('load', async () => {
+                if (this.responseURL.endsWith(`contests/${getContestName()}/standings/json`) && this.status === 200) {
+                    standingTable.rank2Perf = await (new Contest(getContestName())).fetchPredictedPerfArr();
                     standingTable.standings = JSON.parse(this.responseText);
-                    standingTable.calPerfAndRating();
-                    standingTable.fillDataToColumns();
                 }
             });
             return originalXhrOpen.apply(this, args);

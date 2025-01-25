@@ -10,15 +10,24 @@ class HeuristicPredictedStandingTable extends StandingTable {
         super();
         this.roundedPerfHistories = roundedPerfHistories;
         this.rank2Perf = rank2Perf;
-        this.standings = standings;
         this.heuristicContests = heuristicContests;
+        this.perfRatingData = new Map();
+        this.standings = standings;
+    }
+
+    get standings() {
+        return this._standings;
+    }
+
+    set standings(newStandings) {
+        this._standings = newStandings;
+        this.addRatedRankToStandings();
+        this.perfRatingData.clear();
         this.calPerfAndRating();
         this.fillDataToColumns();
     }
 
     calPerfAndRating() {
-        this.addRatedRankToStandings();
-        this.perfRatingData = new Map();
         for (let i = 0; i < this.standings.StandingsData.length; i++) {
             const userScreenName = this.standings.StandingsData[i].UserScreenName;
             // do not use this.standings.StandingsData[i].IsRated
