@@ -23,13 +23,20 @@ class HeuristicPredictedStandingTable extends StandingTable {
         this._standings = newStandings;
         this.addRatedRankToStandings();
         this.perfRatingData.clear();
-        this.calPerfAndRating();
         this.fillDataToColumns();
     }
 
-    calPerfAndRating() {
+    /**
+     * Recalculate rating for a set of specific usernames (ex: displaying users)
+     * instead of whole table in order to improve performance
+     */
+    recalculatePerfAndRating() {
+        const displayingUsers = new Set(this.getDisplayingUserList());
         for (let i = 0; i < this.standings.StandingsData.length; i++) {
             const userScreenName = this.standings.StandingsData[i].UserScreenName;
+            if (this.perfRatingData.has(userScreenName) || !displayingUsers.has(userScreenName)) {
+                continue;
+            }
             // do not use this.standings.StandingsData[i].IsRated
             // in a heuristic contest, IsRated is always true, but if a user does not submit
             // that user is considered as unrated

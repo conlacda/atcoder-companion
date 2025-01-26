@@ -13,6 +13,7 @@ class StandingTable {
         this.observer.disconnect();
 
         const displayingUsers = this.getDisplayingUserList();
+        this.recalculatePerfAndRating();
         const data = displayingUsers.map(userScreenName => this.perfRatingData.get(userScreenName));
         const trows = this._table.querySelector('tbody').querySelectorAll('tr');
 
@@ -40,6 +41,14 @@ class StandingTable {
 
         this.observer.observe(this._table, { childList: true, subtree: true });
     }
+
+    /**
+     * Recalculate the predicted rating for the displaying users
+     * Some standing tables calculate all the data before displaying it
+     * It is easier to implement but also hurts performance at the first render
+     * Implement this function for some heavy calculation tables (like: heuristic standing table)
+     */
+    recalculatePerfAndRating() {}
 
     /**
      * Correct data - the lower rank users should have lower performance
