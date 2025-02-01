@@ -124,6 +124,7 @@ class StandingTable {
             const xhr = this;
             xhr.addEventListener('load', async () => {
                 if (this.responseURL.endsWith(`contests/${getContestName()}/standings/json`) && this.status === 200) {
+                    // TODO: fetch roundedPerfHistories
                     standingTable.rank2Perf = await (new Contest(getContestName())).fetchPredictedPerfArr();
                     standingTable.standings = JSON.parse(this.responseText);
                 }

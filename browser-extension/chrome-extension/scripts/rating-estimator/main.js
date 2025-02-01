@@ -71,7 +71,7 @@ const joinedAsRatedUser = (standings, userScreenName) => {
 
 const getPerfHistory = async (userScreenName, contest_type) => {
     const res = await fetchWithRetry(`https://atcoder.jp/users/${userScreenName}/history/json?contestType=${contest_type}`);
-    const userPerfHistory = await res.json();
+    let userPerfHistory = await res.json();
     userPerfHistory = userPerfHistory.filter(item => item.IsRated);
     const perfs = userPerfHistory.map(item => item.Performance);
     if (contest_type == 'algo')
