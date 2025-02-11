@@ -8,13 +8,15 @@
 
 ## Features
 
-### Estimate rating
+### Rating prediction
+Accurately predict your rating during an ongoing contest.
+
 ![](images/estimate-rating.png)
 
-### Show status of solved problems
+### Show the status of solved problems
 ![mark-solved-problems.png](images/mark-solved-problems.png)
 
-### Test cases
+### Test cases (for some old contests)
 You can add more test cases to the problem statement and download all test cases with one click.
 
 ![add-test-cases.png](images/add-test-cases.png)
@@ -25,17 +27,12 @@ You can also copy and download test cases and debug your code with those test ca
 ![copy-download-debug.png](images/copy-download-debug.png)
 
 ### Debug with custom test
+> If the test cases of that contest are available
+
 Click one of the ![](images/bug.svg) buttons you see above and a custom test page should be opened. Your submission code and input/output should be filled in.
 
 ![custom-page-source-code.png](images/custom-page-source-code.png)
 ![custom-page-in-out.png](images/custom-page-in-out.png)
-
-## Ideas
-* Implement some features that Codeforces is supporting (like checking diff of 2 submissions)
-* Run against all test cases that have a size of less than 512KB
-* Add themes (dark theme, ...)
-* Allow changing fonts
-* Add a dropdown list at the custom test page
 
 ## Reference
 * A part of my source code is copied from [atcoder-rating-estimator](https://github.com/koba-e964/atcoder-rating-estimator)
