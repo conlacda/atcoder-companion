@@ -53,13 +53,17 @@ def logged_in() -> bool:
         return False
     return True
 
-for i in range(3):
+RETRY_NUM = 1
+
+for i in range(RETRY_NUM):
     ok = login()
     if not ok:
+        print("Login failed. Retry after 1 second")
         time.sleep(1)
         if i == 2:
             exit()
     else:
+        print("Logged in!")
         break
 
 def fetch(
@@ -68,7 +72,7 @@ def fetch(
     retry: int = 10,
     sleep_time_after_failed: int = 2, # seconds
 ) -> Union[dict, str]:
-    time.sleep(0.6)
+    time.sleep(0.7)
     retry_count: int = 0
     while retry_count < retry:
         try:
@@ -79,4 +83,5 @@ def fetch(
                 raise Exception(f"Fetch failed with status {res.status_code} - {res.reason}")
         except Exception as e:
             retry_count += 1
+            print(f"fetch() raises an exception '{e}'. Retried {retry_count} times")
             time.sleep(sleep_time_after_failed * int(pow(2, retry_count)))

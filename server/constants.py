@@ -28,3 +28,7 @@ STANDING_URL = "https://atcoder.jp/contests/{}/standings/json"
 RESULT_URL = "https://atcoder.jp/contests/{}/results/json"
 
 CONTEST_TYPE_DUMP = "data/{}_contest_type.json"
+
+HEURISTIC_CONTEST_LIST = "data/heuristic_contests.json"
+
+COMPETITION_HISTORY = "competition-history/{contest_type}/{username}.json"
