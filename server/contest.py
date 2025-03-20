@@ -86,7 +86,7 @@ class Contest:
         return self.rate_range in [
             "- 1999",
             "1200 - 2399",
-            "1600 - 2799",
+            "1600 - 2999",
             "2000 -",
             "All",
         ]
