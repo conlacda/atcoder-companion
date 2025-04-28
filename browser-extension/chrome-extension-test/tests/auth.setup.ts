@@ -11,7 +11,7 @@ setup('authenticate', async ({ page }) => {
     const password: string = process.env.ATCODER_PASSWORD;
 
     // Check if logged in
-    let usernameLocator: Locator = page.getByText(process.env.ATCODER_USERNAME);
+    let usernameLocator: Locator = page.getByText(username);
     if (await usernameLocator.count() > 0) {
         return;
     }
@@ -21,7 +21,7 @@ setup('authenticate', async ({ page }) => {
     await page.locator('#submit').click();
 
     await page.waitForURL('https://atcoder.jp/home');
-    await expect(page.getByText(`Welcome, ${process.env.ATCODER_USERNAME}.`)).toBeVisible();
+    await expect(page.getByText(`Welcome, ${username}.`)).toBeVisible();
     // End of authentication steps.
 
     // Store session to authFile

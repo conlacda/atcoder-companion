@@ -1,5 +1,5 @@
 import {test, expect} from '../fixtures';
-import {Page, Locator} from "@playwright/test";
+import {Page} from "@playwright/test";
 
 require('dotenv').config({path: './.env'});
 
