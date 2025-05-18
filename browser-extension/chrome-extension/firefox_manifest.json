@@ -19,8 +19,12 @@
         "128": "icons/icon-128.png"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "unlimitedStorage"
     ],
+    "background": {
+        "scripts": ["scripts/background.js"]
+    },
     "content_scripts": [
         {
             "js": [
@@ -100,8 +104,6 @@
                 "*://atcoder.jp/contests/*/standings*"
             ],
             "exclude_matches": [
-                "*://atcoder.jp/contests/*/standings*/json",
-                "*://atcoder.jp/contests/*/standings*/json",
                 "*://atcoder.jp/contests/*/standings*/json"
             ],
             "run_at": "document_idle",
