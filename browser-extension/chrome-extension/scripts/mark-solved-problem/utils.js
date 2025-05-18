@@ -49,7 +49,7 @@ const addStatusColumnToTable = (result) => {
 }
 
 class Submission {
-    constructor() {}
+    constructor() { }
 
     static fromHtmlDom(tableRow) {
         const res = new Submission();
@@ -128,13 +128,14 @@ const getLatestSubmissionStatus = async (contest) => {
         const trows = tbody.find('tr');
         for (let i = 0; i < trows.length; i++) {
             const submission = Submission.fromHtmlDom(trows.eq(i));
-            if (submissionResult[submission.task]?.isAccepted()) {
-                continue;
-            }
-            // Update last update
+
             if (submission.time < lastUpdate) {
                 isLastPage = true;
                 break;
+            }
+
+            if (submissionResult[submission.task]?.isAccepted()) {
+                continue;
             }
 
             if (submission.time > currentSessionLastUpdate) {
