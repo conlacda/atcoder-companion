@@ -92,7 +92,7 @@ class Submission {
 }
 
 /**
- * Delete the judging submission info from the previous session
+ * Get the stored submission result from local storage
  * @returns object of {problem: submission}
  */
 const getSubmissionResult = async (contest) => {
@@ -107,9 +107,6 @@ const getSubmissionResult = async (contest) => {
     return res;
 }
 
-/**
- * Gets the status of submissions and displays it as a column in the problem table.
- */
 const getLatestSubmissionStatus = async (contest) => {
     const lastUpdateKey = `${contest}_last_update`;
     const lastUpdate = await readLocalStorage(lastUpdateKey, '2000-01-01 01:01:01');
@@ -164,7 +161,8 @@ const getLatestSubmissionStatus = async (contest) => {
         if (isLastPage) break;
     }
 
-    await writeLocalStorage(lastUpdateKey, currentSessionLastUpdate);
     await writeLocalStorage(`${contest}_submission_status`, submissionResult);
+    await writeLocalStorage(lastUpdateKey, currentSessionLastUpdate);
+
     return submissionResult;
 };
