@@ -154,6 +154,7 @@ const getLatestSubmissionStatus = async (contest) => {
             } else if (PRIORITY_LEVEL[submission.status] === PRIORITY_LEVEL[submissionResult[submission.task].status]) {
                 if (submissionResult[submission.task].time < submission.time) {
                     submissionResult[submission.task].time = submission;
+                    submissionResult[submission.task] = submission;
                 }
             }
         }
