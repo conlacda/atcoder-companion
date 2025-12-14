@@ -33,6 +33,7 @@ const addStatusColumnToTable = (result) => {
     const rows = tbody.find('tr');
     for (let i = 0; i < rows.length; i++) {
         const firstCell = rows.eq(i).find('td:first'); // Get the first cell of the row
+        const problemName = firstCell.find('a').attr('href').split('/').at(-1);
         const problem = firstCell.text();
         const newCell = $('<td class="ext-added"></td>'); // Create a new cell
         if (result[problem]?.status) {
@@ -41,7 +42,7 @@ const addStatusColumnToTable = (result) => {
             newCell.children().css("cursor", "pointer");
             newCell.on("click", () => {
                 const contest = getContest();
-                window.location.href = `/contests/${contest}/submissions/me?f.Task=${contest}_${problem.toLowerCase()}`;
+                window.location.href = `/contests/${contest}/submissions/me?f.Task=${problemName}`;
             });
         }
         newCell.insertBefore(firstCell);
