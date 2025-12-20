@@ -32,8 +32,8 @@
                 "scripts/shared/jquery_.js",
                 "scripts/shared/jszip.min.js",
                 "scripts/shared/utils.js",
-                "scripts/shared/testcase.js",
-                "scripts/shared/user_settings.js"
+                "scripts/shared/user_settings.js",
+                "scripts/shared/testcase.js"
             ],
             "matches": [
                 "*://atcoder.jp/*"

@@ -14,17 +14,21 @@ const writeLocalStorage = async (key, value) => {
 
 const DEFAULT_USER_SETTINGS = {
     testcaseSize: 0, // 512,
-    prediction: 0
+    prediction: 0,
+    showDownloadTestcasesButton: 1
 };
 
 (async () => {
     const USER_SETTING_KEY = "user_settings";
-    let userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, JSON.stringify(DEFAULT_USER_SETTINGS)));
+    let userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, JSON.stringify({})));
+    userSettings = {...DEFAULT_USER_SETTINGS, ...userSettings};
 
     const saveSettingsBtn = document.getElementById('save-settings');
     saveSettingsBtn.onclick = async () => {
         userSettings.testcaseSize = parseInt(document.querySelector('input[name="testcase-size"]:checked').value);
         userSettings.prediction = parseInt(document.querySelector('input[name="prediction"]:checked').value);
+        userSettings.showDownloadTestcasesButton = document.getElementById('show-download-testcases-button').checked ? 1: 0;
+
         await writeLocalStorage(USER_SETTING_KEY, JSON.stringify(userSettings));
         saveSettingsBtn.textContent = `Save settings \u{2705}`;
         setTimeout(() => {
@@ -40,4 +44,6 @@ const DEFAULT_USER_SETTINGS = {
     for (let i = 0; i < 3; i++) {
         document.getElementById(`prediction-${i}`).checked = (i == userSettings.prediction);
     }
+
+    document.getElementById('show-download-testcases-button').checked = userSettings.showDownloadTestcasesButton;
 })();

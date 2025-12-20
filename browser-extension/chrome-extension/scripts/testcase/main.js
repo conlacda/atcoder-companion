@@ -3,21 +3,24 @@ contest = mappingForTestCase[contest] ?? contest;
 const copyButton = $('span[data-toggle="tooltip"]:visible').first();
 
 (async () => {
+    const userSettings = await getUserSettings();
     // Add download all test cases button
     const allTestCasesSz = await sizeOfAllTestCases(contest, problemID);
     if (allTestCasesSz === 0)
         return;
 
-    const downloadButton = (new DOMParser()).parseFromString(`<button class="btn btn-default btn-sm" id="dltc" title="Just click once to download.">Download all test cases (${humanReadable(allTestCasesSz)})</button>`, "text/html").body.firstChild;
-    document.querySelector('span.h2').appendChild(downloadButton);
-    downloadButton.onclick = async () => {
-        downloadButton.disabled = true;
-        downloadButton.textContent += '\u{231B}';
-        await downloadAllTestCases(contest, problemID);
-        setTimeout(() => {
-            downloadButton.textContent = downloadButton.textContent.replace('⌛', '');
-            downloadButton.disabled = false;
-        }, 2000);
+    if (userSettings.showDownloadTestcasesButton) {
+        const downloadButton = (new DOMParser()).parseFromString(`<button class="btn btn-default btn-sm" id="dltc" title="Just click once to download.">Download all test cases (${humanReadable(allTestCasesSz)})</button>`, "text/html").body.firstChild;
+        document.querySelector('span.h2').appendChild(downloadButton);
+        downloadButton.onclick = async () => {
+            downloadButton.disabled = true;
+            downloadButton.textContent += '\u{231B}';
+            await downloadAllTestCases(contest, problemID);
+            setTimeout(() => {
+                downloadButton.textContent = downloadButton.textContent.replace('⌛', '');
+                downloadButton.disabled = false;
+            }, 2000);
+        }
     }
 
     // confirm before loading all of test cases if they are too large.

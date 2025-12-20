@@ -1,11 +1,5 @@
 const SOURCE_PREFIX = "https://raw.githubusercontent.com/conlacda/atcoder-testcases";
 
-const SIZE_IN_BYTES = {
-    'ZERO': 0,
-    'SMALL': 512,
-    'BIG': 100000000000000
-}
-
 // If the size of test cases is larger than 10MB, a dialog should be displayed to warn the user.
 const LARGE_SIZE_IN_BYTES = 10 * 1024 * 1024;
 
@@ -48,7 +42,7 @@ const fetchTestCasesByUserSettings = async (contest, problem) => {
     let testcases = await fetchTestCasesList(contest, problem);
 
     // filter test cases by user's settings
-    const userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, JSON.stringify(DEFAULT_USER_SETTINGS)));
+    const userSettings = await getUserSettings();
     testcases = testcases.filter((tc) => tc.inputsize <= userSettings.testcaseSize && tc.outputsize <= userSettings.testcaseSize);
 
     await Promise.all(testcases.map(async tc => {
@@ -70,7 +64,7 @@ const fetchTestCasesByUserSettings = async (contest, problem) => {
  */
 const sizeOfTestCasesByUserSettings = async (contest, problem) => {
     const testcases = await fetchTestCasesList(contest, problem);
-    const userSettings = JSON.parse(await readLocalStorage(USER_SETTING_KEY, JSON.stringify(DEFAULT_USER_SETTINGS)));
+    const userSettings = await getUserSettings();
 
     let sizeInBytes = 0;
     testcases.forEach((tc) => {
