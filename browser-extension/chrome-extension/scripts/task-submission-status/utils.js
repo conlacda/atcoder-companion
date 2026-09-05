@@ -10,6 +10,8 @@ const hasNextPage = (pageContent) => {
     return !pageContent.includes('<li class="disabled"><a>Next &gt;</a></li>');
 }
 
+const DEFAULT_LAST_UPDATE = '2000-01-01 01:01:01';
+
 /**
  * Add a status column to an HTML table based on the provided submission data.
  * @param {Object} result - An object contains submission data.
@@ -52,27 +54,28 @@ const addStatusColumnToTable = (result) => {
 class Submission {
     constructor() { }
 
-    static fromHtmlDom(tableRow) {
+    static fromHtml(tableRow) {
         const res = new Submission();
         const tds = tableRow.find('td')
         const isWJOrCE = tds.length === 8;
         res.time = tds.eq(0).text();
         res.task = tds.eq(1).text().split('-')[0].trim();
-        res.user = tds.eq(2).text();
+        res.user = tds.eq(2).text().trim();
         res.language = tds.eq(3).text();
         res.score = tds.eq(4).text();
         res.code_size = tds.eq(5).text();
         res.status = tds.eq(6).text();
         res.exec_time = isWJOrCE ? 0 : tds.eq(7).text();
         res.memory = isWJOrCE ? 0 : tds.eq(8).text();
-        res.detail = isWJOrCE ? tds.eq(7).find('a:first').href : tds.eq(9).find('a:first').href;
+        res.detail = isWJOrCE ? tds.eq(7).find('a:first').attr('href') : tds.eq(9).find('a:first').attr('href');
         return res;
     }
+
     static fromJson(o) {
         const res = new Submission();
         res.time = o.time;
         res.task = o.task;
-        res.user = o.user;
+        res.user = o.user.trim();
         res.language = o.language;
         res.score = o.score;
         res.code_size = o.code_size;
@@ -82,13 +85,23 @@ class Submission {
         res.detail = o.detail;
         return res;
     }
+
     isJudging() {
         return this.status === 'WJ' ||
             this.status === 'JD' ||
-            this.status.includes('/');
+            /^\d+\s*\/\s*\d+$/.test(this.status);
     }
+
     isAccepted() {
         return this.status === 'AC';
+    }
+
+    getPriority() {
+        if (this.isAccepted())
+            return 2;
+        if (this.isJudging())
+            return 1;
+        return 0;
     }
 }
 
@@ -108,35 +121,104 @@ const getSubmissionResult = async (contest) => {
     return res;
 }
 
+const fetchSubmissionPage = async (contest, page) => {
+    const url = `https://atcoder.jp/contests/${contest}/submissions/me?page=${page}`;
+    const res = await fetchWithRetry(url);
+    if (!res.ok) {
+        throw new Error(`Failed to fetch ${url}: HTTP ${res.status}`);
+    }
+
+    if (new URL(res.url).pathname.startsWith('/login')) {
+        throw new Error(`Failed to fetch ${url}: login required`);
+    }
+
+    const pageContent = await res.text();
+    const document = $($.parseHTML(pageContent));
+    const tbody = document.find('tbody:first');
+    if (tbody.length === 0)
+        return { pageContent, rows: null };
+
+    return { pageContent, rows: tbody.find('tr') };
+}
+
+const getSavedUser = (submissionResult) => {
+    const firstSubmission = Object.values(submissionResult)[0];
+    return firstSubmission?.user ?? null;
+}
+
+/**
+ * Update the best known submission for a task.
+ * AC is never replaced. Otherwise, higher priority status wins; if priorities are equal, newer submission wins.
+ *
+ * @param {Object} submissionResult - Current submission result, keyed by task name.
+ * @param {Submission} submission - New submission to merge into the result.
+ */
+const updateSubmissionResult = (submissionResult, submission) => {
+    const currentSubmission = submissionResult[submission.task];
+    if (!currentSubmission) {
+        submissionResult[submission.task] = submission;
+        return;
+    }
+
+    if (currentSubmission.isAccepted())
+        return;
+
+    const currentPriority = currentSubmission.getPriority();
+    const newPriority = submission.getPriority();
+    if (newPriority > currentPriority) {
+        submissionResult[submission.task] = submission;
+        return;
+    }
+
+    if (newPriority === currentPriority && currentSubmission.time < submission.time) {
+        submissionResult[submission.task] = submission;
+    }
+}
+
+// TODO: update the structure of submissionResult to {data: {A: Submission, B: Submission}, lastUpdate: ..}
 const getLatestSubmissionStatus = async (contest) => {
     const lastUpdateKey = `${contest}_last_update`;
-    const lastUpdate = await readLocalStorage(lastUpdateKey, '2000-01-01 01:01:01');
-    let currentSessionLastUpdate = lastUpdate;
+    let lastUpdate = await readLocalStorage(lastUpdateKey, DEFAULT_LAST_UPDATE);
     let submissionResult = await getSubmissionResult(contest);
-    // Fetch data from my submission page
+    let savedUser = getSavedUser(submissionResult);
+    if (savedUser === null) {
+        lastUpdate = DEFAULT_LAST_UPDATE;
+    }
+    let currentSessionLastUpdate = lastUpdate;
+
     let page = 0;
-    let isLastPage = false;
+    let isLastPageToCheck = false;
     while (true) {
-        // Fetch submission page
-        const MY_SUBMISSION_URL = `https://atcoder.jp/contests/${contest}/submissions/me?page=${++page}`;
-        let res = await fetchWithRetry(MY_SUBMISSION_URL);
-        const pageContent = await res.text();
-        // Extract submission result
-        const document = $($.parseHTML(pageContent));
-        const tbody = document.find('tbody:first');
-        if (!tbody) break;
+        const submissionPage = await fetchSubmissionPage(contest, ++page);
 
-        const trows = tbody.find('tr');
-        for (let i = 0; i < trows.length; i++) {
-            const submission = Submission.fromHtmlDom(trows.eq(i));
+        // If the first page has no submissions, clear any cached data from the previous account.
+        const hasNoSubmissions = submissionPage.rows === null ||
+            submissionPage.rows.length === 0;
+        if (page === 1 && hasNoSubmissions) {
+            submissionResult = {};
+            currentSessionLastUpdate = DEFAULT_LAST_UPDATE;
+            break;
+        }
 
-            if (submission.time < lastUpdate) {
-                isLastPage = true;
-                break;
+        if (submissionPage.rows === null)
+            break;
+
+        for (let i = 0; i < submissionPage.rows.length; i++) {
+            const submission = Submission.fromHtml(submissionPage.rows.eq(i));
+
+            if (savedUser === null)
+                savedUser = submission.user;
+
+            if (submission.user !== savedUser) {
+                submissionResult = {};
+                savedUser = submission.user;
+                lastUpdate = DEFAULT_LAST_UPDATE;
+                currentSessionLastUpdate = DEFAULT_LAST_UPDATE;
             }
 
-            if (submissionResult[submission.task]?.isAccepted()) {
-                continue;
+            if (submission.time < lastUpdate) {
+                isLastPageToCheck = true;
+                break;
             }
 
             if (submission.time > currentSessionLastUpdate) {
@@ -147,20 +229,11 @@ const getLatestSubmissionStatus = async (contest) => {
                 currentSessionLastUpdate = submission.time;
             }
 
-            // Update result object
-            if (!submissionResult.hasOwnProperty(submission.task)) {
-                submissionResult[submission.task] = submission;
-            } else if (PRIORITY_LEVEL[submission.status] > PRIORITY_LEVEL[submissionResult[submission.task].status]) {
-                submissionResult[submission.task] = submission;
-            } else if (PRIORITY_LEVEL[submission.status] === PRIORITY_LEVEL[submissionResult[submission.task].status]) {
-                if (submissionResult[submission.task].time < submission.time) {
-                    submissionResult[submission.task] = submission;
-                }
-            }
+            updateSubmissionResult(submissionResult, submission);
         }
-        // Break if all pages are fetched
-        if (!hasNextPage(pageContent)) isLastPage = true;
-        if (isLastPage) break;
+
+        if (!hasNextPage(submissionPage.pageContent)) isLastPageToCheck = true;
+        if (isLastPageToCheck) break;
     }
 
     await writeLocalStorage(`${contest}_submission_status`, submissionResult);

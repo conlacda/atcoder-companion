@@ -1,36 +1,3 @@
-/**
- * Sleep in miliseconds
- * @param {number} ms - The number of milliseconds to sleep
- * @returns {Promise<void>} - A Promise that resolves after the specified time
- */
-const sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/**
- * Fetch data from a URL with retries when reach the request limit.
- * @param {string} url - The URL to fetch data from
- * @param {number} [retryNum=10] - Number of retry attempts (default: 10)
- * @returns {Promise<Response>} - A Promise that resolves to the Response object when successful
- */
-const fetchWithRetry = async (url, options = {}, retryNum = 10) => {
-    let sleepInMs = 500;
-    while (retryNum > 0) {
-        try {
-            res = await fetch(url, options);
-            if (res.status === 429) {
-                await sleep(sleepInMs);
-                sleepInMs += 1000;
-                retryNum--;
-            } else {
-                return res;
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-}
-
 class Contest {
     constructor(contestName) {
         this.contestName = contestName;
@@ -83,8 +50,8 @@ class Contest {
      * But maybe it should be cached to improve performance.
      * The reason to not cache here is at the first 10 minutes, the backend fetch data then calculate the predicted data
      * If the extension send a request without specifying no-cache, the browser will return 404 response from cache
-     * If need to cache, cache for algo contests only, do not cache for heuristic contests 
-     * because the number of participants is not fixed until the contest ends. 
+     * If need to cache, cache for algo contests only, do not cache for heuristic contests
+     * because the number of participants is not fixed until the contest ends.
      */
     async fetchPredictedPerfArr(needToCache = false) {
         const resourceUrl = `https://raw.githubusercontent.com/conlacda/ac-perf-data/main/data/${this.contestName}_ranking_to_perf.json`;

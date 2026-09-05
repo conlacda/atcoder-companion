@@ -54,19 +54,18 @@
         },
         {
             "js": [
-                "scripts/mark-solved-problem/const.js",
-                "scripts/mark-solved-problem/utils.js",
-                "scripts/mark-solved-problem/main.js"
+                "scripts/task-submission-status/const.js",
+                "scripts/task-submission-status/utils.js",
+                "scripts/task-submission-status/main.js"
             ],
             "matches": [
-                "*://atcoder.jp/contests/*/tasks",
-                "*://atcoder.jp/contests/*/tasks/"
+                "*://atcoder.jp/contests/*/tasks*"
             ]
         },
         {
             "js": [
                 "scripts/shared/testcase_mapping.js",
-                "scripts/submission-details/problem-info.js",
+                "scripts/submission-details/problem_info.js",
                 "scripts/submission-details/testcase-downloader.js",
                 "scripts/submission-details/dom.js",
                 "scripts/submission-details/main.js"
@@ -88,17 +87,18 @@
         },
         {
             "js": [
-                "scripts/rating-estimator/color.js",
-                "scripts/rating-estimator/rating.js",
-                "scripts/rating-estimator/contest.js",
-                "scripts/rating-estimator/standing_table.js",
-                "scripts/rating-estimator/fixed_standing_table.js",
-                "scripts/rating-estimator/algo_predicted_standing_table.js",
-                "scripts/rating-estimator/heuristic_predicted_standing_table.js",
-                "scripts/rating-estimator/virtual_standing_table.js",
-                "scripts/rating-estimator/predicted_virtual_standing_table.js",
-                "scripts/rating-estimator/extended_standing_table.js",
-                "scripts/rating-estimator/main.js"
+                "scripts/rating-predictor/color.js",
+                "scripts/rating-predictor/rating.js",
+                "scripts/rating-predictor/utils.js",
+                "scripts/rating-predictor/contest.js",
+                "scripts/rating-predictor/standing_table.js",
+                "scripts/rating-predictor/fixed_standing_table.js",
+                "scripts/rating-predictor/algo_predicted_standing_table.js",
+                "scripts/rating-predictor/heuristic_predicted_standing_table.js",
+                "scripts/rating-predictor/virtual_standing_table.js",
+                "scripts/rating-predictor/predicted_virtual_standing_table.js",
+                "scripts/rating-predictor/extended_standing_table.js",
+                "scripts/rating-predictor/main.js"
             ],
             "matches": [
                 "*://atcoder.jp/contests/*/standings*"

@@ -23,7 +23,7 @@ class StandingTable {
         // Add cells with new data
         for (let i = 0; i < trows.length - 2; i++) {
             const confident = (data[i]?.confident === false) ? false : true;
-            
+
             const performanceSpan = (data[i]?.performance ? Color.performance(data[i].performance) : '-') + (confident ? '' : '*');
             trows[i].insertAdjacentHTML('beforeend', `<td class="standings-result ext-added"><p ${confident ? '' : 'title="not sure"'}>${performanceSpan}</p></td>`);
 

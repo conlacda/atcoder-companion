@@ -14,7 +14,7 @@ const getProblemInfo = () => {
     const contest = match[1];
     const title = document.querySelector('span.h2').innerText;
     const problemID = title.includes('-') ? title.split('-')[0].trim() : match[2].toUpperCase();
-    return {contest, problemID};
+    return { contest, problemID };
 }
 
 /**
@@ -78,19 +78,35 @@ const writeLocalStorage = async (key, value) => {
 }
 
 const fetchWithRetry = async (url, options = {}, retryNum = 10) => {
-    let sleepInMs = 500;
-    while (retryNum > 0) {
+    let delayMs = 500;
+
+    await sleep(delayMs);
+    for (let attempt = 0; attempt < retryNum; attempt++) {
         try {
-            res = await fetch(url, options);
-            if (res.status === 429) {
-                await sleep(sleepInMs);
-                sleepInMs += 1000;
-                retryNum--;
-            } else {
-                return res;
+            const response = await fetch(url, options);
+            if (response.ok) {
+                return response;
             }
-        } catch (e) {
-            console.log(e);
+
+            const shouldRetry =
+                response.status === 408
+                || response.status === 429
+                || response.status >= 500;
+
+            if (!shouldRetry) {
+                return response;
+            }
+
+            if (attempt === retryNum - 1) {
+                return response;
+            }
+        } catch (error) {
+            if (attempt === retryNum - 1) {
+                throw error;
+            }
         }
+
+        await sleep(delayMs);
+        delayMs += 1000;
     }
 }

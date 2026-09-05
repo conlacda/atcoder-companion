@@ -105,7 +105,7 @@ const USER_SETTINGS = {
             const virtualStandings = isVuePresent('standings') ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new VirtualStandingTable(virtualStandings, standings, fixedResult);
         } else {
-            // Estimate perf on the virtual standing page without the final result from Atcoder
+            // Predict perf on the virtual standing page without the final result from Atcoder
             const rank2Perf = await contest.fetchPredictedPerfArr();
             const virtualStandings = isVuePresent('standings') ? vueStandings.standings : (await contest.fetchVirtualStandingFromAtcoder());
             new PredictedVirtualStandingTable(virtualStandings, standings, rank2Perf);
@@ -121,7 +121,7 @@ const USER_SETTINGS = {
          */
         if (fixedResult.length > 0) {
             const standings = isVuePresent('standings') ? vueStandings.standings : (await contest.fetchStandingFromAtcoder());
-            const rank2Perf = await contest.fetchPredictedPerfArr(needToCache = true);
+            const rank2Perf = await contest.fetchPredictedPerfArr(true);
             new FixedStandingTable(standings, fixedResult, rank2Perf);
         } else {
             if (userSettings.prediction === USER_SETTINGS.PREDICT.PAST_CONTESTS_ONLY)

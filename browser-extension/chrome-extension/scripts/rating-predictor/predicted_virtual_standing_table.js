@@ -29,7 +29,7 @@ class PredictedVirtualStandingTable extends StandingTable {
 
         const isUnratedContest = this.standings.StandingsData.every(user => !user.IsRated);
 
-        // Estimate performance of (score, time) in virtualStandings
+        // Predict performance of (score, time) in virtualStandings
         this.perfRatingData = new Map();
         let pointer = 0;
         for (let i = 0; i < this.virtualStandings.StandingsData.length; i++) {

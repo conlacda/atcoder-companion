@@ -1,4 +1,9 @@
-let {contest, problemID} = getProblemInfo();
+/**
+ * Add archived test cases to AtCoder problem statement pages.
+ * Test cases are fetched from the archive and rendered below the sample cases
+ * based on the user's popup settings.
+ */
+let { contest, problemID } = getProblemInfo();
 contest = mappingForTestCase[contest] ?? contest;
 const copyButton = $('span[data-toggle="tooltip"]:visible').first();
 

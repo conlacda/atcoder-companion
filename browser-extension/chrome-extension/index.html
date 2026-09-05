@@ -1,73 +1,64 @@
-<html>
-<style>
-    html {
-        width: 280px;
-        height: 200px;
-    }
+<!DOCTYPE html>
+<html lang="en">
 
-    .container {
-        font-size: 20px;
-    }
-
-    .container img,
-    .container h3 {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    button {
-        margin-top: 10px;
-    }
-
-    h4 {
-        margin-top: 0px;
-        margin-bottom: 0px;
-    }
-</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Atcoder Companion</title>
+    <link rel="stylesheet" href="styles/popup.css">
+</head>
 
 <body>
-    <div class="container" style="height: 70px;">
-        <img src="icons/icon-32.png" />
-        <h3>Atcoder Companion</h3>
+    <div class="header">
+        <img src="icons/icon-32.png" alt="">
+        <h1>Atcoder Companion</h1>
     </div>
+
     <fieldset name="testcase-size-form">
-        <legend><strong>Settings</strong></legend>
-        <h4>Test cases</h4>
-        <div>
-            <input type="radio" id="testcase-size-0" name="testcase-size" value="0" checked />
-            <label>Show sample test cases only</label>
-        </div>
-        <div>
-            <input type="radio" id="testcase-size-512" name="testcase-size" value="512" />
-            <label>Show small test cases (<=512KB) </label>
-        </div>
-        <div>
-            <input type="radio" id="testcase-size-100000000000000" name="testcase-size" value="100000000000000" />
-            <label>Show all test cases</label>
-        </div>
+        <legend>Settings</legend>
 
-        <h4>Performance & rating prediction</h4>
-        <div>
-            <input type="radio" id="prediction-0" name="prediction" value="0" checked />
-            <label>Always show predictions</label>
-        </div>
-        <div>
-            <input type="radio" id="prediction-1" name="prediction" value="1" />
-            <label>Past contests only</label>
-        </div>
-        <div>
-            <input type="radio" id="prediction-2" name="prediction" value="2" />
-            <label>Disable this feature</label>
-        </div>
+        <h2>Test cases</h2>
+        <label class="option" for="testcase-size-0">
+            <input type="radio" id="testcase-size-0" name="testcase-size" value="0" checked>
+            <span>Show sample test cases only</span>
+        </label>
+        <label class="option" for="testcase-size-512">
+            <input type="radio" id="testcase-size-512" name="testcase-size" value="512">
+            <span>Show small test cases (&lt;=512KB)</span>
+        </label>
+        <label class="option" for="testcase-size-100000000000000">
+            <input type="radio" id="testcase-size-100000000000000" name="testcase-size" value="100000000000000">
+            <span>Show all test cases</span>
+        </label>
 
-        <h4>Other</h4>
-        <div>
-            <input type="checkbox" id="show-download-testcases-button" name="show-download-testcases-button"/>
-            <label>Show download testcases button</label>
-        </div>
+        <h2>Performance &amp; rating prediction</h2>
+        <label class="option" for="prediction-0">
+            <input type="radio" id="prediction-0" name="prediction" value="0" checked>
+            <span>Always show predictions</span>
+        </label>
+        <label class="option" for="prediction-1">
+            <input type="radio" id="prediction-1" name="prediction" value="1">
+            <span>Past contests only</span>
+        </label>
+        <label class="option" for="prediction-2">
+            <input type="radio" id="prediction-2" name="prediction" value="2">
+            <span>Disable this feature</span>
+        </label>
 
+        <h2>Other</h2>
+        <label class="option" for="show-download-testcases-button">
+            <input type="checkbox" id="show-download-testcases-button" name="show-download-testcases-button">
+            <span>Show download testcases button</span>
+        </label>
     </fieldset>
+
     <button type="button" id="save-settings">Save settings</button>
+
+    <div class="footer">
+        <a href="https://github.com/conlacda/atcoder-companion" target="_blank" rel="noreferrer">Source on GitHub</a>
+        <a href="https://github.com/conlacda/atcoder-testcases" target="_blank" rel="noreferrer">Archived test cases</a>
+        <span>Found a bug? <a href="https://github.com/conlacda/atcoder-companion/issues/new?title=Bug%20report%3A%20"
+                target="_blank" rel="noreferrer">Report it on GitHub</a>.</span>
+    </div>
     <script src="scripts/popup.js"></script>
 </body>
 

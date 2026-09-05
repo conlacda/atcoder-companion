@@ -1,5 +1,5 @@
 /**
- * Estimate performance for the virtual participations
+ * Predict performance for the virtual participations
  * This prediction runs only we have the final result
  */
 class VirtualStandingTable extends StandingTable {
@@ -47,7 +47,7 @@ class VirtualStandingTable extends StandingTable {
         for (let i = 0; i < this.virtualStandings.StandingsData.length; i++) {
             const score = this.virtualStandings.StandingsData[i].TotalResult.Score;
             const elapsed = this.virtualStandings.StandingsData[i].TotalResult.Elapsed;
-            // Move pointer j on the 
+            // Move pointer j on the
             while (j < ratedResult.length && score < ratedResult[j].score) {
                 j++;
             }

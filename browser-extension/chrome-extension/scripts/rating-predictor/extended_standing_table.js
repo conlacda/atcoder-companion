@@ -1,6 +1,6 @@
 /**
  * Predict performance for the extended standings table
- * Match index of Standings and index of Extended Standings to get the estimated performance.
+ * Match index of Standings and index of Extended Standings to get the predicted performance.
  */
 class ExtendedStandingTable extends StandingTable {
     constructor(extendedStandings, finalStandings) {

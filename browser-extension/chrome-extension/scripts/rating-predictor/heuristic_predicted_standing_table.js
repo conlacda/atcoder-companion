@@ -120,7 +120,7 @@ class HeuristicPredictedStandingTable extends StandingTable {
     /**
      * Get diff in days of 2 contests
      * @param {string} contestShortName1
-     * @param {string} contestShortName2 
+     * @param {string} contestShortName2
      * @returns {number}
      */
     getDiffInDays(contestShortName1, contestShortName2) {
@@ -157,8 +157,8 @@ class HeuristicPredictedStandingTable extends StandingTable {
     }
 
     /**
-     * 
-     * @param {[number[], number[]]} decayedPerfsAndWeights 
+     *
+     * @param {[number[], number[]]} decayedPerfsAndWeights
      * @returns {number}
      */
     calculateRatingFromPerfArr(decayedPerfsAndWeights) {
