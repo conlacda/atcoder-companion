@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:cdp": "PLAYWRIGHT_CDP_URL=http://127.0.0.1:9222 playwright test --project=chromium"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

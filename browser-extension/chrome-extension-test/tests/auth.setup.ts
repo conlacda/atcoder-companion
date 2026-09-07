@@ -4,7 +4,13 @@ require('dotenv').config({path: './.env'});
 
 const authFile = '.auth/user.json';
 
-setup('authenticate', async ({ page }) => {
+setup.skip(
+    Boolean(process.env.PLAYWRIGHT_CDP_URL),
+    'The browser connected over CDP is already authenticated.',
+);
+
+setup('authenticate', async ({ sharedContext }) => {
+    const page = await sharedContext.newPage();
     await page.goto('https://atcoder.jp/login');
 
     const username: string = process.env.ATCODER_USERNAME;
@@ -26,4 +32,5 @@ setup('authenticate', async ({ page }) => {
 
     // Store session to authFile
     await page.context().storageState({ path: authFile });
+    await page.close();
 });
