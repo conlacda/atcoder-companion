@@ -21,7 +21,7 @@ test.describe.configure({mode: 'serial'});
 let page: Page;
 let _extensionId: string;
 
-test.beforeAll(async ({ context, extensionId }) => {
+test.beforeAll(async ({ sharedContext: context, extensionId }) => {
     page = await context.newPage();
     _extensionId = extensionId;
 
@@ -96,7 +96,7 @@ const testTable = async () => {
         let match: boolean = false;
         match ||= /^\d+$/gm.test(text); // 2400
         match ||= /^[\+\-±]\d+$/gm.test(text); // +20 -20
-        match ||= /^\d+[⭜⭝]\d+$/gm.test(text); // 1500⭜1600 1600⭝1500
+        match ||= /^\d+[↗↘]\d+$/.test(text); // 1500↗1600 1600↘1500
         match ||= (text === '-'); // -
         expect(match).toBe(true);
     }

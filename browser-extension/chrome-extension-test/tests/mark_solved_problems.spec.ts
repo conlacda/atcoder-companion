@@ -9,7 +9,7 @@ test.describe.configure({ mode: 'serial' });
 
 let page: Page;
 
-test.beforeAll(async ({ context }) => {
+test.beforeAll(async ({ sharedContext: context }) => {
     page = await context.newPage();
 });
 

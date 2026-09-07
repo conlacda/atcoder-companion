@@ -1,15 +1,15 @@
-import {test, expect} from '../fixtures';
-import {Page, Locator} from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
+import { expect, test } from '../fixtures';
 
-require('dotenv').config({path: './.env'});
+require('dotenv').config({ path: './.env' });
 
 // chromium.launch PersistentContext prevents you from using multiple pages, so do not use parallel mode.
 // The parallel mode opens each tab for each test, and the context will be closed after one test.
-test.describe.configure({mode: 'serial'});
+test.describe.configure({ mode: 'serial' });
 
 let page: Page;
 
-test.beforeAll(async ({context}) => {
+test.beforeAll(async ({ sharedContext: context }) => {
     page = await context.newPage();
     await page.goto('https://atcoder.jp/contests/abc347/custom_test?submissionId=51807898&testcase=00_sample_01&problem=B');
     const runButton: Locator = page.locator('a.btn.btn-primary:has-text("Run")').first();

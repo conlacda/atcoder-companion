@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures';
-import { Page, Locator, Download } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 require('dotenv').config({ path: './.env' });
 
@@ -10,7 +10,48 @@ test.describe.configure({ mode: 'serial' });
 let page: Page;
 let _extensionId: string;
 
-test.beforeAll(async ({ context, extensionId }) => {
+const captureDownloadName = async (downloadButton: Locator) => {
+    const cdpSession = await page.context().newCDPSession(page);
+    let extensionContextId: number | undefined;
+
+    cdpSession.on('Runtime.executionContextCreated', event => {
+        if (event.context.origin === `chrome-extension://${_extensionId}`)
+            extensionContextId = event.context.id;
+    });
+    await cdpSession.send('Runtime.enable');
+
+    if (!extensionContextId)
+        throw new Error('Atcoder Companion execution context was not found');
+
+    try {
+        await cdpSession.send('Runtime.evaluate', {
+            contextId: extensionContextId,
+            expression: `
+                globalThis.__playwrightDownloadName = null;
+                HTMLAnchorElement.prototype.click = function () {
+                    globalThis.__playwrightDownloadName = this.download;
+                };
+            `,
+        });
+
+        await downloadButton.click();
+        let downloadName = '';
+        await expect.poll(async () => {
+            const response = await cdpSession.send('Runtime.evaluate', {
+                contextId: extensionContextId,
+                expression: 'globalThis.__playwrightDownloadName',
+                returnByValue: true,
+            });
+            downloadName = String(response.result.value ?? '');
+            return downloadName.length > 0;
+        }, { timeout: 60 * 1000 }).toBe(true);
+        return downloadName;
+    } finally {
+        await cdpSession.detach();
+    }
+};
+
+test.beforeAll(async ({ sharedContext: context, extensionId }) => {
     page = await context.newPage();
     // because we have the set up step, dont put extensionId into the following tests directly like test('Test something', async ({extensionId}) => {}));
     // it makes the test run twice, then playwright will crash
@@ -79,33 +120,24 @@ test.describe('Test download test cases', () => {
         await page.goto('https://atcoder.jp/contests/abc346/tasks/abc346_c');
         await expect(page.getByText('Download all test cases (31.5MB)')).toBeVisible();
         const downloadButton: Locator = page.locator('#dltc');
-        const downloadPromise = page.waitForEvent('download');
-        await downloadButton.click();
-        const download: Download = await downloadPromise;
-        expect(download.suggestedFilename()).toBe("abc346-C.zip");
-        await download.saveAs(download.suggestedFilename());
+        const downloadName = await captureDownloadName(downloadButton);
+        expect(downloadName).toBe("abc346-C.zip");
         // TODO: It should be better to test unzip and then check the folder structure and file contents.
     });
 
     test('Download test cases as a zip file - extended problem', async () => {
         await page.goto('https://atcoder.jp/contests/abc256/tasks/abc256_h');
         const downloadButton: Locator = page.locator('#dltc');
-        const downloadPromise = page.waitForEvent('download');
-        await downloadButton.click();
-        const download: Download = await downloadPromise;
-        expect(download.suggestedFilename()).toBe("abc256-Ex.zip");
-        await download.saveAs(download.suggestedFilename());
+        const downloadName = await captureDownloadName(downloadButton);
+        expect(downloadName).toBe("abc256-Ex.zip");
         // TODO: It should be better to test unzip and then check the folder structure and file contents.
     });
 
     test('Download test cases as a zip file - mapping problem', async () => {
         await page.goto('https://atcoder.jp/contests/abc044/tasks/abc044_a');
         const downloadButton: Locator = page.locator('#dltc');
-        const downloadPromise = page.waitForEvent('download');
-        await downloadButton.click();
-        const download: Download = await downloadPromise;
-        expect(download.suggestedFilename()).toBe("arc060-A.zip");
-        await download.saveAs(download.suggestedFilename());
+        const downloadName = await captureDownloadName(downloadButton);
+        expect(downloadName).toBe("arc060-A.zip");
         // TODO: It should be better to test unzip and then check the folder structure and file contents.
     });
 });

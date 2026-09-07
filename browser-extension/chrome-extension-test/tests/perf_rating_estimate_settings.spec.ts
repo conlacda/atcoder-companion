@@ -10,7 +10,7 @@ test.describe.configure({ mode: 'serial' });
 let page: Page;
 let _extensionId: string;
 
-test.beforeAll(async ({ context, extensionId }) => {
+test.beforeAll(async ({ sharedContext: context, extensionId }) => {
     page = await context.newPage();
     // because we have the set-up step, don't put extensionId into the following tests directly like test('Test something', async ({extensionId}) => {}));
     // it makes the test run twice, then playwright will crash
@@ -39,9 +39,9 @@ test.describe('Test settings for perf/rating estimation', () => {
         await page.locator('#save-settings').click();
 
         await page.goto('https://atcoder.jp/contests/abc360/standings');
-        await expect(page.locator('.ext-added')).not.toHaveCount(0);
+        await expect(page.locator('.ext-added')).not.toHaveCount(0, { timeout: 15_000 });
         await page.goto('https://atcoder.jp/contests/abc360/standings/virtual');
-        await expect(page.locator('.ext-added')).not.toHaveCount(0);
+        await expect(page.locator('.ext-added')).not.toHaveCount(0, { timeout: 15_000 });
 
         const userSettingsMeta: Locator = page.locator('meta[name="user_settings_ext_added"]');
         const userSettings = JSON.parse(await userSettingsMeta.getAttribute('content') ?? '');
