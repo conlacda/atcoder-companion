@@ -15,7 +15,7 @@ class StandingTable {
         const displayingUsers = this.getDisplayingUserList();
         this.recalculatePerfAndRating();
         const data = displayingUsers.map(userScreenName => this.perfRatingData.get(userScreenName));
-        const trows = this._table.querySelector('tbody').querySelectorAll('tr');
+        const trows = this._table.querySelector('tbody').querySelectorAll('tr:not(.ext-practice-row)');
 
         // Remove old cells
         document.querySelectorAll('.ext-added').forEach(e => e.remove());
@@ -88,7 +88,7 @@ class StandingTable {
         }));
 
         // Footer
-        const trows = this._table.querySelector('tbody').querySelectorAll('tr');
+        const trows = this._table.querySelector('tbody').querySelectorAll('tr:not(.ext-practice-row)');
         for (let i = trows.length - 2; i < trows.length; i++) {
             for (let _ = 0; _ < 3; _++) {
                 trows[i].insertAdjacentHTML('beforeend', '<td class="standings-result ext-added"><p>-</p></td>');
@@ -105,7 +105,7 @@ class StandingTable {
         }
 
         const tbody = this._table.querySelector('#standings-tbody');
-        const trs = tbody.querySelectorAll('tr');
+        const trs = tbody.querySelectorAll('tr:not(.ext-practice-row)');
         const userRows = Array.from(trs);
         return userRows.slice(0, -2).map((trow) => {
             const nameWithAffiliation = trow.querySelectorAll('td')[1].innerText.trim();
