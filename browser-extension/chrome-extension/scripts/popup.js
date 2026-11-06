@@ -15,7 +15,8 @@ const writeLocalStorage = async (key, value) => {
 const DEFAULT_USER_SETTINGS = {
     testcaseSize: 0, // 512,
     prediction: 0,
-    showDownloadTestcasesButton: 1
+    showDownloadTestcasesButton: 1,
+    showPracticeSolves: 1
 };
 
 (async () => {
@@ -28,6 +29,8 @@ const DEFAULT_USER_SETTINGS = {
         userSettings.testcaseSize = parseInt(document.querySelector('input[name="testcase-size"]:checked').value);
         userSettings.prediction = parseInt(document.querySelector('input[name="prediction"]:checked').value);
         userSettings.showDownloadTestcasesButton = document.getElementById('show-download-testcases-button').checked ? 1: 0;
+
+        userSettings.showPracticeSolves = document.getElementById('show-practice-solves').checked ? 1 : 0;
 
         await writeLocalStorage(USER_SETTING_KEY, JSON.stringify(userSettings));
         saveSettingsBtn.textContent = `Save settings \u{2705}`;
@@ -45,5 +48,6 @@ const DEFAULT_USER_SETTINGS = {
         document.getElementById(`prediction-${i}`).checked = (i == userSettings.prediction);
     }
 
+    document.getElementById('show-practice-solves').checked = Boolean(userSettings.showPracticeSolves);
     document.getElementById('show-download-testcases-button').checked = userSettings.showDownloadTestcasesButton;
 })();

@@ -7,7 +7,8 @@
 const DEFAULT_USER_SETTINGS = {
     testcaseSize: 0,
     prediction: 0,
-    showDownloadTestcasesButton: 1
+    showDownloadTestcasesButton: 1,
+    showPracticeSolves: 1
 };
 
 /**

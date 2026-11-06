@@ -22,6 +22,7 @@
         "storage",
         "unlimitedStorage"
     ],
+    "host_permissions": ["https://kenkoooo.com/*"],
     "background": {
         "scripts": ["scripts/background.js"]
     },
@@ -116,6 +117,25 @@
             "matches": [
                 "*://atcoder.jp/contests/*/tasks_print"
             ]
+        },
+        {
+            "js": [
+                "scripts/practice-standings/bridge.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/standings*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "js": [
+                "scripts/practice-standings/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/standings*"
+            ],
+            "run_at": "document_start",
+            "world": "MAIN"
         }
     ],
     "browser_specific_settings": {

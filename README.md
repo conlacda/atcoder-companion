@@ -13,6 +13,9 @@ Accurately predicts your rating during an ongoing contest.
 
 ![](images/estimate-rating.png)
 
+### Practice solves in standings
+See your and your friends’ practice solves and attempts. As on Codeforces, practice rows are marked with `*`.
+
 ### Solved problem status
 ![mark-solved-problems.png](images/mark-solved-problems.png)
 
